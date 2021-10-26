@@ -5,35 +5,68 @@ public class MainClass extends PApplet {
         PApplet.main("MainClass",args);
     }
 
+    final int w = 800;
+    final int h = 800;
+    final int SizeNode = 100;
+    Node[][] grid;
+    Node target;
+    Node start;
+
     public void settings() {
-        size(800,800);
+        size(w,h);
+
     }
 
-    Node[][] grid;
+
 
     public void draw(){
-        background(110,136,152);
-        for (int x=0;x<40;x++) {
-            for (int y = 0; y < 40; y++) {
-                noStroke();
-                if(random(0,1) >0.54)grid[x][y].free = false;
-                if(grid[x][y].free)fill(159, 177, 188);
-                else fill(0,0,0);
-                circle(grid[x][y].x*20 + 10, grid[x][y].y*20 + 10, 20);
-            }
-            if(x==39) noLoop();
-        }
 
+    }
+
+    public void mousePressed(){
+        if (start==null||target==null){
+            fill(226, 192, 60);
+            circle((mouseX/SizeNode)*SizeNode + SizeNode/2, mouseY/SizeNode*SizeNode + SizeNode/2, SizeNode);
+            if (start == null) {
+                start = grid[mouseX / SizeNode][mouseY / SizeNode];
+                println("registered start");
+            } else if (target == null) {
+                if (!grid[mouseX / SizeNode][mouseY / SizeNode].equals(start)){
+                    target = grid[mouseX / SizeNode][mouseY / SizeNode];
+                    println("registered target");
+                    Astar(start,target);
+                }
+            }
+        }
     }
 
     public void setup(){
         setupgrid();
+        drawgrid();
+    }
+
+
+    public void Astar(Node Start, Node Target){
+
+    }
+
+    public void drawgrid(){
+        background(110,136,152);
+        for (int x=0;x<w/SizeNode;x++) {
+            for (int y = 0; y < h/SizeNode; y++) {
+                noStroke();
+                if(random(0,1) >0.54)grid[x][y].free = false;
+                if(grid[x][y].free)fill(159, 177, 188);
+                else fill(0,0,0);
+                circle(grid[x][y].x*SizeNode + SizeNode/2, grid[x][y].y*SizeNode + SizeNode/2, SizeNode);
+            }
+        }
     }
 
     public void setupgrid(){
-        grid = new Node[40][40];
-        for(int x = 0; x<40;x++){
-            for(int y = 0; y<40;y++){
+        grid = new Node[w/SizeNode][h/SizeNode];
+        for(int x = 0; x<w/SizeNode;x++){
+            for(int y = 0; y<h/SizeNode;y++){
                 grid[x][y] = new Node(x,y,true, Integer.MAX_VALUE);
             }
         }
