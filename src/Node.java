@@ -1,7 +1,3 @@
-import processing.awt.PShapeJava2D;
-
-import javax.management.ObjectInstance;
-
 public class Node implements Comparable<Node>{
     final public int x;
     final public int y;
@@ -30,6 +26,5 @@ public class Node implements Comparable<Node>{
         else if(this.cost<a.cost)return 0;
         else return -1;
     }
-
 
 }
