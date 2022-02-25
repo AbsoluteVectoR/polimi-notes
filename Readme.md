@@ -31,5 +31,5 @@ You can easily change the dimensions of the window, the size of the nodes (small
 
 
 #### You need the Processing library 
-![[Just download from here](https://processing.org/download)] and remember to import it in your IDE. For example in Intellij Idea, select and add the folder 'processing/core/library' in Project Structure/Project Settings/Libraries from the editor. 
+[Just download from here](https://processing.org/download) and remember to import it in your IDE. For example in Intellij Idea, select and add the folder 'processing/core/library' in Project Structure/Project Settings/Libraries from the editor. 
 
