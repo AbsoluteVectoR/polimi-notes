@@ -1,7 +1,7 @@
 # A* algorithm visualization in Java 
 ![astar1](https://user-images.githubusercontent.com/72280379/155737789-a7460193-9511-4a0a-8652-6f3bb6572d49.gif)
 
-A* search algorithm written in Java with Processing graphic library.  Note that this program is not intend to have optimal performance, it's just a personal exercise to visualize the algorithm. 
+A* search algorithm visualization written in Java with Processing graphic library.
 
 #### Functions overview 
 ```Java
@@ -31,4 +31,5 @@ You can easily change the dimensions of the window, the size of the nodes (small
 
 
 #### You need the Processing library 
-![[Just download from here](https://processing.org/download)] and remember to import it in your IDE. For example in Intellij Idea, select and add the folder 'processing/core/library' in Project Structure/Project Settings/Libraries from the editor.
+![[Just download from here](https://processing.org/download)] and remember to import it in your IDE. For example in Intellij Idea, select and add the folder 'processing/core/library' in Project Structure/Project Settings/Libraries from the editor. 
+
