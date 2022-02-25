@@ -2,11 +2,11 @@ public class Node implements Comparable<Node>{
     final public int x;
     final public int y;
     public boolean free;
-    public float cost;
+    public int cost;
     public boolean visited;
     public Node predecessor;
 
-    public Node(int x,int y,boolean free, float cost) {
+    public Node(int x,int y,boolean free, int cost) {
         this.x = x;
         this.y = y;
         this.free = free;

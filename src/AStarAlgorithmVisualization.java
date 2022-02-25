@@ -23,10 +23,10 @@ public class AStarAlgorithmVisualization extends PApplet {
     public void settings() {
         w = 800;
         h = 800;
-        SizeNode = 10;
-        bgcolor = new Color(0x03045e);
-        obstaclecolor = new Color(0x0077b6);
-        linecolor = new Color(0xcaf0f8);
+        SizeNode = 15;
+        bgcolor = new Color(0xFF08001A, true);
+        obstaclecolor = new Color(0x7171FF);
+        linecolor = new Color(0xFFD500);
         size(w,h);
     }
 
@@ -42,7 +42,7 @@ public class AStarAlgorithmVisualization extends PApplet {
         grid = new Node[w/SizeNode][h/SizeNode];
         for(int x = 0; x<w/SizeNode;x++){
             for(int y = 0; y<h/SizeNode;y++){
-                grid[x][y] = new Node(x,y,true, Integer.MAX_VALUE);
+                grid[x][y] = new Node(x,y,true, MAX_INT);
             }
         }
     }
@@ -52,7 +52,7 @@ public class AStarAlgorithmVisualization extends PApplet {
         for (int x = 0; x < w / SizeNode; x++) {
             for (int y = 0; y < h / SizeNode; y++) {
                 noStroke();
-                if (random(0, 1) > 0.54) grid[x][y].free = false;
+                if (random(0, 1) > 0.51f) grid[x][y].free = false;
                 if (grid[x][y].free) fill(bgcolor.getRGB());
                 else fill(obstaclecolor.getRGB());
                 circle(grid[x][y].x * SizeNode + SizeNode / 2, grid[x][y].y * SizeNode + SizeNode / 2, SizeNode);
@@ -85,94 +85,126 @@ public class AStarAlgorithmVisualization extends PApplet {
 
     public void Astar(Node s, Node t){
         OpenSet = new PriorityQueue<Node>();
-        start.cost = 0.0f + heuristic(start, target);
+        start.cost = 0 + heuristic(start, target);
         OpenSet.add(start);
         Node expanded;
-        while(!finished){
-            if (!OpenSet.isEmpty() && !finished) {
+        while(!OpenSet.isEmpty()){
                 current = OpenSet.poll();
-                if (current.x - 1 > 0) {
-                    expanded = grid[current.x - 1][current.y];
-                    if(expanded.equals(t)){finished=true;expanded.predecessor=current;current=expanded;}
-                    if (expanded.free && !expanded.visited&& !finished) {
-                        expanded.cost = current.cost - heuristic(current, t) + heuristic(expanded, t) + 1;
-                        expanded.predecessor=current;
-                        OpenSet.add(grid[current.x - 1][current.y]);
-                    }
+                if (current.equals(t)){
+                    finished = true;
+                    current.visited=true;
+                    break;
                 }
-                if (current.x + 1 < w / SizeNode && !finished) {
-                    expanded = grid[current.x + 1][current.y];
-                    if(expanded.equals(t)){finished=true;expanded.predecessor=current;current=expanded;}
-                    if (expanded.free && !expanded.visited&& !finished) {
-                        expanded.cost = current.cost - heuristic(current, t) + heuristic(expanded, t) + 1;
-                        expanded.predecessor=current;
-                        OpenSet.add(expanded);
+                if(!current.visited){
+                    if (current.x > 0) {
+                        expanded = grid[current.x - 1][current.y];
+                        if(expanded.free && !finished){
+                            int tentativecost = current.cost - heuristic(current, t) + heuristic(expanded, t) + 10;
+                            if (expanded.cost > tentativecost){
+                                expanded.cost = tentativecost;
+                                expanded.predecessor = current;
+                                if(OpenSet.contains(grid[current.x - 1][current.y]))OpenSet.remove(grid[current.x - 1][current.y]);
+                                OpenSet.add(grid[current.x - 1][current.y]);
+                            }
+                        }
                     }
-                }
-                if (current.y + 1 < h / SizeNode&& !finished) {
-                    expanded = grid[current.x][current.y + 1];
-                    if(expanded.equals(t)){finished=true;expanded.predecessor=current;current=expanded;}
-                    if (expanded.free && !expanded.visited&& !finished) {
-                        expanded.cost = current.cost - heuristic(current, t) + heuristic(expanded, t) + 1;
-                        expanded.predecessor=current;
-                        OpenSet.add(expanded);
+                    if (current.x + 1 < w / SizeNode && !finished) {
+                        expanded = grid[current.x + 1][current.y];
+                        if (expanded.free && !finished) {
+                            int tentativecost = current.cost - heuristic(current, t) + heuristic(expanded, t) + 10;
+                            if (expanded.cost > tentativecost) {
+                                expanded.cost = tentativecost;
+                                expanded.predecessor = current;
+                                if(OpenSet.contains(grid[current.x + 1][current.y]))OpenSet.remove(grid[current.x + 1][current.y]);
+                                OpenSet.add(grid[current.x + 1][current.y]);
+                            }
+                        }
                     }
-                }
-                if (current.y - 1 > 0&& !finished) {
-                    expanded = grid[current.x][current.y - 1];
-                    if(expanded.equals(t)){finished=true;expanded.predecessor=current;current=expanded;}
-                    if (expanded.free && !expanded.visited&& !finished) {
-                        expanded.cost = current.cost - heuristic(current, t) + heuristic(expanded, t) + 1;
-                        expanded.predecessor=current;
-                        OpenSet.add(expanded);
+                    if (current.y + 1 < h / SizeNode && !finished){
+                        expanded = grid[current.x][current.y + 1];
+                        if (expanded.free && !finished) {
+                            int tentativecost = current.cost - heuristic(current, t) + heuristic(expanded, t) + 10;
+                            if (expanded.cost > tentativecost) {
+                                expanded.cost = tentativecost;
+                                expanded.predecessor = current;
+                                if(OpenSet.contains(grid[current.x][current.y + 1]))OpenSet.remove(grid[current.x][current.y + 1]);
+                                OpenSet.add(grid[current.x][current.y + 1]);
+                            }
+                        }
                     }
-                }
-                if (current.y - 1 > 0 & current.x + 1 < w / SizeNode&& !finished) {
-                    expanded = grid[current.x + 1][current.y - 1];
-                    if(expanded.equals(t)){finished=true;expanded.predecessor=current;current=expanded;}
-                    if (expanded.free && !expanded.visited&& !finished) {
-                        expanded.cost = current.cost - heuristic(current, t) + heuristic(expanded, t) + 1.42f;
-                        expanded.predecessor=current;
-                        OpenSet.add(expanded);
+                    if (current.y > 0 && !finished) {
+                        expanded = grid[current.x][current.y - 1];
+                        if (expanded.free && !finished) {
+                            int tentativecost = current.cost - heuristic(current, t) + heuristic(expanded, t) + 10;
+                            if (expanded.cost > tentativecost) {
+                                expanded.cost = tentativecost;
+                                expanded.predecessor = current;
+                                if(OpenSet.contains(grid[current.x][current.y - 1]))OpenSet.remove(grid[current.x][current.y - 1]);
+                                OpenSet.add(grid[current.x][current.y - 1]);
+                            }
+                        }
                     }
-                }
-                if (current.y - 1 > 0 & current.x - 1 > 0&& !finished) {
-                    expanded = grid[current.x - 1][current.y - 1];
-                    if(expanded.equals(t)){finished=true;expanded.predecessor=current;current=expanded;}
-                    if (expanded.free && !expanded.visited&& !finished) {
-                        expanded.cost = current.cost - heuristic(current, t) + heuristic(expanded, t) + 1.42f;
-                        expanded.predecessor=current;
-                        OpenSet.add(expanded);
+                    if (current.y > 0 & current.x + 1 < w / SizeNode && !finished) {
+                        expanded = grid[current.x + 1][current.y - 1];
+                        if (expanded.free && !finished) {
+                            int tentativecost = current.cost - heuristic(current, t) + heuristic(expanded, t) + 14;
+                            if (expanded.cost > tentativecost) {
+                                expanded.cost = tentativecost;
+                                expanded.predecessor = current;
+                                if(OpenSet.contains(grid[current.x + 1][current.y - 1]))OpenSet.remove(grid[current.x + 1][current.y - 1]);
+                                OpenSet.add(grid[current.x + 1][current.y - 1]);
+                            }
+                        }
                     }
-                }
-                if (current.y + 1 < h / SizeNode & current.x - 1 > 0 && !finished) {
-                    expanded = grid[current.x - 1][current.y + 1];
-                    if(expanded.equals(t)){finished=true;expanded.predecessor=current;current=expanded;}
-                    if (expanded.free && !expanded.visited && !finished) {
-                        expanded.cost = current.cost - heuristic(current, t) + heuristic(expanded, t) + 1.42f;
-                        expanded.predecessor=current;
-                        OpenSet.add(expanded);
+                    if (current.y > 0 & current.x > 0 && !finished) {
+                        expanded = grid[current.x - 1][current.y - 1];
+                        if (expanded.free && !finished) {
+                            int tentativecost = current.cost - heuristic(current, t) + heuristic(expanded, t) + 14;
+                            if (expanded.cost > tentativecost) {
+                                expanded.cost = tentativecost;
+                                expanded.predecessor = current;
+                                if(OpenSet.contains(grid[current.x - 1][current.y - 1]))OpenSet.remove(grid[current.x - 1][current.y - 1]);
+                                OpenSet.add(grid[current.x - 1][current.y - 1]);
+                            }
+                        }
                     }
-                }
-                if (current.y + 1 < h / SizeNode & current.x + 1 < w / SizeNode && !finished) {
-                    expanded = grid[current.x + 1][current.y + 1];
-                    if(expanded.equals(t)){finished=true;expanded.predecessor=current;current=expanded;}
-                    if (expanded.free && !expanded.visited && !finished) {
-                        expanded.cost = current.cost - heuristic(current, t) + heuristic(expanded, t) + 1.42f;
-                        expanded.predecessor=current;
-                        OpenSet.add(expanded);
+                    if (current.y + 1 < h / SizeNode & current.x > 0 && !finished) {
+                        expanded = grid[current.x - 1][current.y + 1];
+                        if (expanded.free && !finished) {
+                            int tentativecost = current.cost - heuristic(current, t) + heuristic(expanded, t) + 14;
+                            if (expanded.cost > tentativecost) {
+                                expanded.cost = tentativecost;
+                                expanded.predecessor = current;
+                                if(OpenSet.contains(grid[current.x - 1][current.y + 1]))OpenSet.remove(grid[current.x - 1][current.y + 1]);
+                                OpenSet.add(grid[current.x - 1][current.y + 1]);
+                            }
+                        }
                     }
+                    if (current.y + 1 < h / SizeNode & current.x + 1 < w / SizeNode && !finished) {
+                        expanded = grid[current.x + 1][current.y + 1];
+                        if (expanded.free && !finished) {
+                            int tentativecost = current.cost - heuristic(current, t) + heuristic(expanded, t) + 14;
+                            if (expanded.cost > tentativecost){
+                                expanded.cost = tentativecost;
+                                expanded.predecessor = current;
+                                if(OpenSet.contains(grid[current.x + 1][current.y + 1]))OpenSet.remove(grid[current.x + 1][current.y + 1]);
+                                OpenSet.add(grid[current.x + 1][current.y + 1]);
+                            }
+                        }
+                    }
+                    current.visited = true;
                 }
-                current.visited = true;
-            }else{
+        }
+        if(!finished){
                 println("Path doesn't exist.");
-                break;
-            }
         }
     }
 
-    public float heuristic(Node a,Node b){
-        return abs(a.x - b.x) + abs(a.y - b.y) - min(abs(a.x - b.x),abs(a.y - b.y))*1.4f; //octile distance
+    public int heuristic(Node a,Node b){
+        //Octile distance, variant of Diagonal Distance
+        int dx = abs(a.x - b.x);
+        int dy = abs(a.y - b.y);
+        return max(dx,dy)  + 4*min(dx,dy); //the 4 derives from (14-10) where 14 is the Diagonal Cost and 10 the 'normal cost'
         //return SizeNode*sqrt(pow(a.x* -b.x,2)+pow(a.y-b.y,2)); //euclidean distance
         //return abs(a.x-b.x + a.y-b.y); //manhattan distance
     }
