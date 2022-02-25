@@ -1,4 +1,5 @@
 # A* algorithm visualization in Java 
+![astar1](https://user-images.githubusercontent.com/72280379/155737789-a7460193-9511-4a0a-8652-6f3bb6572d49.gif)
 
 A* search algorithm written in Java with Processing graphic library.  Note that this program is not intend to have optimal performance, it's just a personal exercise to visualize the algorithm. 
 
@@ -14,19 +15,19 @@ public float heuristic() //the Heuristic function used by the algorithm
 public void draw() //Processing function used to update the screen
 public void drawpath() //it draws the path starting from the Target node and backtracking all the predecessors
 ```
-#### Changing the settings
+#### Graphics
 ```Java
 public void settings() {  
     w = 800;  
     h = 800;  
-    SizeNode = 10;  
+    SizeNode = 15;  
     bgcolor = new Color(0x03045e);  
     obstaclecolor = new Color(0x0077b6);  
     linecolor = new Color(0xcaf0f8);  
     size(w,h);  
 }
 ```
-You can easily change the dimensions of the window, the size of the nodes (smaller nodes = slower program) and the color palette. 
+You can easily change the dimensions of the window, the size of the nodes (smaller nodes = slower program) and the colors. 
 
 
 #### You need the Processing library 
