@@ -13,7 +13,7 @@ public void mousePressed() //Processing function used to determine when mouse is
 public void Astar() //the search algorithm
 public float heuristic() //the Heuristic function used by the algorithm
 public void draw() //Processing function used to update the screen
-public void drawpath() //it draws the path starting from the Target node and backtracking all the predecessors
+public void drawpath() //it draws the path starting from the Target node and backtracks all the predecessors
 ```
 #### Graphics
 ```Java
