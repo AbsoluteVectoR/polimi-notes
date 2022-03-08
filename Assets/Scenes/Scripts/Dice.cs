@@ -1,28 +1,54 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Dice : MonoBehaviour
 {
-    private Transform DiceTransform;
+    private Transform DiceTransf;
+    public bool isJustLaunched;
+    public Rigidbody thisone;
     public int value;
+
+    public void Start(){ 
+        thisone = this.GetComponent<Rigidbody>();
+        ResetValue();
+        
+    }
+
+    public void ResetValue(){value = -1;}
     
-    void Start()
+    private void UpdateValue()
     {
-        value = 2000;
-        DiceTransform = this.GetComponent<Transform>();
+        DiceTransf = this.GetComponent<Transform>();
+        if (Vector3.Dot(DiceTransf.up, Vector3.up) > 0.9f) value = 3;
+        else if (Vector3.Dot(-DiceTransf.up, Vector3.up) > 0.9f) value = 4;
+        else if  (Vector3.Dot(DiceTransf.forward, Vector3.up) > 0.9f) value = 1;
+        else if (Vector3.Dot(-DiceTransf.forward, Vector3.up) > 0.9f) value = 6;
+        else if (Vector3.Dot(DiceTransf.right, Vector3.up) > 0.9f) value = 2;
+        else if (Vector3.Dot(-DiceTransf.right, Vector3.up) > 0.9f) value = 5;
+        else ResetValue();
+        isJustLaunched = false;
+        thisone.isKinematic = true;
     }
-    public int IsValue()
+    
+    public int GetValue()
+    { return value; }
+
+    public void Launched()
     {
-        if (Vector3.Dot(DiceTransform.up, Vector3.up) > 0.9f) return 3;
-        else if (Vector3.Dot(-DiceTransform.up, Vector3.up) > 0.9f) return 4;
-        else if (Vector3.Dot(DiceTransform.forward, Vector3.up) > 0.9f) return 1;
-        else if (Vector3.Dot(-DiceTransform.forward, Vector3.up) > 0.9f) return 6;
-        else if (Vector3.Dot(DiceTransform.right, Vector3.up) > 0.9f) return 2;
-        else return 5;
+        isJustLaunched = true;
     }
-    void Update()
+
+    private void OnCollisionExit(Collision collision)
     {
-        if (this.GetComponent<Rigidbody>().velocity.magnitude <= 0.1f) Debug.Log(IsValue());
-    }
+        if (isJustLaunched)
+        {
+            if (thisone.velocity.magnitude <= 0.01f)
+            {
+                UpdateValue();
+            }
+        }
+    } 
+    
 }
