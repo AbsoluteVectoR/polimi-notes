@@ -6,17 +6,36 @@ using UnityEngine;
 public class Dice : MonoBehaviour
 {
     private Transform DiceTransf;
-    public bool isJustLaunched;
-    public Rigidbody thisone;
-    public int value;
+    private bool isJustLaunched;
+    private Rigidbody thisRB;
+    private int value;
 
     public void Start(){ 
-        thisone = this.GetComponent<Rigidbody>();
+        thisRB = this.GetComponent<Rigidbody>();
         ResetValue();
         
     }
 
+    public int GetValue()
+    { return value; }
+    
     public void ResetValue(){value = -1;}
+
+    public void Launched()
+    {
+        isJustLaunched = true;
+    }
+    
+    private void OnCollisionExit(Collision collision)
+    {
+        if (isJustLaunched)
+        {
+            if (thisRB.velocity.magnitude <= 0.01f)
+            {
+                UpdateValue();
+            }
+        }
+    } 
     
     private void UpdateValue()
     {
@@ -29,26 +48,11 @@ public class Dice : MonoBehaviour
         else if (Vector3.Dot(-DiceTransf.right, Vector3.up) > 0.9f) value = 5;
         else ResetValue();
         isJustLaunched = false;
-        thisone.isKinematic = true;
+        thisRB.isKinematic = true;
     }
     
-    public int GetValue()
-    { return value; }
+    
 
-    public void Launched()
-    {
-        isJustLaunched = true;
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (isJustLaunched)
-        {
-            if (thisone.velocity.magnitude <= 0.01f)
-            {
-                UpdateValue();
-            }
-        }
-    } 
+    
     
 }
