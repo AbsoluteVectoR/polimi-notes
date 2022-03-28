@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Dice : MonoBehaviour
 {
-    private Transform DiceTransf;
+    private Transform diceTransf;
     private bool isJustLaunched;
     private Rigidbody thisRB;
     private int value;
@@ -13,7 +13,6 @@ public class Dice : MonoBehaviour
     public void Start(){ 
         thisRB = this.GetComponent<Rigidbody>();
         ResetValue();
-        
     }
 
     public int GetValue()
@@ -39,20 +38,17 @@ public class Dice : MonoBehaviour
     
     private void UpdateValue()
     {
-        DiceTransf = this.GetComponent<Transform>();
-        if (Vector3.Dot(DiceTransf.up, Vector3.up) > 0.9f) value = 3;
-        else if (Vector3.Dot(-DiceTransf.up, Vector3.up) > 0.9f) value = 4;
-        else if  (Vector3.Dot(DiceTransf.forward, Vector3.up) > 0.9f) value = 1;
-        else if (Vector3.Dot(-DiceTransf.forward, Vector3.up) > 0.9f) value = 6;
-        else if (Vector3.Dot(DiceTransf.right, Vector3.up) > 0.9f) value = 2;
-        else if (Vector3.Dot(-DiceTransf.right, Vector3.up) > 0.9f) value = 5;
+        diceTransf = this.GetComponent<Transform>();
+        if (Vector3.Dot(diceTransf.up, Vector3.up) > 0.9f) value = 3;
+        else if (Vector3.Dot(-diceTransf.up, Vector3.up) > 0.9f) value = 4;
+        else if  (Vector3.Dot(diceTransf.forward, Vector3.up) > 0.9f) value = 1;
+        else if (Vector3.Dot(-diceTransf.forward, Vector3.up) > 0.9f) value = 6;
+        else if (Vector3.Dot(diceTransf.right, Vector3.up) > 0.9f) value = 2;
+        else if (Vector3.Dot(-diceTransf.right, Vector3.up) > 0.9f) value = 5;
         else ResetValue();
         isJustLaunched = false;
         thisRB.isKinematic = true;
     }
     
-    
-
-    
-    
+  
 }

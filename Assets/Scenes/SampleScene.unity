@@ -157,12 +157,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b32ed256391048647b3ee162de6de950, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dice1: {fileID: 28921584}
-  Dice2: {fileID: 952634791}
-  RollingRadius: 2
-  RollingSpeedRotation: 1
-  TurnHasStarted: 1
-  DicesPickedUp: 1
+  dice1: {fileID: 28921584}
+  dice2: {fileID: 952634791}
+  rollingRadius: 2
+  rollingSpeedRotation: 0.5
+  turnHasStarted: 0
+  dicesPickedUp: 0
   launch: 0
   sum: 0
 --- !u!4 &48028836
@@ -431,7 +431,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 528977716}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13.75, y: 1.97, z: 0}
+  m_LocalPosition: {x: 13.75, y: 6.34, z: 0}
   m_LocalScale: {x: 1, y: 8.9053, z: 23.750284}
   m_Children: []
   m_Father: {fileID: 1224459428}
@@ -600,7 +600,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 780977585}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13.7, y: 1.97, z: 0}
+  m_LocalPosition: {x: -13.7, y: 6.34, z: 0}
   m_LocalScale: {x: 1, y: 8.9053, z: 23.750284}
   m_Children: []
   m_Father: {fileID: 1224459428}
@@ -783,7 +783,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1075181744}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 1.97, z: -12}
+  m_LocalPosition: {x: 0, y: 6.34, z: -12}
   m_LocalScale: {x: 1, y: 8.9053, z: 28.76453}
   m_Children: []
   m_Father: {fileID: 1224459428}
@@ -878,7 +878,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1150942156}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 1.97, z: 11.31}
+  m_LocalPosition: {x: 0, y: 6.34, z: 11.31}
   m_LocalScale: {x: 1, y: 9, z: 28.246826}
   m_Children: []
   m_Father: {fileID: 1224459428}
