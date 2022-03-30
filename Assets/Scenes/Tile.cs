@@ -16,4 +16,16 @@ public class Tile : MonoBehaviour
         numberText.text = num.ToString();
     }
     
+    public int GetTextNum()
+    {
+        int number = -1;
+        int.TryParse(numberText.text,out number);
+        return number;
+    }
+    
+    public void flipTile()
+    {
+        this.transform.Rotate(45,0,0);
+    }
+    
 }
