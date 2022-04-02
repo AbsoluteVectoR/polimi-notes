@@ -8,8 +8,14 @@ using UnityEngine.UI;
 
 public class Tile : MonoBehaviour
 {
+    [SerializeField] private Button MyButton;
     public GameObject number;
     private TextMeshProUGUI numberText;
+    
+    void Start() { 
+        MyButton.onClick.AddListener(() => { FlipTile();});
+    }
+    
     public void SetTextNum(int num)
     {
         numberText = number.GetComponent<TextMeshProUGUI>();
@@ -23,7 +29,7 @@ public class Tile : MonoBehaviour
         return number;
     }
     
-    public void flipTile()
+    public void FlipTile()
     {
         this.transform.Rotate(45,0,0);
     }

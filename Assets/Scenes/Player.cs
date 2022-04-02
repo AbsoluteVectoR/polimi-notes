@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class TileSetManager : MonoBehaviour
+public class Player : MonoBehaviour
 {
     public GameObject tile;
     private ArrayList tiles;
@@ -25,20 +25,11 @@ public class TileSetManager : MonoBehaviour
     }
 
 
-    public void flipTile(int number)
+    public void FlipTile(int number)
     {
         tiles.Remove(number);
-        tilesObj[number-1].GetComponent<Tile>().flipTile();
+        tilesObj[number-1].GetComponent<Tile>().FlipTile();
     }
-
-    public ArrayList tilesSet()
-    {
-        return tiles;
-    }
-    
-    
-    
-    
 
     
 }
