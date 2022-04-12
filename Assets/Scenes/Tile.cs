@@ -1,37 +1,35 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Tile : MonoBehaviour
 {
-    [SerializeField] private Button MyButton;
     public GameObject number;
-    private TextMeshProUGUI numberText;
-    
-    void Start() { 
-        MyButton.onClick.AddListener(() => { FlipTile();});
-    }
-    
+    private TextMeshProUGUI _numberText;
+    private Player owner;
     public void SetTextNum(int num)
     {
-        numberText = number.GetComponent<TextMeshProUGUI>();
-        numberText.text = num.ToString();
+        _numberText = number.GetComponent<TextMeshProUGUI>();
+        _numberText.text = num.ToString();
     }
+
+    public void setOwner(Player owner)
+    {
+        this.owner = owner;
+    }
+    
     
     public int GetTextNum()
     {
-        int number = -1;
-        int.TryParse(numberText.text,out number);
-        return number;
+        int tmp = -1;
+        int.TryParse(_numberText.text, out tmp);
+        return tmp;
     }
-    
+
     public void FlipTile()
     {
-        this.transform.Rotate(45,0,0);
+        if (owner.FlipTile(GetTextNum()))
+        {
+            this.transform.Rotate(45, 0, 0);
+        }
     }
-    
 }
