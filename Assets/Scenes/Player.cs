@@ -1,9 +1,9 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    
     public GameObject tile;
     private ArrayList _tiles;
     private GameObject[] _tilesObj;
@@ -11,28 +11,28 @@ public class Player : MonoBehaviour
     private int _sumValue;
     public int _sumSelectedTiles;
     public int numOfTiles = 9;
+    public float tileBreadth = 3f;
     void Start()
     {
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 60;
         _tiles = new ArrayList(numOfTiles);
         _tilesObj = new GameObject[numOfTiles];
+        float offset = (1.1f*(numOfTiles+1)*tileBreadth) / 2f;
         for (int i = 1; i <= numOfTiles; i++)
         {
-            Transform tr = this.transform;
-            Vector3 tilePos = new Vector3(tr.position.x + i * 3.3f, tr.position.y,
-                tr.position.z);
-            _tiles.Add(i);
+            var tr = this.transform.position;
+            Vector3 tilePos = tr + this.transform.right * (i * 1.1f * tileBreadth - offset);
+            //Vector3 tilePos = new Vector3(tr.x + i * 1.1f*tileBreadth - offset, tr.y,
+            //  tr.z); 
+            
+            _tiles.Add(i); 
             _tilesObj[i - 1] = Instantiate(tile, tilePos, Quaternion.identity);
             _tilesObj[i - 1].GetComponent<Transform>().Rotate(45f, 0f, 0f);
             _tilesObj[i - 1].GetComponent<Tile>().SetTextNum(i);
             _tilesObj[i - 1].GetComponent<Tile>().setOwner(this);
         }
 
-        
-        _sumValue = 12;
-        _tiles.Remove(4);
-        _tiles.Remove(5);
-        _sumSelectedTiles = 0;
-        _selectableTiles = ComputeSelectable(_tiles);
     }
 
 
@@ -45,63 +45,57 @@ public class Player : MonoBehaviour
             _selectableTiles = ComputeSelectable(_tiles);
             return true;
         }
-
         return false;
     }
 
+    public void setSum(int sum)
+    {
+        _sumValue = sum;
+        _sumSelectedTiles = 0;
+        _selectableTiles = ComputeSelectable(_tiles);
+    }
+    
     private ArrayList ComputeSelectable(ArrayList arraySelectable)
     {
-        ArrayList tmp = arraySelectable;
-        ArrayList array = new ArrayList();
-        Debug.Log("sum é "+ _sumSelectedTiles);
-        
-        if (tmp.Contains(_sumValue - _sumSelectedTiles))
+        var tmp = arraySelectable;
+        var array = new ArrayList();
+
+        if (tmp.Contains(_sumValue - _sumSelectedTiles)) array.Add(_sumValue - _sumSelectedTiles);
+        for(int i = 1; i<=(_sumValue-i);i++)
         {
-            array.Add(_sumValue - _sumSelectedTiles);
-        }
-        
-        for(int i = 1; i<=(_sumValue-i);i++){
-            if (tmp.Contains(i))
+            if (!tmp.Contains(i)) continue;
+            if (i + _sumSelectedTiles == _sumValue) if (!array.Contains(i)) array.Add(i);
+            for (var x = i + 1; x <= (_sumValue-i); x++)
             {
-                if (i + _sumSelectedTiles == _sumValue)
+                if (!tmp.Contains(x)) continue;
+                if (i + x + _sumSelectedTiles == _sumValue)
                 {
+                    if (!array.Contains(x)) array.Add(x);
                     if (!array.Contains(i)) array.Add(i);
                 }
-                
-                for (int x = i + 1; x <= (_sumValue-i); x++)
+                else
                 {
-                    if (tmp.Contains(x))
+                    for (var y = x + 1; y <= (_sumValue - y); y++)
                     {
-                        if (i + x + _sumSelectedTiles == _sumValue)
-                        {
-                            if (!array.Contains(x)) array.Add(x);
-                            if (!array.Contains(i)) array.Add(i);
-                        }
-                        else
-                        {
-                            for (int y = x + 1; y <= (_sumValue - y); y++)
-                            {
-                                if (tmp.Contains(y))
-                                {
-                                    if (i + x + y + _sumSelectedTiles == _sumValue)
-                                    {
-                                        if (!array.Contains(x)) array.Add(x);
-                                        if (!array.Contains(i)) array.Add(i);
-                                        if (!array.Contains(y)) array.Add(y);
-                                    }
-                                }
-                            }
-                        }
+                        if (!tmp.Contains(y)) continue;
+                        if (i + x + y + _sumSelectedTiles != _sumValue) continue;
+                        if (!array.Contains(x)) array.Add(x);
+                        if (!array.Contains(i)) array.Add(i);
+                        if (!array.Contains(y)) array.Add(y);
                     }
                 }
             }
-            
-            Debug.Log("ITERAZIONE NUMERO " + i);
-            foreach (int numero in array)
-            {
-                Debug.Log(numero);
-            }
-            
+        }
+
+        if (array.Count != 0) return array;
+        if (_sumSelectedTiles == _sumValue)
+        {
+            Debug.Log("OK");
+            //selected = true;
+        }
+        else
+        {
+            Debug.Log("ko");
         }
         return array;
     }

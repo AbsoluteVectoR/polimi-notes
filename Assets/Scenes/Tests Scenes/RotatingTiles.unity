@@ -220,7 +220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tile: {fileID: 1846430371409471043, guid: fd688cf0f428fd942b2738c40fdf06e0, type: 3}
   _sumSelectedTiles: 0
-  numOfTiles: 12
+  numOfTiles: 9
 --- !u!4 &639964710
 Transform:
   m_ObjectHideFlags: 0

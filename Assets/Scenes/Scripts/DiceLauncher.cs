@@ -13,6 +13,7 @@ public class DiceLauncher : MonoBehaviour
     public static DiceLauncher instance;
     public GameObject dice1;
     public GameObject dice2;
+    public GameObject player; 
     public float rollingRadius = 2f;
     public float rollingSpeedRotation = 0.5f;
     public bool turnHasStarted;
@@ -45,13 +46,6 @@ public class DiceLauncher : MonoBehaviour
         }
         if(isRollingDices)Rolling();
         if (launched) Launch();
-    }
-    private void Rolling()
-    {
-        dice1rb.position = dice1DestPos;
-        dice2rb.position = dice2DestPos;
-        dice1rb.AddRelativeTorque(rollingSpeedRotation,rollingSpeedRotation,-rollingSpeedRotation);
-        dice2rb.AddRelativeTorque(-rollingSpeedRotation,rollingSpeedRotation,rollingSpeedRotation);
     }
 
     private IEnumerator PickUpDices()
@@ -88,6 +82,15 @@ public class DiceLauncher : MonoBehaviour
         isRollingDices = true; //starts to roll the dices
         time = 0f;
     }
+    
+    private void Rolling()
+    {
+        dice1rb.position = dice1DestPos;
+        dice2rb.position = dice2DestPos;
+        dice1rb.AddRelativeTorque(rollingSpeedRotation,rollingSpeedRotation,-rollingSpeedRotation);
+        dice2rb.AddRelativeTorque(-rollingSpeedRotation,rollingSpeedRotation,rollingSpeedRotation);
+    }
+    
     private void Launch()
     {
         isRollingDices = false;
@@ -109,8 +112,9 @@ public class DiceLauncher : MonoBehaviour
     {
         while(dice1.GetComponent<Dice>().GetValue() == -1 || dice2.GetComponent<Dice>().GetValue() == -1) yield return new WaitForSeconds(0.1f);
         sum = 0;
-        sum += dice1.GetComponent<Dice>().GetValue();
+        sum = dice1.GetComponent<Dice>().GetValue();
         sum += dice2.GetComponent<Dice>().GetValue();
+        player.GetComponent<Player>().setSum(sum);
         dice1.GetComponent<Dice>().ResetValue();
         dice2.GetComponent<Dice>().ResetValue();
     }
