@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.43994722, g: 0.48841733, b: 0.56861925, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -159,7 +159,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dice1: {fileID: 28921584}
   dice2: {fileID: 952634791}
-  player: {fileID: 708471668}
+  player: {fileID: 0}
   rollingRadius: 2
   rollingSpeedRotation: 3
   turnHasStarted: 0
@@ -204,13 +204,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 151219960}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0.7183362, y: 0.27293298, z: -0.032135896, w: 0.639115}
   m_LocalPosition: {x: 0, y: 36.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1224459428}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 69.348, y: 120.877, z: 95.545}
 --- !u!108 &151219962
 Light:
   m_ObjectHideFlags: 0
@@ -220,16 +220,16 @@ Light:
   m_GameObject: {fileID: 151219960}
   m_Enabled: 1
   serializedVersion: 10
-  m_Type: 0
+  m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 3
+  m_Intensity: 0.4
   m_Range: 78
   m_SpotAngle: 119.8
   m_InnerSpotAngle: 1
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 1
+    m_Type: 2
     m_Resolution: 3
     m_CustomResolution: -1
     m_Strength: 0.098
@@ -512,53 +512,6 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 8932090874653180739, guid: 1e669a30c90f8f74cb2ad6979b1e726e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 1e669a30c90f8f74cb2ad6979b1e726e, type: 3}
---- !u!1 &708471668
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 708471670}
-  - component: {fileID: 708471669}
-  m_Layer: 0
-  m_Name: player
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &708471669
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 708471668}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a484ce34a0750c84f910a6cd22a679ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tile: {fileID: 1846430371409471043, guid: fd688cf0f428fd942b2738c40fdf06e0, type: 3}
-  _sumSelectedTiles: 0
-  numOfTiles: 12
-  tileBreadth: 3
---- !u!4 &708471670
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 708471668}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3, z: -27}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &722667495
 GameObject:
   m_ObjectHideFlags: 0
@@ -623,7 +576,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &780977585
 GameObject:
@@ -1063,7 +1016,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78b8904010219af4d90a525c574cf66e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SeatDistance: 20
+  seatDistance: 27
+  diceLaunchDistance: 20
+  numPlayers: 4
+  player: {fileID: 1537379941968819896, guid: 376b6e86e27de4e45aee50d2a3de0079, type: 3}
   state: 0
 --- !u!4 &1349740055
 Transform:

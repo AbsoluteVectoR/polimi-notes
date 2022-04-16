@@ -1,48 +1,57 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     private DiceLauncher dlauncher;
-    public float SeatDistance;
-    private float SeatHeight;
+    public float seatDistance;
+    public float diceLaunchDistance;
+    public int numPlayers = 4;
+    public GameObject player;
+    private float _seatHeight;
+    private ArrayList _players;
+
     public enum statetype
     {
-        TurnPlayer1 = 1,
-        TurnPlayer2 = 2, 
-        TurnPlayer3 = 3,
-        TurnPlayer4 = 4
+        menu = 0,
+        pickingupDices = 1,
+        rolling = 2,
+        checkingDicesSum = 3,
+        choosingTiles = 4,
+        nextPlayer = 5,
+        gameOver = 6
     }
 
     public statetype state;
 
     private void Start()
     {
-        SeatHeight = SeatDistance;
+        _seatHeight = 6;
         dlauncher = DiceLauncher.instance;
-        state = statetype.TurnPlayer1;
-    }
-
-    void Update()
-    {
-        
-        switch(state)
+        state = statetype.menu;
+        _players = new ArrayList(numPlayers);
+        //main player
+        var mainP = 
+            Instantiate(player, new Vector3(0, _seatHeight, -seatDistance), Quaternion.identity);
+        _players.Add(mainP);
+        //left player
+        if (numPlayers == 4)
         {
-            case statetype.TurnPlayer1:
-                dlauncher.transform.position = new Vector3(0, SeatHeight, -SeatDistance);
-                break;
-            case statetype.TurnPlayer2:
-                dlauncher.transform.position = new Vector3(-SeatDistance, SeatHeight, 0);
-                break;
-            case statetype.TurnPlayer3:
-                dlauncher.transform.position = new Vector3(0, SeatHeight, SeatDistance);
-                break;
-            case statetype.TurnPlayer4:
-                dlauncher.transform.position = new Vector3(SeatDistance, SeatHeight, 0);
-                break;
-            
+            var leftP =
+                Instantiate(player, new Vector3(-seatDistance, _seatHeight, 0), Quaternion.identity);
+            _players.Add(leftP);
+        }
+        //front player 
+        var frontP = 
+            Instantiate(player, new Vector3(0, _seatHeight, seatDistance), Quaternion.identity);
+        _players.Add(frontP);
+        
+        //right player 
+        if (numPlayers == 4)
+        {
+            var rightP = 
+                Instantiate(player, new Vector3(seatDistance, _seatHeight, 0), Quaternion.identity);
+            _players.Add(rightP);
         }
     }
 }

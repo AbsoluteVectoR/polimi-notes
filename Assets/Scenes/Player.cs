@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
             //  tr.z); 
             
             _tiles.Add(i); 
-            _tilesObj[i - 1] = Instantiate(tile, tilePos, Quaternion.identity);
+            _tilesObj[i - 1] = Instantiate(tile, tilePos, this.transform.rotation );
             _tilesObj[i - 1].GetComponent<Transform>().Rotate(45f, 0f, 0f);
             _tilesObj[i - 1].GetComponent<Tile>().SetTextNum(i);
             _tilesObj[i - 1].GetComponent<Tile>().setOwner(this);
