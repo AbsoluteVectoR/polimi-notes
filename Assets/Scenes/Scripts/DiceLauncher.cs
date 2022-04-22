@@ -4,105 +4,99 @@ using System.Collections.Generic;
 using System.Numerics;
 using TreeEditor;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using UnityEngine.Serialization;
 using Random = System.Random;
 using Vector3 = UnityEngine.Vector3;
 
 public class DiceLauncher : MonoBehaviour
 {
-    public static DiceLauncher instance;
     public GameObject dice1;
     public GameObject dice2;
-    public GameObject player; 
     public float rollingRadius = 2f;
     public float rollingSpeedRotation = 0.5f;
-    public bool turnHasStarted;
-    public bool dicesPickedUp;
-    public bool launched = false;
     public int sum;
-    private Rigidbody dice1rb;
-    private Rigidbody dice2rb;
-    private Vector3 thisTransf;
-    private Vector3  dice1DestPos;
-    private Vector3 dice2DestPos;
-    private bool isRollingDices;
-    private void Awake()
-    {
-        instance = this;
-    }
+    private GameManager _gameMan;
+    private Rigidbody _dice1Rb;
+    private Rigidbody _dice2Rb;
+    public Transform launcherTransform;
+    public Vector3 launcherPosition;
+    private Vector3  _dice1DestPos;
+    private Vector3 _dice2DestPos;
+    private bool _isRollingDices;
+   
     public void Start()
     {
-        isRollingDices = false;
-        dicesPickedUp = false;
-        dice1rb = dice1.GetComponent<Rigidbody>();
-        dice2rb = dice2.GetComponent<Rigidbody>();
+        _gameMan = GameManager.Instance;
+        _isRollingDices = false;
     }
+    
+    public void turnStart()
+    {
+        StartCoroutine(PickUpDices());
+    }
+    
     public void Update()
-    {   
-        if (dicesPickedUp&&turnHasStarted)
-        {
-            StartCoroutine(PickUpDices());
-            turnHasStarted = false;
-        }
-        if(isRollingDices)Rolling();
-        if (launched) Launch();
+    {
+        if(_isRollingDices)Rolling();
     }
 
     private IEnumerator PickUpDices()
     {
-        dicesPickedUp = true;
-        dice1rb.useGravity = false;
-        dice2rb.useGravity = false;
-        dice1rb.isKinematic = false;
-        dice2rb.isKinematic = false;
-        thisTransf = this.transform.position;
+        _dice1Rb = dice1.GetComponent<Rigidbody>();
+        _dice2Rb = dice2.GetComponent<Rigidbody>();
+        _dice1Rb.useGravity = false;
+        _dice2Rb.useGravity = false;
+        _dice1Rb.isKinematic = false;
+        _dice2Rb.isKinematic = false;
+        launcherPosition = launcherTransform.position + Vector3.up * 12;
         //pick up dices
         float time = 0f;
-        dice1DestPos = new Vector3(dice1rb.position.x,thisTransf.y,dice1rb.position.z);
-        dice2DestPos = new Vector3(dice2rb.position.x,thisTransf.y,dice2rb.position.z);
+        _dice1DestPos = new Vector3(_dice1Rb.position.x,launcherPosition.y,_dice1Rb.position.z);
+        _dice2DestPos = new Vector3(_dice2Rb.position.x,launcherPosition.y,_dice2Rb.position.z);
         while (time < 1f) 
         {
-            dice1.transform.position = Vector3.Lerp( dice1rb.position,dice1DestPos,Mathf.Pow(time,3f)/2f);
-            dice2.transform.position = Vector3.Lerp( dice2rb.position,dice2DestPos,Mathf.Pow(time,3f)/2f);
+            dice1.transform.position = Vector3.Lerp( _dice1Rb.position,_dice1DestPos,Mathf.Pow(time,3f)/2f);
+            dice2.transform.position = Vector3.Lerp( _dice2Rb.position,_dice2DestPos,Mathf.Pow(time,3f)/2f);
             time += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
         //move dices to the launcher position 
         time = 0f;
-        this.transform.LookAt(Vector3.zero);
-        dice1DestPos = transform.TransformPoint(this.transform.right * rollingRadius);
-        dice2DestPos = transform.TransformPoint(-this.transform.right * rollingRadius);
+        _dice1DestPos = launcherTransform.TransformPoint(launcherTransform.right * rollingRadius) + Vector3.up*12;
+        _dice2DestPos = launcherTransform.TransformPoint(-launcherTransform.right * rollingRadius)+ Vector3.up*12;
         while (time < 1f) 
         {
-            dice1.transform.position = Vector3.Lerp( dice1rb.position,dice1DestPos,Mathf.Pow(time,3f)/5f);
-            dice2.transform.position = Vector3.Lerp( dice2rb.position,dice2DestPos,Mathf.Pow(time,3f)/5f);
+            dice1.transform.position = Vector3.Lerp( _dice1Rb.position,_dice1DestPos,Mathf.Pow(time,3f)/5f);
+            dice2.transform.position = Vector3.Lerp( _dice2Rb.position,_dice2DestPos,Mathf.Pow(time,3f)/5f);
             time += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
-        isRollingDices = true; //starts to roll the dices
-        time = 0f;
+        _isRollingDices = true; //starts to roll the dices
+        
+        //testing
+        yield return new WaitForSeconds(0.1f);
+        Launch();
     }
     
     private void Rolling()
     {
-        dice1rb.position = dice1DestPos;
-        dice2rb.position = dice2DestPos;
-        dice1rb.AddRelativeTorque(rollingSpeedRotation,rollingSpeedRotation,-rollingSpeedRotation);
-        dice2rb.AddRelativeTorque(-rollingSpeedRotation,rollingSpeedRotation,rollingSpeedRotation);
+        _dice1Rb.position = _dice1DestPos;
+        _dice2Rb.position = _dice2DestPos;
+        _dice1Rb.AddRelativeTorque(rollingSpeedRotation,rollingSpeedRotation,-rollingSpeedRotation);
+        _dice2Rb.AddRelativeTorque(-rollingSpeedRotation,rollingSpeedRotation,rollingSpeedRotation);
     }
     
     private void Launch()
     {
-        isRollingDices = false;
-        dicesPickedUp = false;
-        launched = false;
-        Vector3 forceDirection = new Vector3(-this.transform.position.x,1,-this.transform.position.z).normalized*2000f;
-        dice1rb.AddForce(forceDirection);
-        dice2rb.AddForce(forceDirection);
-        dice1rb.AddRelativeTorque(-rollingSpeedRotation,-rollingSpeedRotation,-rollingSpeedRotation);
-        dice2rb.AddRelativeTorque(rollingSpeedRotation,rollingSpeedRotation,rollingSpeedRotation);
-        dice1rb.useGravity = true;
-        dice2rb.useGravity = true;
+        _isRollingDices = false;
+        Vector3 forceDirection = new Vector3(-launcherPosition.x,1,-launcherPosition.z).normalized*2000f;
+        _dice1Rb.AddForce(forceDirection);
+        _dice2Rb.AddForce(forceDirection);
+        _dice1Rb.AddRelativeTorque(-rollingSpeedRotation,-rollingSpeedRotation,-rollingSpeedRotation);
+        _dice2Rb.AddRelativeTorque(rollingSpeedRotation,rollingSpeedRotation,rollingSpeedRotation);
+        _dice1Rb.useGravity = true;
+        _dice2Rb.useGravity = true;
         dice1.GetComponent<Dice>().Launched();
         dice2.GetComponent<Dice>().Launched();
         StartCoroutine(MakeSumOfDices());
@@ -110,11 +104,13 @@ public class DiceLauncher : MonoBehaviour
     
     private IEnumerator MakeSumOfDices()
     {
-        while(dice1.GetComponent<Dice>().GetValue() == -1 || dice2.GetComponent<Dice>().GetValue() == -1) yield return new WaitForSeconds(0.1f);
-        sum = 0;
+        while (dice1.GetComponent<Dice>().GetValue() == -1 || dice2.GetComponent<Dice>().GetValue() == -1)
+        {
+            yield return new WaitForSeconds(0.1f); //every 0.1 seconds check if the dices are finally aligned
+        }
         sum = dice1.GetComponent<Dice>().GetValue();
         sum += dice2.GetComponent<Dice>().GetValue();
-        player.GetComponent<Player>().setSum(sum);
+        _gameMan.DicesStopped(sum);
         dice1.GetComponent<Dice>().ResetValue();
         dice2.GetComponent<Dice>().ResetValue();
     }

@@ -36,7 +36,7 @@ public class Dice : MonoBehaviour
         }
     } 
     
-    private void UpdateValue()
+    private void UpdateValue() //Computing the value of the dice using dot product of the orientation vectors 
     {
         diceTransf = this.GetComponent<Transform>();
         if (Vector3.Dot(diceTransf.up, Vector3.up) > 0.9f) value = 3;

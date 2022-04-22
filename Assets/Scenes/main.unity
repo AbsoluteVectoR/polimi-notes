@@ -128,58 +128,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8395345904222443423, guid: 1e669a30c90f8f74cb2ad6979b1e726e, type: 3}
   m_PrefabInstance: {fileID: 341885388}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &48028834
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 48028836}
-  - component: {fileID: 48028835}
-  m_Layer: 0
-  m_Name: DiceLauncher
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &48028835
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 48028834}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b32ed256391048647b3ee162de6de950, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dice1: {fileID: 28921584}
-  dice2: {fileID: 952634791}
-  player: {fileID: 0}
-  rollingRadius: 2
-  rollingSpeedRotation: 3
-  turnHasStarted: 0
-  dicesPickedUp: 0
-  launched: 0
-  sum: 0
---- !u!4 &48028836
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 48028834}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 16, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &151219960
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,6 +233,10 @@ PrefabInstance:
       value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: -2004151554135174706, guid: 1e669a30c90f8f74cb2ad6979b1e726e, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2004151554135174706, guid: 1e669a30c90f8f74cb2ad6979b1e726e, type: 3}
       propertyPath: m_Interpolate
       value: 1
       objectReference: {fileID: 0}
@@ -294,7 +246,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8395345904222443416, guid: 1e669a30c90f8f74cb2ad6979b1e726e, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8395345904222443416, guid: 1e669a30c90f8f74cb2ad6979b1e726e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -450,6 +402,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -2004151554135174706, guid: 1e669a30c90f8f74cb2ad6979b1e726e, type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2004151554135174706, guid: 1e669a30c90f8f74cb2ad6979b1e726e, type: 3}
       propertyPath: m_Interpolate
       value: 1
       objectReference: {fileID: 0}
@@ -459,7 +415,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8395345904222443416, guid: 1e669a30c90f8f74cb2ad6979b1e726e, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8395345904222443416, guid: 1e669a30c90f8f74cb2ad6979b1e726e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -576,7 +532,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &780977585
 GameObject:
@@ -985,7 +941,7 @@ Transform:
   - {fileID: 1075181748}
   - {fileID: 151219961}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1349740053
 GameObject:
@@ -997,6 +953,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1349740055}
   - component: {fileID: 1349740054}
+  - component: {fileID: 1349740056}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1016,11 +973,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78b8904010219af4d90a525c574cf66e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  launcher: {fileID: 0}
   seatDistance: 27
   diceLaunchDistance: 20
-  numPlayers: 4
+  numPlayers: 2
   player: {fileID: 1537379941968819896, guid: 376b6e86e27de4e45aee50d2a3de0079, type: 3}
-  state: 0
+  seatHeight: 6
+  players: []
+  currentPlayer: {fileID: 0}
 --- !u!4 &1349740055
 Transform:
   m_ObjectHideFlags: 0
@@ -1029,12 +989,31 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1349740053}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.310371, y: -0.52007556, z: 20.357327}
+  m_LocalPosition: {x: -3.55, y: 10.55, z: 2.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1349740056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349740053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b32ed256391048647b3ee162de6de950, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dice1: {fileID: 28921584}
+  dice2: {fileID: 952634791}
+  rollingRadius: 2
+  rollingSpeedRotation: 5
+  sum: 0
+  launcherTransform: {fileID: 0}
+  launcherPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &1617133097
 GameObject:
   m_ObjectHideFlags: 0
