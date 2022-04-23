@@ -977,9 +977,11 @@ MonoBehaviour:
   seatDistance: 27
   diceLaunchDistance: 20
   numPlayers: 2
+  numOfTiles: 9
   player: {fileID: 1537379941968819896, guid: 376b6e86e27de4e45aee50d2a3de0079, type: 3}
   seatHeight: 6
-  players: []
+  playersPlaying: []
+  playersOut: []
   currentPlayer: {fileID: 0}
 --- !u!4 &1349740055
 Transform:

@@ -1,9 +1,7 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Networking.PlayerConnection;
 using UnityEngine;
-using UnityEngine.WSA;
+using Application = UnityEngine.Application;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,9 +10,11 @@ public class GameManager : MonoBehaviour
     public float seatDistance;
     public float diceLaunchDistance;
     public int numPlayers = 4;
+    public int numOfTiles = 12;
     public GameObject player;
     public float seatHeight;
-    public List<GameObject> players;
+    public List<GameObject> playersPlaying;
+    public List<GameObject> playersOut;
     public GameObject currentPlayer;
     private int _sumValue;
     private int _sumSelectedTiles;
@@ -25,30 +25,34 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        players = new List<GameObject>(numPlayers);
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 60;
+        
+        playersPlaying = new List<GameObject>(numPlayers);
+        
         //main player
         var posTiles = new Vector3(0, seatHeight, -seatDistance);
-        players.Add(Instantiate(player, posTiles, Quaternion.identity));
+        playersPlaying.Add(Instantiate(player, posTiles, Quaternion.identity));
         
         //left player
         if (numPlayers == 4)
         {
             posTiles = new Vector3(-seatDistance, seatHeight, 0);
-            players.Add(Instantiate(player, posTiles, Quaternion.LookRotation(-posTiles)));
+            playersPlaying.Add(Instantiate(player, posTiles, Quaternion.LookRotation(-posTiles)));
         }
         //front player 
         posTiles = new Vector3(0, seatHeight, seatDistance);
-        players.Add(Instantiate(player, posTiles, Quaternion.LookRotation(-posTiles)));
+        playersPlaying.Add(Instantiate(player, posTiles, Quaternion.LookRotation(-posTiles)));
         
         //right player 
         if (numPlayers == 4)
         {
             posTiles = new Vector3(seatDistance, seatHeight, 0);
-            players.Add(Instantiate(player, posTiles, Quaternion.LookRotation(-posTiles)));
+            playersPlaying.Add(Instantiate(player, posTiles, Quaternion.LookRotation(-posTiles)));
         }
 
         launcher = this.GetComponent<DiceLauncher>();
-        currentPlayer = players[0];
+        currentPlayer = playersPlaying[0];
         launcher.launcherTransform = currentPlayer.transform;
         launcher.enabled = true;
         launcher.turnStart();
@@ -63,29 +67,81 @@ public class GameManager : MonoBehaviour
     
     private void UpdatingPlayerTiles()
     {
-        ArrayList selectableTiles = ComputeSelectable(currentPlayer.GetComponent<Player>().getTiles());
+        ArrayList selectableTiles = ComputeSelectable(currentPlayer.GetComponent<Player>().GetTiles());
         if (selectableTiles.Count > 0)
         {
+            currentPlayer.GetComponent<Player>().EnableSelect(true);
             currentPlayer.GetComponent<Player>().SetPlayerSelectables(selectableTiles);
         }
         else if(_sumSelectedTiles == _sumValue)
         {
             _sumSelectedTiles = 0;
-            nextPlayer();
+            currentPlayer.GetComponent<Player>().EnableSelect(false);
+            if (currentPlayer.GetComponent<Player>().GetTiles().Count == 0)
+            {
+                playersOut.Add(currentPlayer); //immediate win
+                currentPlayer.GetComponent<Player>().SetScore(0);
+                GameOver();
+            }
+            ChangePlayer();
         }
         else
         {
-            Debug.Log("KO");
+            currentPlayer.GetComponent<Player>().EnableSelect(false);
+            PlayerGameOver(); 
         }
     }
 
-    private void nextPlayer()
+
+    public void PlayerGameOver()
     {
-        int currentIndex = players.IndexOf(currentPlayer);
-        if (currentIndex != numPlayers - 1)
-            currentPlayer = players[currentIndex + 1];
+        var eliminatedPlayer = currentPlayer;
+        int score = 0;
+        var tiles = eliminatedPlayer.GetComponent<Player>().GetTiles();
+        foreach (int number in tiles) score += number;
+        Debug.Log("KO, score: "+ score);
+        if (playersPlaying.Count - 1 > 0)
+        {
+            ChangePlayer();
+            playersPlaying.Remove(eliminatedPlayer);
+            playersOut.Add(eliminatedPlayer);
+        }
         else
-            currentPlayer = players[0];
+        {
+            playersPlaying.Remove(eliminatedPlayer);
+            playersOut.Add(eliminatedPlayer);
+            GameOver();
+        }
+    }
+
+    private void GameOver()
+    {
+        GameObject winner = playersOut[0];
+        foreach (GameObject player in playersOut)
+        {
+            var playerScore = player.GetComponent<Player>().GetScore();
+            var winnerScore = winner.GetComponent<Player>().GetScore();
+            if (playerScore < winnerScore)
+            {
+                winner = player;
+            }
+            else if(playerScore == winnerScore && player.GetComponent<Player>().nickname != winner.GetComponent<Player>().nickname)
+            {
+                Debug.Log("There is a tie! No winners!");
+                return;
+            }
+        }
+        
+        Debug.Log("Our compliments to "+ winner.GetComponent<Player>().nickname+ " !");
+    }
+    
+    private void ChangePlayer()
+    {
+        int currentIndex = playersPlaying.IndexOf(currentPlayer);
+        if (currentIndex != playersPlaying.Count-1)
+            currentPlayer = playersPlaying[currentIndex + 1];
+        else
+            currentPlayer = playersPlaying[0];
         
         launcher.launcherPosition = currentPlayer.transform.position;
         launcher.launcherTransform = currentPlayer.transform;
@@ -130,12 +186,6 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-
-        foreach (int i in array)
-        {
-            Debug.Log(i);
-        }
-        
         return array;
     }
     
