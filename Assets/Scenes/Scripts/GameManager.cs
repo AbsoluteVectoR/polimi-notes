@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public int numPlayers = 4;
     public int numOfTiles = 12;
     public GameObject player;
+    public GameObject AIplayer;
     public float seatHeight;
     public List<GameObject> playersPlaying;
     public List<GameObject> playersOut;
@@ -38,17 +39,17 @@ public class GameManager : MonoBehaviour
         if (numPlayers == 4)
         {
             posTiles = new Vector3(-seatDistance, seatHeight, 0);
-            playersPlaying.Add(Instantiate(player, posTiles, Quaternion.LookRotation(-posTiles)));
+            playersPlaying.Add(Instantiate(AIplayer, posTiles, Quaternion.LookRotation(-posTiles)));
         }
         //front player 
         posTiles = new Vector3(0, seatHeight, seatDistance);
-        playersPlaying.Add(Instantiate(player, posTiles, Quaternion.LookRotation(-posTiles)));
+        playersPlaying.Add(Instantiate(AIplayer, posTiles, Quaternion.LookRotation(-posTiles)));
         
         //right player 
         if (numPlayers == 4)
         {
             posTiles = new Vector3(seatDistance, seatHeight, 0);
-            playersPlaying.Add(Instantiate(player, posTiles, Quaternion.LookRotation(-posTiles)));
+            playersPlaying.Add(Instantiate(AIplayer, posTiles, Quaternion.LookRotation(-posTiles)));
         }
 
         launcher = this.GetComponent<DiceLauncher>();
