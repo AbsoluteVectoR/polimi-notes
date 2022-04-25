@@ -25,11 +25,14 @@ public class Tile : MonoBehaviour
         return tmp;
     }
 
-    public void FlipTile()
+    public void Flip() //Used by Button and PlayerAI
     {
-        if (owner.FlipTile(GetTextNum()))
+        if (owner.GetSelectableTiles().Contains(GetTextNum())&&
+            owner.IsSelecting())
         {
+            owner.TileSelected(GetTextNum());
             this.transform.Rotate(45, 0, 0);
         }
     }
+    
 }

@@ -8,12 +8,13 @@ public class Player : MonoBehaviour
     public GameObject tile;
     public int numOfTiles = 9;
     public float tileBreadth = 3f;
-    private ArrayList _tiles;
-    private GameObject[] _tilesObj;
-    private ArrayList _selectableTiles;
-    public bool selectEnabled;
     public int score;
-    public String nickname = "HumanPlayer";
+    public String username = "HumanPlayer";
+    public ArrayList _tiles;
+    protected GameObject[] _tilesObj;
+    protected ArrayList _selectableTiles;
+    protected bool selectEnabled;
+    
     void Start()
     {
         score = 9999;
@@ -24,7 +25,7 @@ public class Player : MonoBehaviour
         InstantiateTiles();
     }
 
-    private void InstantiateTiles()
+    protected void InstantiateTiles()
     {
         float offset = (1.1f * (numOfTiles + 1) * tileBreadth) / 2f;
         for (int i = 1; i <= numOfTiles; i++)
@@ -40,12 +41,10 @@ public class Player : MonoBehaviour
         selectEnabled = false;
     }
     
-    public bool FlipTile(int number)
+    public void TileSelected(int number)
     {
-        if (!_selectableTiles.Contains(number) || !selectEnabled) return false;
         _tiles.Remove(number);
         gameMan.SelectTile(number);
-        return true;
     }
 
     public void SetPlayerSelectables(ArrayList selectableTiles)
@@ -58,9 +57,19 @@ public class Player : MonoBehaviour
         selectEnabled = v;
     }
 
+    public bool IsSelecting()
+    {
+        return selectEnabled;
+    }
+
     public ArrayList GetTiles()
     {
         return _tiles;
+    }
+
+    public ArrayList GetSelectableTiles()
+    {
+        return _selectableTiles;
     }
 
     public void SetScore(int score)
@@ -71,5 +80,15 @@ public class Player : MonoBehaviour
     public int GetScore()
     {
         return score;
+    }
+
+    public void SetUsername(String user)
+    {
+        username = user;
+    }
+    
+    public String GetUsername()
+    {
+        return username;
     }
 }
