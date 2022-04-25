@@ -39,17 +39,24 @@ public class GameManager : MonoBehaviour
         if (numPlayers == 4)
         {
             posTiles = new Vector3(-seatDistance, seatHeight, 0);
-            playersPlaying.Add(Instantiate(AIplayer, posTiles, Quaternion.LookRotation(-posTiles)));
+            var leftPlayer = Instantiate(AIplayer, posTiles, Quaternion.LookRotation(-posTiles)); 
+            leftPlayer.GetComponent<PlayerAI>().SetUsername("Monty");
+            playersPlaying.Add(leftPlayer);
         }
+        
         //front player 
         posTiles = new Vector3(0, seatHeight, seatDistance);
-        playersPlaying.Add(Instantiate(AIplayer, posTiles, Quaternion.LookRotation(-posTiles)));
+        var frontPlayer = Instantiate(AIplayer, posTiles, Quaternion.LookRotation(-posTiles)); 
+        frontPlayer.GetComponent<PlayerAI>().SetUsername("Karl");
+        playersPlaying.Add(frontPlayer);
         
         //right player 
         if (numPlayers == 4)
         {
             posTiles = new Vector3(seatDistance, seatHeight, 0);
-            playersPlaying.Add(Instantiate(AIplayer, posTiles, Quaternion.LookRotation(-posTiles)));
+            var rightPlayer = Instantiate(AIplayer, posTiles, Quaternion.LookRotation(-posTiles)); 
+            rightPlayer.GetComponent<PlayerAI>().SetUsername("Sir Tree");
+            playersPlaying.Add(rightPlayer);
         }
 
         launcher = this.GetComponent<DiceLauncher>();
@@ -80,8 +87,8 @@ public class GameManager : MonoBehaviour
             currentPlayer.GetComponent<Player>().EnableSelect(false);
             if (currentPlayer.GetComponent<Player>().GetTiles().Count == 0)
             {
-                playersOut.Add(currentPlayer); //immediate win
-                currentPlayer.GetComponent<Player>().SetScore(0);
+                playersOut.Add(currentPlayer);
+                currentPlayer.GetComponent<Player>().SetScore(0); //immediate win
                 GameOver();
             }
             ChangePlayer();
@@ -93,13 +100,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-    public void PlayerGameOver()
+    
+    private void PlayerGameOver()
     {
         var eliminatedPlayer = currentPlayer;
         int score = 0;
         var tiles = eliminatedPlayer.GetComponent<Player>().GetTiles();
-        foreach (int number in tiles) score += number;
+        foreach (int number in tiles) score += number; //counting the score
+        eliminatedPlayer.GetComponent<Player>().SetScore(score);
+        
         Debug.Log("KO, score: "+ score);
         if (playersPlaying.Count - 1 > 0)
         {
@@ -126,14 +135,15 @@ public class GameManager : MonoBehaviour
             {
                 winner = player;
             }
-            else if(playerScore == winnerScore && player.GetComponent<Player>().nickname != winner.GetComponent<Player>().nickname)
+            else if(playerScore == winnerScore && 
+                    (player.GetComponent<Player>().username != winner.GetComponent<Player>().username))
             {
                 Debug.Log("There is a tie! No winners!");
                 return;
             }
         }
         
-        Debug.Log("Our compliments to "+ winner.GetComponent<Player>().nickname+ " !");
+        Debug.Log("Our compliments to "+ winner.GetComponent<Player>().username+ " !");
     }
     
     private void ChangePlayer()
@@ -156,7 +166,7 @@ public class GameManager : MonoBehaviour
         UpdatingPlayerTiles();
     }
     
-    private ArrayList ComputeSelectable(ArrayList currentTiles)
+    public ArrayList ComputeSelectable(ArrayList currentTiles)
     {
         var tmp = currentTiles;
         var array = new ArrayList();
