@@ -108,3 +108,4 @@ Assets/PlayFabEditorExtensions/Editor/Resources/PlayFabUnitySdk.unitypackage.met
 
 # MISC.
 *.ahbuildinfo
+.vscode/
