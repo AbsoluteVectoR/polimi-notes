@@ -8,7 +8,6 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public DiceLauncher launcher;
     public float seatDistance;
-    public float diceLaunchDistance;
     public int numPlayers = 4;
     public int numOfTiles = 12;
     public GameObject player;
@@ -19,6 +18,8 @@ public class GameManager : MonoBehaviour
     public GameObject currentPlayer;
     private int _sumValue;
     private int _sumSelectedTiles;
+    
+
 
     private void Awake()
     {
@@ -61,7 +62,7 @@ public class GameManager : MonoBehaviour
 
         launcher = this.GetComponent<DiceLauncher>();
         currentPlayer = playersPlaying[0];
-        launcher.launcherTransform = currentPlayer.transform;
+        this.transform.position  = currentPlayer.transform.position;
         launcher.enabled = true;
         launcher.turnStart();
     }
@@ -154,8 +155,8 @@ public class GameManager : MonoBehaviour
         else
             currentPlayer = playersPlaying[0];
         
-        launcher.launcherPosition = currentPlayer.transform.position;
-        launcher.launcherTransform = currentPlayer.transform;
+        launcher.transform.position = currentPlayer.transform.position;
+        launcher.transform.rotation = currentPlayer.transform.rotation;
         launcher.enabled = true;
         launcher.turnStart();
     }

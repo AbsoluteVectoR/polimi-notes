@@ -19,8 +19,6 @@ public class DiceLauncher : MonoBehaviour
     private GameManager _gameMan;
     private Rigidbody _dice1Rb;
     private Rigidbody _dice2Rb;
-    public Transform launcherTransform;
-    public Vector3 launcherPosition;
     private Vector3  _dice1DestPos;
     private Vector3 _dice2DestPos;
     private bool _isRollingDices;
@@ -49,7 +47,7 @@ public class DiceLauncher : MonoBehaviour
         _dice2Rb.useGravity = false;
         _dice1Rb.isKinematic = false;
         _dice2Rb.isKinematic = false;
-        launcherPosition = launcherTransform.position + Vector3.up * 12;
+        var launcherPosition = this.transform.position + Vector3.up * 12;
         //pick up dices
         float time = 0f;
         _dice1DestPos = new Vector3(_dice1Rb.position.x,launcherPosition.y,_dice1Rb.position.z);
@@ -58,24 +56,25 @@ public class DiceLauncher : MonoBehaviour
         {
             dice1.transform.position = Vector3.Lerp( _dice1Rb.position,_dice1DestPos,Mathf.Pow(time,3f)/2f);
             dice2.transform.position = Vector3.Lerp( _dice2Rb.position,_dice2DestPos,Mathf.Pow(time,3f)/2f);
-            time += Time.deltaTime;
-            yield return new WaitForEndOfFrame();
+            time += 0.1f;
+            yield return new WaitForSeconds(0.001f);
         }
         //move dices to the launcher position 
         time = 0f;
-        _dice1DestPos = launcherTransform.TransformPoint(launcherTransform.right * rollingRadius) + Vector3.up*12;
-        _dice2DestPos = launcherTransform.TransformPoint(-launcherTransform.right * rollingRadius)+ Vector3.up*12;
+        var launcherTransform = this.transform;
+        _dice1DestPos = launcherTransform.position - launcherTransform.forward*5f +  launcherTransform.right * rollingRadius + Vector3.up*12;
+
+        _dice2DestPos =  launcherTransform.position - launcherTransform.forward*5f - launcherTransform.right * rollingRadius + Vector3.up*12;
+        
         while (time < 1f) 
         {
             dice1.transform.position = Vector3.Lerp( _dice1Rb.position,_dice1DestPos,Mathf.Pow(time,3f)/5f);
             dice2.transform.position = Vector3.Lerp( _dice2Rb.position,_dice2DestPos,Mathf.Pow(time,3f)/5f);
-            time += Time.deltaTime;
-            yield return new WaitForEndOfFrame();
+            time += 0.01f;
+            yield return new WaitForSeconds(0.001f);
         }
-        _isRollingDices = true; //starts to roll the dices
-        
-        //testing
-        yield return new WaitForSeconds(0.1f);
+        _isRollingDices = true; //starts to roll the dices 
+        yield return new WaitForSeconds(1.5f); // <- time of rolling
         Launch();
     }
     
@@ -90,7 +89,8 @@ public class DiceLauncher : MonoBehaviour
     private void Launch()
     {
         _isRollingDices = false;
-        Vector3 forceDirection = new Vector3(-launcherPosition.x,1,-launcherPosition.z).normalized*2000f;
+        var launchDirection = this.transform.position;
+        Vector3 forceDirection = new Vector3(-launchDirection.x,1,-launchDirection.z).normalized*2000f;
         _dice1Rb.AddForce(forceDirection);
         _dice2Rb.AddForce(forceDirection);
         _dice1Rb.AddRelativeTorque(-rollingSpeedRotation,-rollingSpeedRotation,-rollingSpeedRotation);
