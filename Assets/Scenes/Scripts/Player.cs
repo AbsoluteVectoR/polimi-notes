@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
             _tilesObj[i - 1].GetComponent<Transform>().Rotate(45f, 0f, 0f);
             _tilesObj[i - 1].GetComponent<Tile>().SetTextNum(i);
             _tilesObj[i - 1].GetComponent<Tile>().setOwner(this);
+            StartCoroutine(_tilesObj[i - 1].GetComponent<Tile>().spawningAnimation()); //cool tile intro animation
         }
         _selectableTiles = new ArrayList();
         selectEnabled = false;
