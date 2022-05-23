@@ -21,18 +21,7 @@ public class GameManager : MonoBehaviour
     
     public string humanUsername;
 
-    public void setNumOfPlayers(int num){
-        this.numPlayers = num;
-    }
-
-    public void setNumOfTiles(int num){
-        this.numOfTiles = num;
-    }
-
-    public void setHumanNickname(string username){
-        humanUsername = username; 
-    }
-
+    
     public void StartGame()
     {
         
@@ -210,4 +199,25 @@ public class GameManager : MonoBehaviour
         return array;
     }
     
+
+    public void setNumOfPlayers(int num){
+        this.numPlayers = num;
+    }
+
+    public void setNumOfTiles(int num){
+        this.numOfTiles = num;
+    }
+
+    public void setHumanNickname(string username){
+        humanUsername = username; 
+    }
+
+    public int getNumOfPlayers(){
+        return numPlayers;
+    }
+
+    public string getHumanNickname(){
+        return humanUsername;
+    }
+
 }

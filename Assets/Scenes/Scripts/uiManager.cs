@@ -3,102 +3,50 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class uiManager : MonoBehaviour
+public class UiManager : MonoBehaviour
 {
-    public GameObject titleObj;
-     public GameObject inGameCanvas;
-    private TextMeshProUGUI titleGUI;
+    public GameObject leftPlayerName;
+    public GameObject leftPlayerScore;
+    public GameObject rightPlayerName;
+    public GameObject rightPlayerScore;
+    public GameObject humanPlayerName;
+     public GameObject humanPlayerScore;
+    public GameObject upPlayerName;
+    public GameObject upPlayerScore;
+   
+    public GameObject gameManObj;
+    private ArrayList names;
+    private ArrayList scores; 
 
-    public GameObject numOfPlayerObj;
-    public GameObject numOfTilesObj;
-
-    public GameObject nicknameInput;
-
-    private TMPro.TMP_InputField  nicknameInputField;
-
-    public GameObject gameMan;
-    private GameManager game;
-    void Start()
-    {
-        QualitySettings.vSyncCount = 0;
-        Application.targetFrameRate = 60;
-        game = gameMan.GetComponent<GameManager>();
-        titleGUI = titleObj.GetComponent<TextMeshProUGUI>();
-        titleGUI.alpha = 1f;
-        numOfPlayerObj.SetActive(false);
-        numOfTilesObj.SetActive(false);
-        nicknameInput.SetActive(false);
-        nicknameInputField = nicknameInput.GetComponent<TMP_InputField>();
-        //Start of the game
-        StartCoroutine(startMenu());
-
-       
-
-        
+    public void Start(){
+        names = new ArrayList();
+        scores = new ArrayList();
+        names.Add(leftPlayerName);
+        names.Add(rightPlayerName);
+        names.Add(upPlayerName);
+        names.Add(humanPlayerName);
+        scores.Add(leftPlayerScore);
+        scores.Add(rightPlayerScore);
+        scores.Add(upPlayerScore);
+        scores.Add(humanPlayerScore);
+        scoreHider();
     }
 
-    private IEnumerator startMenu(){
-        yield return new WaitForSeconds(0.5f);
-        var opacity = 1f;
-        while(opacity>=0f){
-            opacity-=0.023f; 
-            titleGUI.alpha=opacity; 
-            yield return new WaitForSeconds(0.01f);
+    private void scoreHider(){
+        foreach(GameObject score in scores){
+            var text = score.GetComponent<TextMeshProUGUI>();
+            if(text.text.Equals("99"))text.alpha = 0f;
+             else text.alpha=1f;  
+        }
+    }
+
+    public void startMatch(){
+        var gameMan = gameManObj.GetComponent<GameManager>();
+           humanPlayerName.GetComponent<TextMeshProUGUI>().text=gameMan.getHumanNickname();
+           if(gameMan.getNumOfPlayers()==2)
+            {
+                leftPlayerName.SetActive(false);
+                rightPlayerName.SetActive(false);
             }
-        //starting input field
-        nicknameInput.SetActive(true);
-        nicknameInputField.Select();
     }
-
-
-    public void inputFieldDeselected(){
-     string nickname = nicknameInputField.text;
-     if(!nickname.Equals("Insert nickname")&&!nickname.Equals("")){
-        game.setHumanNickname(nickname);
-        StartCoroutine(nicknameEntered());
-     }
-    }
-
-
-    private IEnumerator nicknameEntered(){
-        //starting input field
-        nicknameInput.SetActive(false);
-        yield return new WaitForEndOfFrame();
-        numOfPlayerObj.SetActive(true);
-    }
-
-    public void set2PlayersButtonAction(){
-        game.setNumOfPlayers(2);
-        enableNumOfTiles();
-    }
-
-    public void set4PlayersButtonAction(){
-        game.setNumOfPlayers(4);
-        enableNumOfTiles();
-    }
-
-
-    private void enableNumOfTiles(){
-        numOfPlayerObj.SetActive(false);
-        numOfTilesObj.SetActive(true);
-    }
-
-    public void set9TilesButtonAction(){
-        game.setNumOfTiles(9);
-        StartCoroutine(startGame());
-    }
-
-    public void set12TilesButtonAction(){
-        game.setNumOfTiles(12);
-        StartCoroutine(startGame());
-    }
-
-
-    private IEnumerator startGame(){
-        numOfTilesObj.SetActive(false);
-        game.StartGame();
-        yield return new WaitForSeconds(3f);
-        inGameCanvas.SetActive(true);
-    }
-
 }
