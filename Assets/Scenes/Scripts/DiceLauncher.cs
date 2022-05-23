@@ -16,7 +16,7 @@ public class DiceLauncher : MonoBehaviour
     public float rollingRadius = 2f;
     public float rollingSpeedRotation = 0.5f;
     public int sum;
-    private GameManager _gameMan;
+    public GameManager _gameMan;
     private Rigidbody _dice1Rb;
     private Rigidbody _dice2Rb;
     private Vector3  _dice1DestPos;
@@ -25,12 +25,13 @@ public class DiceLauncher : MonoBehaviour
    
     public void Start()
     {
-        _gameMan = GameManager.Instance;
+        _gameMan = this.GetComponent<GameManager>(); 
         _isRollingDices = false;
     }
     
-    public void turnStart()
+    public IEnumerator turnStart(float waitingTimeBeforePickUp)
     {
+        yield return new WaitForSeconds(waitingTimeBeforePickUp);
         StartCoroutine(PickUpDices());
     }
     

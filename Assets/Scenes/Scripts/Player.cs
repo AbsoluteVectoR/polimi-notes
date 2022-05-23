@@ -15,11 +15,13 @@ public class Player : MonoBehaviour
     protected ArrayList _selectableTiles;
     protected bool selectEnabled;
     
-    void Start()
-    {
+
+
+    public void startPlaying(GameManager gameMan, int numOfTiles, String username){
         score = 9999;
-        gameMan = GameManager.Instance;
-        numOfTiles = gameMan.numOfTiles;
+        this.gameMan = gameMan;
+        this.numOfTiles = numOfTiles;
+        this.username = username;
         _tiles = new ArrayList(numOfTiles);
         _tilesObj = new GameObject[numOfTiles];
         InstantiateTiles();
@@ -83,10 +85,6 @@ public class Player : MonoBehaviour
         return score;
     }
 
-    public void SetUsername(String user)
-    {
-        username = user;
-    }
     
     public String GetUsername()
     {

@@ -5,7 +5,7 @@ using Application = UnityEngine.Application;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
+    public static GameObject Instance;
     public DiceLauncher launcher;
     public float seatDistance;
     public int numPlayers = 4;
@@ -19,36 +19,45 @@ public class GameManager : MonoBehaviour
     private int _sumValue;
     private int _sumSelectedTiles;
     
+    public string humanUsername;
 
-
-    private void Awake()
-    {
-        Instance = this;
+    public void setNumOfPlayers(int num){
+        this.numPlayers = num;
     }
-    private void Start()
+
+    public void setNumOfTiles(int num){
+        this.numOfTiles = num;
+    }
+
+    public void setHumanNickname(string username){
+        humanUsername = username; 
+    }
+
+    public void StartGame()
     {
-        QualitySettings.vSyncCount = 0;
-        Application.targetFrameRate = 60;
         
         playersPlaying = new List<GameObject>(numPlayers);
         
         //main player
         var posTiles = new Vector3(0, seatHeight, -seatDistance);
-        playersPlaying.Add(Instantiate(player, posTiles, Quaternion.identity));
+        var humanPlayer = Instantiate(player, posTiles, Quaternion.identity);
+        humanPlayer.GetComponent<Player>().startPlaying(this,numOfTiles,"Martino");
+        playersPlaying.Add(humanPlayer);
         
+
         //left player
         if (numPlayers == 4)
         {
             posTiles = new Vector3(-seatDistance, seatHeight, 0);
             var leftPlayer = Instantiate(AIplayer, posTiles, Quaternion.LookRotation(-posTiles)); 
-            leftPlayer.GetComponent<PlayerAI>().SetUsername("Monty");
+            leftPlayer.GetComponent<PlayerAI>().startPlaying(this,numOfTiles,"Monte");
             playersPlaying.Add(leftPlayer);
         }
         
         //front player 
         posTiles = new Vector3(0, seatHeight, seatDistance);
         var frontPlayer = Instantiate(AIplayer, posTiles, Quaternion.LookRotation(-posTiles)); 
-        frontPlayer.GetComponent<PlayerAI>().SetUsername("Karl");
+        frontPlayer.GetComponent<PlayerAI>().startPlaying(this,numOfTiles,"Carlo");
         playersPlaying.Add(frontPlayer);
         
         //right player 
@@ -56,7 +65,7 @@ public class GameManager : MonoBehaviour
         {
             posTiles = new Vector3(seatDistance, seatHeight, 0);
             var rightPlayer = Instantiate(AIplayer, posTiles, Quaternion.LookRotation(-posTiles)); 
-            rightPlayer.GetComponent<PlayerAI>().SetUsername("Sir Tree");
+            rightPlayer.GetComponent<PlayerAI>().startPlaying(this,numOfTiles,"Sir Tree");
             playersPlaying.Add(rightPlayer);
         }
 
@@ -64,7 +73,7 @@ public class GameManager : MonoBehaviour
         currentPlayer = playersPlaying[0];
         this.transform.position  = currentPlayer.transform.position;
         launcher.enabled = true;
-        launcher.turnStart();
+        StartCoroutine(launcher.turnStart(3f));
     }
 
 
@@ -158,7 +167,7 @@ public class GameManager : MonoBehaviour
         launcher.transform.position = currentPlayer.transform.position;
         launcher.transform.rotation = currentPlayer.transform.rotation;
         launcher.enabled = true;
-        launcher.turnStart();
+        StartCoroutine(launcher.turnStart(0.5f));
     }
     
     public void SelectTile(int selectedTile)
