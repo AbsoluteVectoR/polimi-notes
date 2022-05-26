@@ -18,8 +18,8 @@ public class GameManager : MonoBehaviour
     public GameObject currentPlayer;
     private int _sumValue;
     private int _sumSelectedTiles;
-    
     public string humanUsername;
+    public GameObject inGameUI;
 
     
     public void StartGame()
@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
         //main player
         var posTiles = new Vector3(0, seatHeight, -seatDistance);
         var humanPlayer = Instantiate(player, posTiles, Quaternion.identity);
-        humanPlayer.GetComponent<Player>().startPlaying(this,numOfTiles,"Martino");
+        humanPlayer.GetComponent<Player>().startPlaying(this,numOfTiles,humanUsername);
         playersPlaying.Add(humanPlayer);
         
 
@@ -106,9 +106,8 @@ public class GameManager : MonoBehaviour
         int score = 0;
         var tiles = eliminatedPlayer.GetComponent<Player>().GetTiles();
         foreach (int number in tiles) score += number; //counting the score
+        score = sum(numOfTiles) - score; 
         eliminatedPlayer.GetComponent<Player>().SetScore(score);
-        
-        Debug.Log("KO, score: "+ score);
         if (playersPlaying.Count - 1 > 0)
         {
             ChangePlayer();
@@ -121,6 +120,7 @@ public class GameManager : MonoBehaviour
             playersOut.Add(eliminatedPlayer);
             GameOver();
         }
+        inGameUI.GetComponent<UiManager>().updateScores(playersOut); //updates the scores
     }
 
     private void GameOver()
@@ -130,7 +130,7 @@ public class GameManager : MonoBehaviour
         {
             var playerScore = player.GetComponent<Player>().GetScore();
             var winnerScore = winner.GetComponent<Player>().GetScore();
-            if (playerScore < winnerScore)
+            if (playerScore > winnerScore)
             {
                 winner = player;
             }
@@ -218,6 +218,18 @@ public class GameManager : MonoBehaviour
 
     public string getHumanNickname(){
         return humanUsername;
+    }
+
+
+    private int sum(int sumOfTiles)
+    {
+        int sum = 0;
+        for (int x = 1; x <= sumOfTiles; x++)
+        {
+            sum += x;
+        }
+
+        return sum;
     }
 
 }

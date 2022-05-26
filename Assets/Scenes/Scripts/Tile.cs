@@ -45,7 +45,7 @@ public class Tile : MonoBehaviour
             owner.IsSelecting())
         {
             owner.TileSelected(GetTextNum());
-            this.transform.Rotate(45, 0, 0);
+            this.transform.Rotate(60, 0, 0);
         }
     }
     

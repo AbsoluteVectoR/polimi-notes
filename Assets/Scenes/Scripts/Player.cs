@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
 
 
     public void startPlaying(GameManager gameMan, int numOfTiles, String username){
-        score = 9999;
+        score = 99;
         this.gameMan = gameMan;
         this.numOfTiles = numOfTiles;
         this.username = username;
@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
             Vector3 tilePos = transform.position + transform.right * (i * 1.1f * tileBreadth - offset);
             _tiles.Add(i);
             _tilesObj[i - 1] = Instantiate(tile, tilePos, transform.rotation);
-            _tilesObj[i - 1].GetComponent<Transform>().Rotate(45f, 0f, 0f);
+            _tilesObj[i - 1].GetComponent<Transform>().Rotate(40f, 0f, 0f);
             _tilesObj[i - 1].GetComponent<Tile>().SetTextNum(i);
             _tilesObj[i - 1].GetComponent<Tile>().setOwner(this);
             StartCoroutine(_tilesObj[i - 1].GetComponent<Tile>().spawningAnimation()); //cool tile intro animation

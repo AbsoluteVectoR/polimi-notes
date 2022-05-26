@@ -49,4 +49,24 @@ public class UiManager : MonoBehaviour
                 rightPlayerName.SetActive(false);
             }
     }
+
+    public void updateScores(List<GameObject> playersOut){
+        foreach(GameObject player in playersOut){
+            Player playerOut = player.GetComponent<Player>();
+            if (playerOut.GetUsername().Equals("Monte")){
+                leftPlayerScore.GetComponent<TextMeshProUGUI>().text=playerOut.GetScore().ToString();
+            }
+            else if(playerOut.GetUsername().Equals("Carlo")){
+                upPlayerScore.GetComponent<TextMeshProUGUI>().text=playerOut.GetScore().ToString();
+            }
+            else if(playerOut.GetUsername().Equals("Sir Tree")){
+                upPlayerScore.GetComponent<TextMeshProUGUI>().text=playerOut.GetScore().ToString();
+            }
+            else{
+                humanPlayerScore.GetComponent<TextMeshProUGUI>().text=playerOut.GetScore().ToString();
+            }
+        }
+        scoreHider();
+    }
+
 }
