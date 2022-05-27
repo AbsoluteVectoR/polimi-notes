@@ -8,16 +8,16 @@ public class Player : MonoBehaviour
     public GameObject tile;
     public int numOfTiles = 9;
     public float tileBreadth = 3f;
-    public int score;
-    public String username = "HumanPlayer";
-    public ArrayList _tiles;
+    private int score;
+    private string username = "HumanPlayer";
+    private ArrayList _tiles;
     protected GameObject[] _tilesObj;
     protected ArrayList _selectableTiles;
     protected bool selectEnabled;
     
 
 
-    public void startPlaying(GameManager gameMan, int numOfTiles, String username){
+    public void startPlaying(GameManager gameMan, int numOfTiles, string username){
         score = 99;
         this.gameMan = gameMan;
         this.numOfTiles = numOfTiles;
@@ -86,7 +86,7 @@ public class Player : MonoBehaviour
     }
 
     
-    public String GetUsername()
+    public string GetUsername()
     {
         return username;
     }

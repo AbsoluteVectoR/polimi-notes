@@ -10,15 +10,18 @@ public class UiManager : MonoBehaviour
     public GameObject rightPlayerName;
     public GameObject rightPlayerScore;
     public GameObject humanPlayerName;
-     public GameObject humanPlayerScore;
+    public GameObject humanPlayerScore;
     public GameObject upPlayerName;
     public GameObject upPlayerScore;
-   
+    public GameObject winnerTitle;
+    public GameObject tieTitle;
     public GameObject gameManObj;
     private ArrayList names;
     private ArrayList scores; 
 
     public void Start(){
+        winnerTitle.SetActive(false);
+        tieTitle.SetActive(false);
         names = new ArrayList();
         scores = new ArrayList();
         names.Add(leftPlayerName);
@@ -34,9 +37,10 @@ public class UiManager : MonoBehaviour
 
     private void scoreHider(){
         foreach(GameObject score in scores){
-            var text = score.GetComponent<TextMeshProUGUI>();
-            if(text.text.Equals("99"))text.alpha = 0f;
-             else text.alpha=1f;  
+            var text = score.GetComponent<TextMeshProUGUI>().text;
+            var canvas = score.GetComponent<CanvasGroup>();
+            if (text.Equals("99")) canvas.alpha = 0f;
+            else StartCoroutine(fadeIn(canvas));
         }
     }
 
@@ -69,4 +73,25 @@ public class UiManager : MonoBehaviour
         scoreHider();
     }
 
+    public void declareWinner(string winnerUsername)
+    {
+        winnerTitle.SetActive(true);
+        winnerTitle.GetComponent<TextMeshProUGUI>().text = winnerTitle.GetComponent<TextMeshProUGUI>().text + winnerUsername + "!";
+        StartCoroutine(fadeIn(winnerTitle.GetComponent<CanvasGroup>()));
+    }
+    
+    public void declareTie()
+    {
+        tieTitle.SetActive(true);
+        StartCoroutine(fadeIn(winnerTitle.GetComponent<CanvasGroup>()));
+    }
+
+    private IEnumerator fadeIn(CanvasGroup canvas){
+        var opacity = 0f;
+        while(opacity<=1f){
+            opacity+=0.033f;
+            canvas.alpha=opacity; 
+            yield return new WaitForSeconds(0.01f);
+        }
+    }
 }

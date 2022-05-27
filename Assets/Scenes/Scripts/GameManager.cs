@@ -21,46 +21,45 @@ public class GameManager : MonoBehaviour
     public string humanUsername;
     public GameObject inGameUI;
 
-    
+
     public void StartGame()
     {
-        
         playersPlaying = new List<GameObject>(numPlayers);
-        
+
         //main player
         var posTiles = new Vector3(0, seatHeight, -seatDistance);
         var humanPlayer = Instantiate(player, posTiles, Quaternion.identity);
-        humanPlayer.GetComponent<Player>().startPlaying(this,numOfTiles,humanUsername);
+        humanPlayer.GetComponent<Player>().startPlaying(this, numOfTiles, humanUsername);
         playersPlaying.Add(humanPlayer);
-        
+
 
         //left player
         if (numPlayers == 4)
         {
             posTiles = new Vector3(-seatDistance, seatHeight, 0);
-            var leftPlayer = Instantiate(AIplayer, posTiles, Quaternion.LookRotation(-posTiles)); 
-            leftPlayer.GetComponent<PlayerAI>().startPlaying(this,numOfTiles,"Monte");
+            var leftPlayer = Instantiate(AIplayer, posTiles, Quaternion.LookRotation(-posTiles));
+            leftPlayer.GetComponent<PlayerAI>().startPlaying(this, numOfTiles, "Monte");
             playersPlaying.Add(leftPlayer);
         }
-        
+
         //front player 
         posTiles = new Vector3(0, seatHeight, seatDistance);
-        var frontPlayer = Instantiate(AIplayer, posTiles, Quaternion.LookRotation(-posTiles)); 
-        frontPlayer.GetComponent<PlayerAI>().startPlaying(this,numOfTiles,"Carlo");
+        var frontPlayer = Instantiate(AIplayer, posTiles, Quaternion.LookRotation(-posTiles));
+        frontPlayer.GetComponent<PlayerAI>().startPlaying(this, numOfTiles, "Carlo");
         playersPlaying.Add(frontPlayer);
-        
+
         //right player 
         if (numPlayers == 4)
         {
             posTiles = new Vector3(seatDistance, seatHeight, 0);
-            var rightPlayer = Instantiate(AIplayer, posTiles, Quaternion.LookRotation(-posTiles)); 
-            rightPlayer.GetComponent<PlayerAI>().startPlaying(this,numOfTiles,"Sir Tree");
+            var rightPlayer = Instantiate(AIplayer, posTiles, Quaternion.LookRotation(-posTiles));
+            rightPlayer.GetComponent<PlayerAI>().startPlaying(this, numOfTiles, "Sir Tree");
             playersPlaying.Add(rightPlayer);
         }
 
         launcher = this.GetComponent<DiceLauncher>();
         currentPlayer = playersPlaying[0];
-        this.transform.position  = currentPlayer.transform.position;
+        this.transform.position = currentPlayer.transform.position;
         launcher.enabled = true;
         StartCoroutine(launcher.turnStart(3f));
     }
@@ -71,7 +70,7 @@ public class GameManager : MonoBehaviour
         _sumValue = sum;
         UpdatingPlayerTiles();
     }
-    
+
     private void UpdatingPlayerTiles()
     {
         ArrayList selectableTiles = ComputeSelectable(currentPlayer.GetComponent<Player>().GetTiles());
@@ -80,33 +79,34 @@ public class GameManager : MonoBehaviour
             currentPlayer.GetComponent<Player>().EnableSelect(true);
             currentPlayer.GetComponent<Player>().SetPlayerSelectables(selectableTiles);
         }
-        else if(_sumSelectedTiles == _sumValue)
+        else if (_sumSelectedTiles == _sumValue)
         {
             _sumSelectedTiles = 0;
             currentPlayer.GetComponent<Player>().EnableSelect(false);
-            if (currentPlayer.GetComponent<Player>().GetTiles().Count == 0)
+            if (currentPlayer.GetComponent<Player>().GetTiles().Count == 0) //immediate win
             {
+                currentPlayer.GetComponent<Player>().SetScore(sum(numOfTiles)); 
                 playersOut.Add(currentPlayer);
-                currentPlayer.GetComponent<Player>().SetScore(0); //immediate win
                 GameOver();
             }
+
             ChangePlayer();
         }
         else
         {
             currentPlayer.GetComponent<Player>().EnableSelect(false);
-            PlayerGameOver(); 
+            PlayerGameOver();
         }
     }
 
-    
+
     private void PlayerGameOver()
     {
         var eliminatedPlayer = currentPlayer;
         int score = 0;
         var tiles = eliminatedPlayer.GetComponent<Player>().GetTiles();
         foreach (int number in tiles) score += number; //counting the score
-        score = sum(numOfTiles) - score; 
+        score = sum(numOfTiles) - score;
         eliminatedPlayer.GetComponent<Player>().SetScore(score);
         if (playersPlaying.Count - 1 > 0)
         {
@@ -120,6 +120,7 @@ public class GameManager : MonoBehaviour
             playersOut.Add(eliminatedPlayer);
             GameOver();
         }
+
         inGameUI.GetComponent<UiManager>().updateScores(playersOut); //updates the scores
     }
 
@@ -134,48 +135,50 @@ public class GameManager : MonoBehaviour
             {
                 winner = player;
             }
-            else if(playerScore == winnerScore && 
-                    (player.GetComponent<Player>().username != winner.GetComponent<Player>().username))
+            else if (playerScore == winnerScore &&
+                     (player.GetComponent<Player>().GetUsername() != winner.GetComponent<Player>().GetUsername()))
             {
-                Debug.Log("There is a tie! No winners!");
+                inGameUI.GetComponent<UiManager>().declareTie();
                 return;
             }
         }
-        
-        Debug.Log("Our compliments to "+ winner.GetComponent<Player>().username+ " !");
+
+        inGameUI.GetComponent<UiManager>().declareWinner(winner.GetComponent<Player>().GetUsername());
     }
-    
+
     private void ChangePlayer()
     {
         int currentIndex = playersPlaying.IndexOf(currentPlayer);
-        if (currentIndex != playersPlaying.Count-1)
+        if (currentIndex != playersPlaying.Count - 1)
             currentPlayer = playersPlaying[currentIndex + 1];
         else
             currentPlayer = playersPlaying[0];
-        
+
         launcher.transform.position = currentPlayer.transform.position;
         launcher.transform.rotation = currentPlayer.transform.rotation;
         launcher.enabled = true;
         StartCoroutine(launcher.turnStart(0.5f));
     }
-    
+
     public void SelectTile(int selectedTile)
     {
         _sumSelectedTiles += selectedTile;
         UpdatingPlayerTiles();
     }
-    
+
     public ArrayList ComputeSelectable(ArrayList currentTiles)
     {
         var tmp = currentTiles;
         var array = new ArrayList();
 
         if (tmp.Contains(_sumValue - _sumSelectedTiles)) array.Add(_sumValue - _sumSelectedTiles);
-        for(int i = 1; i<=(_sumValue-i);i++)
+        for (int i = 1; i <= (_sumValue - i); i++)
         {
             if (!tmp.Contains(i)) continue;
-            if (i + _sumSelectedTiles == _sumValue) if (!array.Contains(i)) array.Add(i);
-            for (var x = i + 1; x <= (_sumValue-i); x++)
+            if (i + _sumSelectedTiles == _sumValue)
+                if (!array.Contains(i))
+                    array.Add(i);
+            for (var x = i + 1; x <= (_sumValue - i); x++)
             {
                 if (!tmp.Contains(x)) continue;
                 if (i + x + _sumSelectedTiles == _sumValue)
@@ -196,40 +199,41 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+
         return array;
     }
-    
 
-    public void setNumOfPlayers(int num){
+
+    public void setNumOfPlayers(int num)
+    {
         this.numPlayers = num;
     }
 
-    public void setNumOfTiles(int num){
+    public void setNumOfTiles(int num)
+    {
         this.numOfTiles = num;
     }
 
-    public void setHumanNickname(string username){
-        humanUsername = username; 
+    public void setHumanNickname(string username)
+    {
+        humanUsername = username;
     }
 
-    public int getNumOfPlayers(){
+    public int getNumOfPlayers()
+    {
         return numPlayers;
     }
 
-    public string getHumanNickname(){
+    public string getHumanNickname()
+    {
         return humanUsername;
     }
 
 
-    private int sum(int sumOfTiles)
+    private int sum(int numOfTiles)
     {
         int sum = 0;
-        for (int x = 1; x <= sumOfTiles; x++)
-        {
-            sum += x;
-        }
-
+        for (int x = 1; x <= numOfTiles; x++) sum += x;
         return sum;
     }
-
 }

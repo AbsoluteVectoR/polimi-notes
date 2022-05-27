@@ -115,6 +115,8 @@ public class DiceLauncher : MonoBehaviour
         dice1.GetComponent<Dice>().ResetValue();
         dice2.GetComponent<Dice>().ResetValue();
     }
+    
+    
 
     
 }
