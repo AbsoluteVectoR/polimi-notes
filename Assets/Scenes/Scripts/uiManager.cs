@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class UiManager : MonoBehaviour
+public class uiManager : MonoBehaviour
 {
     public GameObject leftPlayerName;
     public GameObject leftPlayerScore;

@@ -2705,8 +2705,8 @@ GameObject:
   - component: {fileID: 1086677625}
   - component: {fileID: 1086677624}
   - component: {fileID: 1086677623}
-  - component: {fileID: 1086677627}
   - component: {fileID: 1086677628}
+  - component: {fileID: 1086677629}
   m_Layer: 5
   m_Name: InGameCanvas
   m_TagString: Untagged
@@ -2801,7 +2801,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1086677627
+--- !u!225 &1086677628
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1086677622}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &1086677629
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2824,18 +2836,6 @@ MonoBehaviour:
   winnerTitle: {fileID: 698346771}
   tieTitle: {fileID: 2144782424}
   gameManObj: {fileID: 1349740053}
---- !u!225 &1086677628
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1086677622}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!1 &1110438299
 GameObject:
   m_ObjectHideFlags: 0

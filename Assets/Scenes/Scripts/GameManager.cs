@@ -121,7 +121,7 @@ public class GameManager : MonoBehaviour
             GameOver();
         }
 
-        inGameUI.GetComponent<UiManager>().updateScores(playersOut); //updates the scores
+        inGameUI.GetComponent<uiManager>().updateScores(playersOut); //updates the scores
     }
 
     private void GameOver()
@@ -138,12 +138,12 @@ public class GameManager : MonoBehaviour
             else if (playerScore == winnerScore &&
                      (player.GetComponent<Player>().GetUsername() != winner.GetComponent<Player>().GetUsername()))
             {
-                inGameUI.GetComponent<UiManager>().declareTie();
+                inGameUI.GetComponent<uiManager>().declareTie();
                 return;
             }
         }
 
-        inGameUI.GetComponent<UiManager>().declareWinner(winner.GetComponent<Player>().GetUsername());
+        inGameUI.GetComponent<uiManager>().declareWinner(winner.GetComponent<Player>().GetUsername());
     }
 
     private void ChangePlayer()

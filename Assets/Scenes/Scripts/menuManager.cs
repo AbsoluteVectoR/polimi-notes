@@ -116,7 +116,7 @@ public class menuManager : MonoBehaviour
         var inGameUIcanvas = inGameCanvas.GetComponent<CanvasGroup>();
         inGameUIcanvas.alpha=0f;
         inGameCanvas.SetActive(true);
-        inGameCanvas.GetComponent<UiManager>().startMatch();
+        inGameCanvas.GetComponent<uiManager>().startMatch();
         StartCoroutine(fadeIn(inGameUIcanvas));
     }
 }
