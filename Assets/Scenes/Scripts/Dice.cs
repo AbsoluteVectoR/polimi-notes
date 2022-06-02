@@ -26,7 +26,7 @@ public class Dice : MonoBehaviour
     {
         if (isJustLaunched)
         {
-            if (thisRB.velocity.magnitude <= 0.0001f)
+            if (thisRB.angularVelocity.magnitude <=0.001f)
             {
                 UpdateValue();
             }

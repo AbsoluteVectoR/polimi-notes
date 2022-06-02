@@ -41,9 +41,9 @@ public class Tile : MonoBehaviour
 
     public void Flip() //Used by Button and PlayerAI
     {
-        if (owner.GetSelectableTiles().Contains(GetTextNum())&&
-            owner.IsSelecting())
+        if (owner.IsSelecting())
         {
+            if (!owner.GetSelectableTiles().Contains(GetTextNum())) return;
             owner.TileSelected(GetTextNum());
             this.transform.Rotate(60, 0, 0);
         }

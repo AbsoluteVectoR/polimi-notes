@@ -46,8 +46,8 @@ public class Player : MonoBehaviour
     
     public void TileSelected(int number)
     {
-        _tiles.Remove(number);
         gameMan.SelectTile(number);
+        _tiles.Remove(number);
     }
 
     public void SetPlayerSelectables(ArrayList selectableTiles)

@@ -797,7 +797,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -2004151554135174706, guid: 1e669a30c90f8f74cb2ad6979b1e726e, type: 3}
       propertyPath: m_CollisionDetection
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8395345904222443416, guid: 1e669a30c90f8f74cb2ad6979b1e726e, type: 3}
       propertyPath: m_RootOrder
@@ -1244,7 +1244,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -2004151554135174706, guid: 1e669a30c90f8f74cb2ad6979b1e726e, type: 3}
       propertyPath: m_CollisionDetection
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8395345904222443416, guid: 1e669a30c90f8f74cb2ad6979b1e726e, type: 3}
       propertyPath: m_RootOrder
