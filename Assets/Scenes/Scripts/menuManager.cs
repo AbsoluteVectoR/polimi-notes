@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class menuManager : MonoBehaviour
 {
@@ -73,27 +74,32 @@ public class menuManager : MonoBehaviour
     }
 
     private IEnumerator numOfPlayersTitle(){
-        //starting input field
-        yield return StartCoroutine(fadeOut(this.GetComponent<CanvasGroup>()));
+        yield return StartCoroutine(fadeOut(this.GetComponent<CanvasGroup>())); 
         nicknameInput.SetActive(false);
         numOfPlayerObj.SetActive(true);
+        //it's necessary to re-activate buttons since after a click I always disable them
+        //after the first match, during the second or more match.. the buttons need to be enabled
+        foreach (GameObject b in GameObject.FindGameObjectsWithTag("button")) b.GetComponent<Button>().enabled = true;
         yield return StartCoroutine(fadeIn(this.GetComponent<CanvasGroup>()));
     }
 
     public void set2PlayersButtonAction(){
         game.setNumOfPlayers(2);
-        StartCoroutine(numOfPlayerTiles());
+        StartCoroutine(numOfTiles());
     }
 
     public void set4PlayersButtonAction(){
         game.setNumOfPlayers(4);
-        StartCoroutine(numOfPlayerTiles()); 
+        StartCoroutine(numOfTiles()); 
     }
 
-    public IEnumerator numOfPlayerTiles(){
+    public IEnumerator numOfTiles(){
         yield return StartCoroutine(fadeOut(this.GetComponent<CanvasGroup>()));
         numOfPlayerObj.SetActive(false);
-        numOfTilesObj.SetActive(true); //enabling the selection of num of tiles
+        numOfTilesObj.SetActive(true); 
+        //it's necessary to re-activate buttons since after a click I always disable them
+        //after the first match, during the second or more match.. the buttons need to be enabled
+        foreach (GameObject b in GameObject.FindGameObjectsWithTag("button")) b.GetComponent<Button>().enabled = true; 
         StartCoroutine(fadeIn(this.GetComponent<CanvasGroup>()));
     }
 
@@ -114,9 +120,17 @@ public class menuManager : MonoBehaviour
         game.StartGame();
         yield return new WaitForSeconds(3f);
         var inGameUIcanvas = inGameCanvas.GetComponent<CanvasGroup>();
-        inGameUIcanvas.alpha=0f;
         inGameCanvas.SetActive(true);
         inGameCanvas.GetComponent<uiManager>().startMatch();
         StartCoroutine(fadeIn(inGameUIcanvas));
+    }
+
+    public IEnumerator endPlay()
+    {
+        var inGameUIcanvas = inGameCanvas.GetComponent<CanvasGroup>();
+        yield return StartCoroutine(fadeOut(inGameUIcanvas));
+        inGameCanvas.GetComponent<uiManager>().resetScore();
+        inGameCanvas.SetActive(false);
+        StartCoroutine(numOfPlayersTitle());
     }
 }

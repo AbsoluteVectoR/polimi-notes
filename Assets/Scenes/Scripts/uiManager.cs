@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class uiManager : MonoBehaviour
 {
@@ -14,14 +15,16 @@ public class uiManager : MonoBehaviour
     public GameObject upPlayerName;
     public GameObject upPlayerScore;
     public GameObject winnerTitle;
+    public GameObject newPlayButton;
     public GameObject tieTitle;
     public GameObject gameManObj;
     private ArrayList names;
     private ArrayList scores; 
 
     public void Start(){
-        winnerTitle.SetActive(false);
+        newPlayButton.SetActive(false);
         tieTitle.SetActive(false);
+        winnerTitle.SetActive(false);
         names = new ArrayList();
         scores = new ArrayList();
         names.Add(leftPlayerName);
@@ -32,7 +35,6 @@ public class uiManager : MonoBehaviour
         scores.Add(rightPlayerScore);
         scores.Add(upPlayerScore);
         scores.Add(humanPlayerScore);
-        scoreHider();
     }
 
     private void scoreHider(){
@@ -40,7 +42,15 @@ public class uiManager : MonoBehaviour
             var text = score.GetComponent<TextMeshProUGUI>().text;
             var canvas = score.GetComponent<CanvasGroup>();
             if (text.Equals("99")) canvas.alpha = 0f;
-            else StartCoroutine(fadeIn(canvas));
+            else if(canvas.alpha!=1f)StartCoroutine(fadeIn(canvas));
+        }
+    }
+
+    public void resetScore()
+    {
+        foreach(GameObject score in scores)
+        {
+            score.GetComponent<TextMeshProUGUI>().text = "99";
         }
     }
 
@@ -52,6 +62,16 @@ public class uiManager : MonoBehaviour
                 leftPlayerName.SetActive(false);
                 rightPlayerName.SetActive(false);
             }
+           else //don't delete this branch!
+           {
+               leftPlayerName.SetActive(true);
+               rightPlayerName.SetActive(true);
+           }
+           newPlayButton.SetActive(false);
+           tieTitle.SetActive(false);
+           winnerTitle.SetActive(false);
+           winnerTitle.GetComponent<TextMeshProUGUI>().text = "The winner is \n";
+           scoreHider();
     }
 
     public void updateScores(List<GameObject> playersOut){
@@ -64,7 +84,7 @@ public class uiManager : MonoBehaviour
                 upPlayerScore.GetComponent<TextMeshProUGUI>().text=playerOut.GetScore().ToString();
             }
             else if(playerOut.GetUsername().Equals("Sir Tree")){
-                upPlayerScore.GetComponent<TextMeshProUGUI>().text=playerOut.GetScore().ToString();
+                rightPlayerScore.GetComponent<TextMeshProUGUI>().text=playerOut.GetScore().ToString();
             }
             else{
                 humanPlayerScore.GetComponent<TextMeshProUGUI>().text=playerOut.GetScore().ToString();
@@ -78,18 +98,40 @@ public class uiManager : MonoBehaviour
         winnerTitle.SetActive(true);
         winnerTitle.GetComponent<TextMeshProUGUI>().text = winnerTitle.GetComponent<TextMeshProUGUI>().text + winnerUsername + "!";
         StartCoroutine(fadeIn(winnerTitle.GetComponent<CanvasGroup>()));
+        gameManObj.GetComponent<GameManager>().setDicesToDefaultPosition();
+        StartCoroutine(showNewPlay());
     }
     
     public void declareTie()
     {
         tieTitle.SetActive(true);
-        StartCoroutine(fadeIn(winnerTitle.GetComponent<CanvasGroup>()));
+        StartCoroutine(fadeIn(tieTitle.GetComponent<CanvasGroup>()));
+        gameManObj.GetComponent<GameManager>().setDicesToDefaultPosition();
+        StartCoroutine(showNewPlay());
+    }
+
+    public IEnumerator showNewPlay()
+    {
+        yield return new WaitForSeconds(1f);
+        newPlayButton.SetActive(true);
+        newPlayButton.GetComponent<Button>().enabled = true;
+        StartCoroutine(fadeIn(newPlayButton.GetComponent<CanvasGroup>()));
     }
 
     private IEnumerator fadeIn(CanvasGroup canvas){
-        var opacity = 0f;
+        var opacity = canvas.alpha; 
         while(opacity<=1f){
             opacity+=0.033f;
+            canvas.alpha=opacity; 
+            yield return new WaitForSeconds(0.01f);
+        }
+    }
+    
+    private IEnumerator fadeOut(CanvasGroup canvas)
+    {
+        var opacity = canvas.alpha;
+        while(opacity>=0f){
+            opacity-=0.033f; 
             canvas.alpha=opacity; 
             yield return new WaitForSeconds(0.01f);
         }

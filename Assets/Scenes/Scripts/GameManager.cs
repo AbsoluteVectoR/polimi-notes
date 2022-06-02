@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,8 +20,13 @@ public class GameManager : MonoBehaviour
     private int _sumValue;
     private int _sumSelectedTiles;
     public string humanUsername;
+    public GameObject menuUI;
     public GameObject inGameUI;
 
+    public void Awake()
+    {
+        launcher = this.GetComponent<DiceLauncher>();
+    }
 
     public void StartGame()
     {
@@ -56,11 +62,10 @@ public class GameManager : MonoBehaviour
             rightPlayer.GetComponent<PlayerAI>().startPlaying(this, numOfTiles, "Sir Tree");
             playersPlaying.Add(rightPlayer);
         }
-
-        launcher = this.GetComponent<DiceLauncher>();
+        playersOut.Clear();
         currentPlayer = playersPlaying[0];
         this.transform.position = currentPlayer.transform.position;
-        launcher.enabled = true;
+        this.transform.rotation = currentPlayer.transform.rotation;
         StartCoroutine(launcher.turnStart(3f));
     }
 
@@ -79,48 +84,39 @@ public class GameManager : MonoBehaviour
             currentPlayer.GetComponent<Player>().EnableSelect(true);
             currentPlayer.GetComponent<Player>().SetPlayerSelectables(selectableTiles);
         }
-        else if (_sumSelectedTiles == _sumValue)
+        else if (_sumSelectedTiles == _sumValue) //the player have selected all the tiles necessary to reach the dices sum, he ended his turn
         {
             _sumSelectedTiles = 0;
             currentPlayer.GetComponent<Player>().EnableSelect(false);
-            if (currentPlayer.GetComponent<Player>().GetTiles().Count == 0) //immediate win
+            if (currentPlayer.GetComponent<Player>().GetTiles().Count == 0) //Check in case of immediate win
             {
-                currentPlayer.GetComponent<Player>().SetScore(sum(numOfTiles)); 
-                playersOut.Add(currentPlayer);
-                GameOver();
+                var AllPlayers = playersPlaying;
+                foreach (GameObject player in AllPlayers) PlayerGameOver(player); //immediate win, immediate Game Over for everyone
             }
-
-            ChangePlayer();
+            else
+            {
+                if(playersPlaying.Count>0)ChangePlayer();
+            }
         }
-        else
+        else //the player hasn't enough tiles to reach the dices sum, game over for the player
         {
             currentPlayer.GetComponent<Player>().EnableSelect(false);
-            PlayerGameOver();
+            PlayerGameOver(currentPlayer);
+            if(playersPlaying.Count>0)ChangePlayer();
         }
     }
 
 
-    private void PlayerGameOver()
+    private void PlayerGameOver(GameObject eliminatedPlayer)
     {
-        var eliminatedPlayer = currentPlayer;
         int score = 0;
         var tiles = eliminatedPlayer.GetComponent<Player>().GetTiles();
         foreach (int number in tiles) score += number; //counting the score
         score = sum(numOfTiles) - score;
         eliminatedPlayer.GetComponent<Player>().SetScore(score);
-        if (playersPlaying.Count - 1 > 0)
-        {
-            ChangePlayer();
-            playersPlaying.Remove(eliminatedPlayer);
-            playersOut.Add(eliminatedPlayer);
-        }
-        else
-        {
-            playersPlaying.Remove(eliminatedPlayer);
-            playersOut.Add(eliminatedPlayer);
-            GameOver();
-        }
-
+        playersPlaying.Remove(eliminatedPlayer);
+        playersOut.Add(eliminatedPlayer);
+        if (playersPlaying.Count == 0) GameOver();
         inGameUI.GetComponent<uiManager>().updateScores(playersOut); //updates the scores
     }
 
@@ -142,14 +138,13 @@ public class GameManager : MonoBehaviour
                 return;
             }
         }
-
         inGameUI.GetComponent<uiManager>().declareWinner(winner.GetComponent<Player>().GetUsername());
     }
 
     private void ChangePlayer()
     {
         int currentIndex = playersPlaying.IndexOf(currentPlayer);
-        if (currentIndex != playersPlaying.Count - 1)
+        if (currentIndex != playersPlaying.Count - 1) //circular array 
             currentPlayer = playersPlaying[currentIndex + 1];
         else
             currentPlayer = playersPlaying[0];
@@ -235,5 +230,18 @@ public class GameManager : MonoBehaviour
         int sum = 0;
         for (int x = 1; x <= numOfTiles; x++) sum += x;
         return sum;
+    }
+
+    public void newPlay()
+    {
+        StartCoroutine(menuUI.GetComponent<menuManager>().endPlay());
+        foreach(GameObject tile in GameObject.FindGameObjectsWithTag("tile")) 
+            Destroy(tile);
+        foreach(GameObject player in GameObject.FindGameObjectsWithTag("Player")) 
+            Destroy(player);
+    }
+    public void setDicesToDefaultPosition()
+    {
+        launcher.setDicesToDefaultPosition();
     }
 }
