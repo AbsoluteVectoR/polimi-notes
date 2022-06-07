@@ -6,9 +6,11 @@ public class Tile : MonoBehaviour
 {
     public GameObject number;
     private TextMeshProUGUI _numberText;
-    private Player owner;
+    private Player _owner;
+    private bool _flipped;
 
     private int myNumber;
+    
     public void SetTextNum(int num)
     {
         _numberText = number.GetComponent<TextMeshProUGUI>();
@@ -18,7 +20,7 @@ public class Tile : MonoBehaviour
 
     public void setOwner(Player owner)
     {
-        this.owner = owner;
+        this._owner = owner;
     }
     
     public IEnumerator spawningAnimation(){
@@ -41,11 +43,12 @@ public class Tile : MonoBehaviour
 
     public void Flip() //Used by Button and PlayerAI
     {
-        if (owner.IsSelecting())
+        if (_owner.IsSelecting()&&!_flipped)
         {
-            if (!owner.GetSelectableTiles().Contains(GetTextNum())) return;
-            owner.TileSelected(GetTextNum());
+            if (!_owner.GetSelectableTiles().Contains(GetTextNum())) return;
+            _owner.TileSelected(GetTextNum());
             this.transform.Rotate(60, 0, 0);
+            _flipped = true;
         }
     }
     
