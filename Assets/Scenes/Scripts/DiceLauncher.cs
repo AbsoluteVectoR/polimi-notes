@@ -1,13 +1,7 @@
-using System;
+
 using System.Collections;
-using System.Collections.Generic;
-using System.Numerics;
-using TreeEditor;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
-using UnityEngine.Serialization;
 using Quaternion = UnityEngine.Quaternion;
-using Random = System.Random;
 using Vector3 = UnityEngine.Vector3;
 
 public class DiceLauncher : MonoBehaviour
@@ -17,7 +11,7 @@ public class DiceLauncher : MonoBehaviour
     public float rollingRadius = 2f;
     public float rollingSpeedRotation = 0.5f;
     public int sum;
-    public GameManager _gameMan;
+    private GameManager _gameMan;
     private Rigidbody _dice1Rb;
     private Rigidbody _dice2Rb;
     private Vector3  _dice1DestPos;
@@ -28,6 +22,8 @@ public class DiceLauncher : MonoBehaviour
     {
         _gameMan = this.GetComponent<GameManager>(); 
         _isRollingDices = false;
+        _dice1Rb = dice1.GetComponent<Rigidbody>();
+        _dice2Rb = dice2.GetComponent<Rigidbody>();
     }
     
     public IEnumerator turnStart(float waitingTimeBeforePickUp)
@@ -43,22 +39,22 @@ public class DiceLauncher : MonoBehaviour
 
     private IEnumerator PickUpDices()
     {
-        _dice1Rb = dice1.GetComponent<Rigidbody>();
-        _dice2Rb = dice2.GetComponent<Rigidbody>();
         _dice1Rb.isKinematic = true;
         _dice2Rb.isKinematic = true;
         var launcherTransform = this.transform;
         var launcherPosition = launcherTransform.position + Vector3.up * 12;
-        _dice1DestPos = new Vector3(_dice1Rb.position.x,launcherPosition.y,_dice1Rb.position.z);
-        _dice2DestPos = new Vector3(_dice2Rb.position.x,launcherPosition.y,_dice2Rb.position.z);
-        _dice1DestPos = launcherTransform.position - launcherTransform.forward*5f -  launcherTransform.right * rollingRadius + Vector3.up*12;
-        _dice2DestPos =  launcherTransform.position - launcherTransform.forward*5f + launcherTransform.right * rollingRadius + Vector3.up*12;
+        dice1.transform.position += new Vector3(0, launcherPosition.y, 0);
+        dice2.transform.position += new Vector3(0, launcherPosition.y, 0);
+        var forward = launcherTransform.forward;
+        var right = launcherTransform.right;
+        _dice1DestPos = launcherPosition - forward*5f -  right * rollingRadius + Vector3.up*12;
+        _dice2DestPos =  launcherPosition - forward*5f + right * rollingRadius + Vector3.up*12;
         var time = 0.042f;
         while (time < 1f)
         {
             var delta = Mathf.Pow(time, 3f);
-            dice1.transform.position = Vector3.Lerp( _dice1Rb.position,_dice1DestPos,delta);
-            dice2.transform.position = Vector3.Lerp( _dice2Rb.position,_dice2DestPos,delta);
+            dice1.transform.position = Vector3.Lerp( dice1.transform.position,_dice1DestPos,delta);
+            dice2.transform.position = Vector3.Lerp( dice2.transform.position,_dice2DestPos,delta);
             time += 0.01f;
             yield return new WaitForSeconds(0.001f);
         }
@@ -122,20 +118,20 @@ public class DiceLauncher : MonoBehaviour
         _dice2Rb = dice2.GetComponent<Rigidbody>();
         _dice1Rb.isKinematic = true;
         _dice2Rb.isKinematic = true;
-        dice1.transform.position = new Vector3(_dice1Rb.position.x,2f,_dice1Rb.position.z);
-        dice2.transform.position = new Vector3(_dice2Rb.position.x,2f,_dice2Rb.position.z);
+        dice1.transform.position += new Vector3(0,2f,0);
+        dice2.transform.position += new Vector3(0,2f,0);
         //move dices to the default position 
-        var _dice1DefPos = new Vector3(17,2,-17);
-        var _dice2DefPos = new Vector3(13,2,-17);
-        var _diceDefRotation = Quaternion.Euler(90f, 90f, 45f);
+        var dice1DefPos = new Vector3(17,2,-17);
+        var dice2DefPos = new Vector3(13,2,-17);
+        var diceDefRotation = Quaternion.Euler(90f, 90f, 45f);
         var time = 0.042f;
         while (time < 1f)
         {
             var delta = Mathf.Pow(time, 3f);
-            dice1.transform.position = Vector3.Lerp( _dice1Rb.position,_dice1DefPos,time);
-            dice2.transform.position = Vector3.Lerp( _dice2Rb.position,_dice2DefPos,time);
-            dice1.transform.rotation = Quaternion.Lerp(dice1.transform.rotation,_diceDefRotation,time);
-            dice2.transform.rotation = Quaternion.Lerp(dice2.transform.rotation,_diceDefRotation,time);
+            dice1.transform.position = Vector3.Lerp( _dice1Rb.position,dice1DefPos,delta);
+            dice2.transform.position = Vector3.Lerp( _dice2Rb.position,dice2DefPos,delta);
+            dice1.transform.rotation = Quaternion.Lerp(dice1.transform.rotation,diceDefRotation,delta);
+            dice2.transform.rotation = Quaternion.Lerp(dice2.transform.rotation,diceDefRotation,delta);
             time += 0.01f;
             yield return new WaitForSeconds(0.001f);
         }

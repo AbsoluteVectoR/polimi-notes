@@ -1,27 +1,27 @@
-using System;
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Application = UnityEngine.Application;
+using UnityEngine.Serialization;
+
 
 public class GameManager : MonoBehaviour
 {
-    public static GameObject Instance;
     public DiceLauncher launcher;
     public float seatDistance;
-    public int numPlayers = 4;
-    public int numOfTiles = 12;
-    public GameObject player;
-    public GameObject AIplayer;
     public float seatHeight;
-    public List<GameObject> playersPlaying;
-    public List<GameObject> playersOut;
-    public GameObject currentPlayer;
-    private int _sumValue;
-    private int _sumSelectedTiles;
-    public string humanUsername;
+    public GameObject player;
+    [FormerlySerializedAs("AIplayer")] public GameObject aiPlayer;
     public GameObject menuUI;
     public GameObject inGameUI;
+    public string humanUsername;
+    private int _numPlayers;
+    private int _numOfTiles = 12;
+    private List<GameObject> _playersPlaying;
+    private List<GameObject> _playersOut;
+    private GameObject _currentPlayer;
+    private int _sumValue;
+    private int _sumSelectedTiles;
 
     public void Awake()
     {
@@ -30,46 +30,45 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        playersPlaying = new List<GameObject>(numPlayers);
-
+        _playersPlaying = new List<GameObject>(_numPlayers);
+        _playersOut = new List<GameObject>();
         //main player
         var posTiles = new Vector3(0, seatHeight, -seatDistance);
         var humanPlayer = Instantiate(player, posTiles, Quaternion.identity);
-        humanPlayer.GetComponent<Player>().startPlaying(this, numOfTiles, humanUsername);
-        playersPlaying.Add(humanPlayer);
+        humanPlayer.GetComponent<Player>().startPlaying(this, _numOfTiles, humanUsername);
+        _playersPlaying.Add(humanPlayer);
 
 
         //left player
-        if (numPlayers == 4)
+        if (_numPlayers == 4)
         {
             posTiles = new Vector3(-seatDistance, seatHeight, 0);
-            var leftPlayer = Instantiate(AIplayer, posTiles, Quaternion.LookRotation(-posTiles));
-            leftPlayer.GetComponent<PlayerAI>().startPlaying(this, numOfTiles, "Monte");
-            playersPlaying.Add(leftPlayer);
+            var leftPlayer = Instantiate(aiPlayer, posTiles, Quaternion.LookRotation(-posTiles));
+            leftPlayer.GetComponent<PlayerAI>().startPlaying(this, _numOfTiles, "Monte");
+            _playersPlaying.Add(leftPlayer);
         }
 
         //front player 
         posTiles = new Vector3(0, seatHeight, seatDistance);
-        var frontPlayer = Instantiate(AIplayer, posTiles, Quaternion.LookRotation(-posTiles));
-        frontPlayer.GetComponent<PlayerAI>().startPlaying(this, numOfTiles, "Carlo");
-        playersPlaying.Add(frontPlayer);
+        var frontPlayer = Instantiate(aiPlayer, posTiles, Quaternion.LookRotation(-posTiles));
+        frontPlayer.GetComponent<PlayerAI>().startPlaying(this, _numOfTiles, "Carlo");
+        _playersPlaying.Add(frontPlayer);
 
         //right player 
-        if (numPlayers == 4)
+        if (_numPlayers == 4)
         {
             posTiles = new Vector3(seatDistance, seatHeight, 0);
-            var rightPlayer = Instantiate(AIplayer, posTiles, Quaternion.LookRotation(-posTiles));
-            rightPlayer.GetComponent<PlayerAI>().startPlaying(this, numOfTiles, "Sir Tree");
-            playersPlaying.Add(rightPlayer);
+            var rightPlayer = Instantiate(aiPlayer, posTiles, Quaternion.LookRotation(-posTiles));
+            rightPlayer.GetComponent<PlayerAI>().startPlaying(this, _numOfTiles, "Sir Tree");
+            _playersPlaying.Add(rightPlayer);
         }
-        playersOut.Clear();
-        currentPlayer = playersPlaying[0];
-        this.transform.position = currentPlayer.transform.position;
-        this.transform.rotation = currentPlayer.transform.rotation;
+        
+        _currentPlayer = _playersPlaying[0];
+        this.transform.position = _currentPlayer.transform.position;
+        this.transform.rotation = _currentPlayer.transform.rotation;
         StartCoroutine(launcher.turnStart(3f));
     }
-
-
+    
     public void DicesStopped(int sum)
     {
         _sumValue = sum;
@@ -78,61 +77,60 @@ public class GameManager : MonoBehaviour
 
     private void UpdatingPlayerTiles()
     {
-        ArrayList selectableTiles = ComputeSelectable(currentPlayer.GetComponent<Player>().GetTiles());
+        ArrayList selectableTiles = legalMoves.compute(_currentPlayer.GetComponent<Player>().GetTiles(), _sumValue, _sumSelectedTiles);
         if (selectableTiles.Count > 0)
         {
-            currentPlayer.GetComponent<Player>().EnableSelect(true);
-            currentPlayer.GetComponent<Player>().SetPlayerSelectables(selectableTiles);
+            _currentPlayer.GetComponent<Player>().EnableSelect(true);
+            _currentPlayer.GetComponent<Player>().SetPlayerSelectables(selectableTiles,_sumValue-_sumSelectedTiles);
         }
         else if (_sumSelectedTiles == _sumValue) //the player have selected all the tiles necessary to reach the dices sum, he ended his turn
         {
             _sumSelectedTiles = 0;
-            currentPlayer.GetComponent<Player>().EnableSelect(false);
-            if (currentPlayer.GetComponent<Player>().GetTiles().Count == 0) //Check in case of immediate win
+            _currentPlayer.GetComponent<Player>().EnableSelect(false);
+            if (_currentPlayer.GetComponent<Player>().GetTiles().Count == 0) //Check in case of immediate win
             {
-                var AllPlayers = playersPlaying;
-                foreach (GameObject player in AllPlayers) PlayerGameOver(player); //immediate win, immediate Game Over for everyone
+                var allPlayers = _playersPlaying;
+                foreach (GameObject p in allPlayers) PlayerGameOver(p); //immediate win, immediate Game Over for everyone
             }
             else
             {
-                if(playersPlaying.Count>0)ChangePlayer();
+                if(_playersPlaying.Count>0)ChangePlayer();
             }
         }
         else //the player hasn't enough tiles to reach the dices sum, game over for the player
         {
-            currentPlayer.GetComponent<Player>().EnableSelect(false);
-            PlayerGameOver(currentPlayer);
-            if(playersPlaying.Count>0)ChangePlayer();
+            _currentPlayer.GetComponent<Player>().EnableSelect(false);
+            PlayerGameOver(_currentPlayer);
+            if(_playersPlaying.Count>0)ChangePlayer();
         }
     }
-
-
+    
     private void PlayerGameOver(GameObject eliminatedPlayer)
     {
         int score = 0;
         var tiles = eliminatedPlayer.GetComponent<Player>().GetTiles();
         foreach (int number in tiles) score += number; //counting the score
-        score = sum(numOfTiles) - score;
+        score = sum(_numOfTiles) - score;
         eliminatedPlayer.GetComponent<Player>().SetScore(score);
-        playersPlaying.Remove(eliminatedPlayer);
-        playersOut.Add(eliminatedPlayer);
-        if (playersPlaying.Count == 0) GameOver();
-        inGameUI.GetComponent<uiManager>().updateScores(playersOut); //updates the scores
+        _playersPlaying.Remove(eliminatedPlayer);
+        _playersOut.Add(eliminatedPlayer);
+        if (_playersPlaying.Count == 0) GameOver();
+        inGameUI.GetComponent<uiManager>().updateScores(_playersOut); //updates the scores
     }
 
     private void GameOver()
     {
-        GameObject winner = playersOut[0];
-        foreach (GameObject player in playersOut)
+        GameObject winner = _playersOut[0];
+        foreach (GameObject p in _playersOut)
         {
-            var playerScore = player.GetComponent<Player>().GetScore();
+            var playerScore = p.GetComponent<Player>().GetScore();
             var winnerScore = winner.GetComponent<Player>().GetScore();
             if (playerScore > winnerScore)
             {
-                winner = player;
+                winner = p;
             }
             else if (playerScore == winnerScore &&
-                     (player.GetComponent<Player>().GetUsername() != winner.GetComponent<Player>().GetUsername()))
+                     (p.GetComponent<Player>().GetUsername() != winner.GetComponent<Player>().GetUsername()))
             {
                 inGameUI.GetComponent<uiManager>().declareTie();
                 return;
@@ -143,14 +141,14 @@ public class GameManager : MonoBehaviour
 
     private void ChangePlayer()
     {
-        int currentIndex = playersPlaying.IndexOf(currentPlayer);
-        if (currentIndex != playersPlaying.Count - 1) //circular array 
-            currentPlayer = playersPlaying[currentIndex + 1];
+        int currentIndex = _playersPlaying.IndexOf(_currentPlayer);
+        if (currentIndex != _playersPlaying.Count - 1) //circular array 
+            _currentPlayer = _playersPlaying[currentIndex + 1];
         else
-            currentPlayer = playersPlaying[0];
+            _currentPlayer = _playersPlaying[0];
 
-        launcher.transform.position = currentPlayer.transform.position;
-        launcher.transform.rotation = currentPlayer.transform.rotation;
+        launcher.transform.position = _currentPlayer.transform.position;
+        launcher.transform.rotation = _currentPlayer.transform.rotation;
         launcher.enabled = true;
         StartCoroutine(launcher.turnStart(0.5f));
     }
@@ -161,52 +159,15 @@ public class GameManager : MonoBehaviour
         UpdatingPlayerTiles();
     }
 
-    public ArrayList ComputeSelectable(ArrayList currentTiles)
-    {
-        var tmp = currentTiles;
-        var array = new ArrayList();
-
-        if (tmp.Contains(_sumValue - _sumSelectedTiles)) array.Add(_sumValue - _sumSelectedTiles);
-        for (int i = 1; i <= (_sumValue - i); i++)
-        {
-            if (!tmp.Contains(i)) continue;
-            if (i + _sumSelectedTiles == _sumValue)
-                if (!array.Contains(i))
-                    array.Add(i);
-            for (var x = i + 1; x <= (_sumValue - i); x++)
-            {
-                if (!tmp.Contains(x)) continue;
-                if (i + x + _sumSelectedTiles == _sumValue)
-                {
-                    if (!array.Contains(x)) array.Add(x);
-                    if (!array.Contains(i)) array.Add(i);
-                }
-                else
-                {
-                    for (var y = x + 1; y <= (_sumValue - y); y++)
-                    {
-                        if (!tmp.Contains(y)) continue;
-                        if (i + x + y + _sumSelectedTiles != _sumValue) continue;
-                        if (!array.Contains(x)) array.Add(x);
-                        if (!array.Contains(i)) array.Add(i);
-                        if (!array.Contains(y)) array.Add(y);
-                    }
-                }
-            }
-        }
-
-        return array;
-    }
-
 
     public void setNumOfPlayers(int num)
     {
-        this.numPlayers = num;
+        this._numPlayers = num;
     }
 
     public void setNumOfTiles(int num)
     {
-        this.numOfTiles = num;
+        this._numOfTiles = num;
     }
 
     public void setHumanNickname(string username)
@@ -216,7 +177,7 @@ public class GameManager : MonoBehaviour
 
     public int getNumOfPlayers()
     {
-        return numPlayers;
+        return _numPlayers;
     }
 
     public string getHumanNickname()
@@ -225,11 +186,16 @@ public class GameManager : MonoBehaviour
     }
 
 
-    private int sum(int numOfTiles)
+    private static int sum(int numOfTiles)
     {
         int sum = 0;
         for (int x = 1; x <= numOfTiles; x++) sum += x;
         return sum;
+    }
+
+    public int maximumScore()
+    {
+        return sum(_numOfTiles);
     }
 
     public void newPlay()
@@ -237,8 +203,8 @@ public class GameManager : MonoBehaviour
         StartCoroutine(menuUI.GetComponent<menuManager>().endPlay());
         foreach(GameObject tile in GameObject.FindGameObjectsWithTag("tile")) 
             Destroy(tile);
-        foreach(GameObject player in GameObject.FindGameObjectsWithTag("Player")) 
-            Destroy(player);
+        foreach(GameObject p in GameObject.FindGameObjectsWithTag("Player")) 
+            Destroy(p);
     }
     public void setDicesToDefaultPosition()
     {

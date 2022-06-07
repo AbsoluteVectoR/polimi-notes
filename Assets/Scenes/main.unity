@@ -1178,7 +1178,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 20a587867b2dab34a8d19627f4344488, type: 2}
+  - {fileID: 2100000, guid: 27ba79b1b804c614e85a04485d19ee1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1216,8 +1216,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 528977716}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 20, y: 2, z: 0}
-  m_LocalScale: {x: -0.47, y: 8.9, z: 40}
+  m_LocalPosition: {x: 20, y: 5, z: 0}
+  m_LocalScale: {x: 0.5, y: 10, z: 40}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1224459428}
@@ -1758,7 +1758,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 20a587867b2dab34a8d19627f4344488, type: 2}
+  - {fileID: 2100000, guid: 27ba79b1b804c614e85a04485d19ee1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1796,8 +1796,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 780977585}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -20, y: 2, z: 0}
-  m_LocalScale: {x: -0.47, y: 8.9, z: 40}
+  m_LocalPosition: {x: -20, y: 5, z: 0}
+  m_LocalScale: {x: 0.5, y: 10, z: 40}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1224459428}
@@ -2783,7 +2783,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 20a587867b2dab34a8d19627f4344488, type: 2}
+  - {fileID: 2100000, guid: 27ba79b1b804c614e85a04485d19ee1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2821,8 +2821,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1075181744}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 2, z: -20}
-  m_LocalScale: {x: -0.47, y: 9, z: 40.5}
+  m_LocalPosition: {x: 0, y: 5, z: -20}
+  m_LocalScale: {x: 0.5, y: 10, z: 40.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1224459428}
@@ -3161,7 +3161,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 20a587867b2dab34a8d19627f4344488, type: 2}
+  - {fileID: 2100000, guid: 27ba79b1b804c614e85a04485d19ee1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3199,8 +3199,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1150942156}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0, y: 2, z: 20}
-  m_LocalScale: {x: -0.47, y: 9, z: 40.5}
+  m_LocalPosition: {x: 0, y: 5, z: 20}
+  m_LocalScale: {x: 0.5, y: 10, z: 40.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1224459428}
@@ -3892,17 +3892,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   launcher: {fileID: 0}
   seatDistance: 27
-  numPlayers: 4
-  numOfTiles: 12
-  player: {fileID: 1537379941968819896, guid: 376b6e86e27de4e45aee50d2a3de0079, type: 3}
-  AIplayer: {fileID: 7376210551516294192, guid: faf04acaf52e9ad4cab0d19ab9d2ee2f, type: 3}
   seatHeight: 6
-  playersPlaying: []
-  playersOut: []
-  currentPlayer: {fileID: 0}
-  humanUsername: 
+  player: {fileID: 1537379941968819896, guid: 376b6e86e27de4e45aee50d2a3de0079, type: 3}
+  aiPlayer: {fileID: 7376210551516294192, guid: faf04acaf52e9ad4cab0d19ab9d2ee2f, type: 3}
   menuUI: {fileID: 1110438299}
   inGameUI: {fileID: 1086677622}
+  humanUsername: 
 --- !u!4 &1349740055
 Transform:
   m_ObjectHideFlags: 0
@@ -3935,7 +3930,6 @@ MonoBehaviour:
   rollingRadius: 2
   rollingSpeedRotation: 5
   sum: 0
-  _gameMan: {fileID: 0}
 --- !u!1 &1383410875
 GameObject:
   m_ObjectHideFlags: 0
@@ -4841,7 +4835,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.050980397, g: 0.34509805, b: 0.18431373, a: 0.11372549}
+  m_Color: {r: 0.050980397, g: 0.34509805, b: 0.18431373, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
