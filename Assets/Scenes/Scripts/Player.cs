@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     private ArrayList _tiles;
     protected GameObject[] _tilesObj;
     protected ArrayList _selectableTiles;
+    protected int _remainingValue;
     protected bool selectEnabled;
     
 
@@ -50,8 +51,9 @@ public class Player : MonoBehaviour
         _tiles.Remove(number);
     }
 
-    public void SetPlayerSelectables(ArrayList selectableTiles)
+    public void SetPlayerSelectables(ArrayList selectableTiles, int remainingValue)
     {
+        _remainingValue = remainingValue;
         _selectableTiles = selectableTiles;
     }
 
