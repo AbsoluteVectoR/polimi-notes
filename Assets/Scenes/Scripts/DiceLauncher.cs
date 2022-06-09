@@ -8,8 +8,8 @@ public class DiceLauncher : MonoBehaviour
 {
     public GameObject dice1;
     public GameObject dice2;
-    public float rollingRadius = 2f;
-    public float rollingSpeedRotation = 0.5f;
+    public float rollingRadius;
+    public float rollingSpeedRotation;
     public int sum;
     private GameManager _gameMan;
     private Rigidbody _dice1Rb;
@@ -59,7 +59,7 @@ public class DiceLauncher : MonoBehaviour
             yield return new WaitForSeconds(0.001f);
         }
         _isRollingDices = true; //starts to roll the dices 
-        yield return new WaitForSeconds(1.5f); // <- time of rolling
+        yield return new WaitForSeconds(Random.Range(0f,0.5f)); // <- time of rolling //todo to change
         Launch();
     }
     

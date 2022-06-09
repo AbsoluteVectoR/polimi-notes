@@ -13,7 +13,8 @@ public class Player : MonoBehaviour
     private ArrayList _tiles;
     protected GameObject[] _tilesObj;
     protected ArrayList _selectableTiles;
-    protected int _remainingValue;
+    protected int _sumDices;
+    protected int _sumSelectedTiles;
     protected bool selectEnabled;
     
 
@@ -51,9 +52,10 @@ public class Player : MonoBehaviour
         _tiles.Remove(number);
     }
 
-    public void SetPlayerSelectables(ArrayList selectableTiles, int remainingValue)
+    public void SetPlayerSelectables(ArrayList selectableTiles,int sumDices, int sumSelectedTiles)
     {
-        _remainingValue = remainingValue;
+        _sumDices = sumDices;
+        _sumSelectedTiles = sumSelectedTiles;
         _selectableTiles = selectableTiles;
     }
 
