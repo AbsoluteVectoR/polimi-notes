@@ -3,7 +3,7 @@ using System.Collections.Generic;
     public class PlayerAI : Player
     {
         private bool _computing;
-        private bool _computed = true;
+        private bool _computed;
         private Queue<int> bestMove;
     
     
@@ -13,18 +13,15 @@ using System.Collections.Generic;
             if (_computing) return;
             if (_computed) //when computed playerAI knows which are the best moves and play them 
             {
-                if (selectableTiles.Count > 0)
-                {
-                    var tileToSelect = (int)selectableTiles[0]; //at the moment select the first tile in the selectable tiles, that is computed by GameManager 
+                var tileToSelect = (int)selectableTiles[0]; //at the moment select the first tile in the selectable tiles, that is computed by GameManager 
                     tilesObj[tileToSelect-1].GetComponent<Tile>().Flip();
-                }
             }
             else
             {
-                //mcts oracle = new mcts();
-                //var sumDices = remainingValue;sda
-                //StartCoroutine(oracle.computeBestMove(this,gameMan.maximumScore(),selectableTiles, sumDices));
-                _computing = false;
+                mcts oracle = new mcts();
+                var sumDices = remainingValue;
+                StartCoroutine(oracle.computeBestMove(this,gameMan.maximumScore(),tiles, sumDices));
+                _computing = true;
             }
         }
 

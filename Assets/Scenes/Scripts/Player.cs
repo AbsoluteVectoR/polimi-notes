@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     public float tileBreadth = 3f;
     private int score;
     private string username = "HumanPlayer";
-    private ArrayList _tiles;
+    protected ArrayList tiles;
     protected GameObject[] tilesObj;
     protected ArrayList selectableTiles;
     protected int remainingValue;
@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
         this.gameMan = gameMan;
         this.numOfTiles = numOfTiles;
         this.username = username;
-        _tiles = new ArrayList(numOfTiles);
+        tiles = new ArrayList(numOfTiles);
         tilesObj = new GameObject[numOfTiles];
         InstantiateTiles();
     }
@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
         for (int i = 1; i <= numOfTiles; i++)
         {
             Vector3 tilePos = transform.position + transform.right * (i * 1.1f * tileBreadth - offset);
-            _tiles.Add(i);
+            tiles.Add(i);
             tilesObj[i - 1] = Instantiate(tile, tilePos, transform.rotation);
             tilesObj[i - 1].GetComponent<Transform>().Rotate(40f, 0f, 0f);
             tilesObj[i - 1].GetComponent<Tile>().SetTextNum(i);
@@ -44,7 +44,7 @@ public class Player : MonoBehaviour
     
     public void TileSelected(int number)
     {
-        _tiles.Remove(number);
+        tiles.Remove(number);
         gameMan.SelectTile(number);
     }
 
@@ -66,7 +66,7 @@ public class Player : MonoBehaviour
 
     public ArrayList GetTiles()
     {
-        return _tiles;
+        return tiles;
     }
 
     public ArrayList GetSelectableTiles()

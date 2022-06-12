@@ -16,36 +16,42 @@ public class mcts
     private int _maximumScore;
     private PlayerAI _caller;
     private ArrayList _possibleExpansionState;
-
-    public IEnumerator computeBestMove(PlayerAI caller, int maximumScore, ArrayList selectableTiles, int sumDices)
+    private ArrayList _tilesRoot;
+    private int _totalSim;
+    public IEnumerator computeBestMove(PlayerAI caller, int maximumScore, ArrayList tiles, int sumDices)
     {
+        _totalSim = 1;
         _caller = caller;
+        _tilesRoot = tiles;
         yield return new WaitForSeconds(0.1f); //temporary 
         _maximumScore = maximumScore;
         _possibleExpansionState = new ArrayList();
         for (int i = 2; i <= 12; i++) _possibleExpansionState.Add(i); //'constant' arraylist needed for expansion phase
 
-        State root = buildRootNode(selectableTiles,sumDices);
+        State root = buildRootNode(sumDices);
         
-        var selected = selection(root,float.MinValue);
-        var expanded = expansion(selected);
-        var newScore = simulation(expanded);
-        backpropagation(expanded,newScore);
-        
+        while (_totalSim < 1000000)
+        {
+            var selected = selection(root);
+            var expanded = expansion(selected);
+            var newScore = simulation(expanded);
+            backpropagation(expanded,newScore);
+            _totalSim++;
+        }
+
         //Queue<int> bestMove = new Queue<int>();
-        
 
         adviceBestMove();
     }
 
-    private State buildRootNode(ArrayList selectableTiles,int sumDices)
+    private State buildRootNode(int sumDices)
     {
-        State root = new State(null, _possibleExpansionState, selectableTiles, null);
-        ArrayList legalMovesRoot = LegalMoves.computeSets(selectableTiles, sumDices);
+        State root = new State(null, _possibleExpansionState, _tilesRoot, null);
+        ArrayList legalMovesRoot = LegalMoves.computeSets(_tilesRoot, sumDices);
         foreach (HashSet<int> possibleMove in legalMovesRoot)
         {
             var newChildRoot = new State(root, _possibleExpansionState, 
-                tilesAfterMove(selectableTiles,possibleMove), possibleMove);
+                tilesAfterMove(_tilesRoot,possibleMove), possibleMove);
             root.addChild(newChildRoot);
         }
         return root;
@@ -59,17 +65,20 @@ public class mcts
         return valueDices;
     }
 
-    private float Ucb(State state)
+    private double Ucb(State state)
     {
         var allTimeScore = state.getAllTimeScore();
-        var visits = state.getVisits();
-        var parentVisits = 1;
+        var sims = state.getSimulations();
+        /*
+        var parentSimulations = 1;
         if (state.getParent() != null)
         {
-            parentVisits = state.getParent().getVisits();
+            parentSimulations = state.getParent().getSimulations();
         }
-        if (visits == 0 || parentVisits == 0) return float.MinValue;
-        float ucb = (float)(allTimeScore / (_maximumScore * visits) + C * Math.Sqrt(Math.Log(parentVisits) / visits));
+        */
+        if (sims == 0) return Double.MaxValue;
+        //if (parentSimulations == 0) parentSimulations = 1;
+        double ucb = ((double)allTimeScore / (_maximumScore * sims) + C * Math.Sqrt((Math.Log(_totalSim))/ sims));
         return ucb;
     }
     
@@ -78,29 +87,31 @@ public class mcts
         _caller.takeAdvice();
     }
 
-    private State selection(State selectedState, float bestUcb)
+    private State selection(State selectedState)
     {
-        if (selectedState.getChildren().Count > 0)
+        var bestUcb = double.MinValue;
+        if (selectedState.getChildren().Count <= 0) return selectedState;
+        
+        State bestChild = null;
+        foreach (var child in selectedState.getChildren())
         {
-            foreach (var state in selectedState.getChildren())
+            if (child.getUcb() >= bestUcb)
             {
-                if (state.getUcb() >= bestUcb) selectedState = state;
+                bestChild = child;
+                bestUcb = child.getUcb();
             }
-            return selection(selectedState,bestUcb);
         }
-        return selectedState;
+        return selection(bestChild);
     }
 
     private State expansion(State stateToExpand)
     {
-        stateToExpand.incrementVisits();
         var tiles = stateToExpand.getTiles();
         State newChild = null;
         while (!stateToExpand.isFullExpanded()) 
         {
-            if (stateToExpand.getTiles().Count==0) return stateToExpand; //leaf node
             ArrayList unexpanded = stateToExpand.returnUnexpandedLaunches();
-            float rangePossibleChild = unexpanded.Count + 0.9999f; 
+            float rangePossibleChild = unexpanded.Count - 0.01f; 
             //to expand only the UNEXPANDED ONES and not states already expanded
             int randomExpansion = (int)unexpanded[(int)Random.Range(0f, rangePossibleChild)]; 
             stateToExpand.newExpandedChild(randomExpansion);
@@ -116,15 +127,15 @@ public class mcts
         }
 
         if (newChild == null) return stateToExpand;
-        return stateToExpand;
+        return newChild;
     }
     
     public int simulation(State simulatedChild)
     {
-        var tiles = simulatedChild.getTiles();
-        var possibleMoves = new ArrayList();
         while (true)
         {
+            var tiles = simulatedChild.getTiles();
+            var possibleMoves = new ArrayList();
             var launch = randomLaunch();
             possibleMoves = LegalMoves.computeSets(simulatedChild.getTiles(), launch);
             if (possibleMoves.Count == 0) break;
@@ -147,21 +158,24 @@ public class mcts
     {
         while (expandedState.getParent() != null) //root 
         {
-            expandedState.incrementVisits();
+            expandedState.incrementSimulations();
             expandedState.incrementScore(scoreLastSimulation);
             var newUcb = Ucb(expandedState);
             expandedState.setUcb(newUcb);
             expandedState = expandedState.getParent();
         }
+        expandedState.incrementSimulations(); //root total simulations
     }
 
 
     private ArrayList tilesAfterMove(ArrayList array,HashSet<int> moveSet)
     {
-        foreach (int tile in moveSet)
+        ArrayList tilesAfterMove = new ArrayList(); 
+        foreach (int tile in array)
         {
-            array.Remove(tile);
+            if (moveSet.Contains(tile)) continue;
+            tilesAfterMove.Add(tile);
         }
-        return array;
+        return tilesAfterMove;
     }
 }

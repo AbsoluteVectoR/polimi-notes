@@ -3892,7 +3892,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   launcher: {fileID: 0}
   seatDistance: 27
-  seatHeight: 7
+  seatHeight: 5
   player: {fileID: 1537379941968819896, guid: 376b6e86e27de4e45aee50d2a3de0079, type: 3}
   aiPlayer: {fileID: 7376210551516294192, guid: faf04acaf52e9ad4cab0d19ab9d2ee2f, type: 3}
   menuUI: {fileID: 1110438299}

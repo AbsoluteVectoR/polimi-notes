@@ -6,12 +6,12 @@ using UnityEngine;
 
 public class State 
 {
-    private float _UCB;
+    private double _ucb;
     private readonly ArrayList _tiles;
     private State _parent;
     private List<State> _childrens;
     private HashSet<int> _played;
-    private int _visits;
+    private int _simulations;
     private int _allTimeScores;
     private ArrayList _unexpandedChildren;
     private bool completelyExpanded;
@@ -19,28 +19,23 @@ public class State
     public State(State parent, ArrayList possibleExpansions, ArrayList tiles, HashSet<int> played)
     {
         _parent = parent;
-        _UCB = float.MaxValue;
+        _ucb = float.MaxValue;
         _tiles = tiles;
         _played = played;
-        _visits = 0;
+        _simulations = 0;
         _allTimeScores = 0;
         _childrens = new List<State>();
         _unexpandedChildren = possibleExpansions;
-        completelyExpanded = false;
     }
 
     public bool isFullExpanded()
     {
-        return completelyExpanded;
+        return (_tiles.Count == 0 || _unexpandedChildren.Count == 0);
     }
 
     public void newExpandedChild(int expandedLaunch)
     {
         _unexpandedChildren.Remove(expandedLaunch);
-        if (_unexpandedChildren.Count == 0)
-        {
-            completelyExpanded = true;
-        }
     }
 
     public ArrayList returnUnexpandedLaunches()
@@ -48,24 +43,25 @@ public class State
         return _unexpandedChildren;
     }
     
-    public void incrementVisits()
+    public void incrementSimulations()
     {
-        _visits++;
+        _simulations++;
     }
+    
 
     public void incrementScore(int addedScore)
     {
         _allTimeScores += addedScore;
     }
 
-    public float getUcb()
+    public double getUcb()
     {
-        return _UCB;
+        return _ucb;
     }
 
-    public void setUcb(float newUcb)
+    public void setUcb(double newUcb)
     {
-        _UCB = newUcb;
+        _ucb = newUcb;
     }
 
     public int getAllTimeScore()
@@ -73,9 +69,9 @@ public class State
         return _allTimeScores;
     }
 
-    public int getVisits()
+    public int getSimulations()
     {
-        return _visits;
+        return _simulations;
     }
 
     public List<State> getChildren()
