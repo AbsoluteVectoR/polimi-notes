@@ -9,24 +9,45 @@ public class State
     private float _UCB;
     private readonly ArrayList _tiles;
     private State _parent;
-    private List<State> _childrens; // We could replace it with priority queue <- at the end 
-    private readonly int _remainingValue;
-    private int _played;
+    private List<State> _childrens;
+    private HashSet<int> _played;
     private int _visits;
     private int _allTimeScores;
-    
-    public State(State parent,ArrayList tiles, int remainingValue, int played)
+    private ArrayList _unexpandedChildren;
+    private bool completelyExpanded;
+
+    public State(State parent, ArrayList possibleExpansions, ArrayList tiles, HashSet<int> played)
     {
         _parent = parent;
-        _UCB = 0f;
+        _UCB = float.MaxValue;
         _tiles = tiles;
-        _remainingValue = remainingValue;
         _played = played;
         _visits = 0;
         _allTimeScores = 0;
-        _childrens = new List<State>(); 
+        _childrens = new List<State>();
+        _unexpandedChildren = possibleExpansions;
+        completelyExpanded = false;
     }
 
+    public bool isFullExpanded()
+    {
+        return completelyExpanded;
+    }
+
+    public void newExpandedChild(int expandedLaunch)
+    {
+        _unexpandedChildren.Remove(expandedLaunch);
+        if (_unexpandedChildren.Count == 0)
+        {
+            completelyExpanded = true;
+        }
+    }
+
+    public ArrayList returnUnexpandedLaunches()
+    {
+        return _unexpandedChildren;
+    }
+    
     public void incrementVisits()
     {
         _visits++;
@@ -42,9 +63,9 @@ public class State
         return _UCB;
     }
 
-    public void setUcb(float newUCB)
+    public void setUcb(float newUcb)
     {
-        _UCB = newUCB;
+        _UCB = newUcb;
     }
 
     public int getAllTimeScore()
@@ -55,11 +76,6 @@ public class State
     public int getVisits()
     {
         return _visits;
-    }
-
-    public int getRemainingValue()
-    {
-        return _remainingValue;
     }
 
     public List<State> getChildren()
@@ -77,9 +93,14 @@ public class State
         return _tiles;
     }
 
-    public int getPlayed()
+    public HashSet<int> getPlayed()
     {
         return _played;
+    }
+
+    public void addChild(State newChild)
+    {
+        _childrens.Add(newChild);
     }
     
 }

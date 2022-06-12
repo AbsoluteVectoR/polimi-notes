@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -6,18 +5,15 @@ public class Player : MonoBehaviour
 {
     public GameManager gameMan;
     public GameObject tile;
-    public int numOfTiles = 9;
+    public int numOfTiles;
     public float tileBreadth = 3f;
     private int score;
     private string username = "HumanPlayer";
     private ArrayList _tiles;
-    protected GameObject[] _tilesObj;
-    protected ArrayList _selectableTiles;
-    protected int _sumDices;
-    protected int _sumSelectedTiles;
+    protected GameObject[] tilesObj;
+    protected ArrayList selectableTiles;
+    protected int remainingValue;
     protected bool selectEnabled;
-    
-
 
     public void startPlaying(GameManager gameMan, int numOfTiles, string username){
         score = 99;
@@ -25,7 +21,7 @@ public class Player : MonoBehaviour
         this.numOfTiles = numOfTiles;
         this.username = username;
         _tiles = new ArrayList(numOfTiles);
-        _tilesObj = new GameObject[numOfTiles];
+        tilesObj = new GameObject[numOfTiles];
         InstantiateTiles();
     }
 
@@ -36,27 +32,26 @@ public class Player : MonoBehaviour
         {
             Vector3 tilePos = transform.position + transform.right * (i * 1.1f * tileBreadth - offset);
             _tiles.Add(i);
-            _tilesObj[i - 1] = Instantiate(tile, tilePos, transform.rotation);
-            _tilesObj[i - 1].GetComponent<Transform>().Rotate(40f, 0f, 0f);
-            _tilesObj[i - 1].GetComponent<Tile>().SetTextNum(i);
-            _tilesObj[i - 1].GetComponent<Tile>().setOwner(this);
-            StartCoroutine(_tilesObj[i - 1].GetComponent<Tile>().spawningAnimation()); //cool tile intro animation
+            tilesObj[i - 1] = Instantiate(tile, tilePos, transform.rotation);
+            tilesObj[i - 1].GetComponent<Transform>().Rotate(40f, 0f, 0f);
+            tilesObj[i - 1].GetComponent<Tile>().SetTextNum(i);
+            tilesObj[i - 1].GetComponent<Tile>().setOwner(this);
+            StartCoroutine(tilesObj[i - 1].GetComponent<Tile>().spawningAnimation()); //cool tile intro animation
         }
-        _selectableTiles = new ArrayList();
+        selectableTiles = new ArrayList();
         selectEnabled = false;
     }
     
     public void TileSelected(int number)
     {
-        gameMan.SelectTile(number);
         _tiles.Remove(number);
+        gameMan.SelectTile(number);
     }
 
-    public void SetPlayerSelectables(ArrayList selectableTiles,int sumDices, int sumSelectedTiles)
+    public void SetPlayerSelectables(ArrayList selectableTiles,int remainingValue)
     {
-        _sumDices = sumDices;
-        _sumSelectedTiles = sumSelectedTiles;
-        _selectableTiles = selectableTiles;
+        this.remainingValue = remainingValue;
+        this.selectableTiles = selectableTiles;
     }
 
     public void EnableSelect(bool v)
@@ -76,7 +71,7 @@ public class Player : MonoBehaviour
 
     public ArrayList GetSelectableTiles()
     {
-        return _selectableTiles;
+        return selectableTiles;
     }
 
     public void SetScore(int score)

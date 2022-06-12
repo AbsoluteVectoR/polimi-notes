@@ -1,6 +1,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Scenes.Scripts;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -77,11 +78,11 @@ public class GameManager : MonoBehaviour
 
     private void UpdatingPlayerTiles()
     {
-        ArrayList selectableTiles = legalMoves.compute(_currentPlayer.GetComponent<Player>().GetTiles(), _sumValue, _sumSelectedTiles);
+        ArrayList selectableTiles = LegalMoves.compute(_currentPlayer.GetComponent<Player>().GetTiles(), _sumValue, _sumSelectedTiles);
         if (selectableTiles.Count > 0)
         {
             _currentPlayer.GetComponent<Player>().EnableSelect(true);
-            _currentPlayer.GetComponent<Player>().SetPlayerSelectables(selectableTiles,_sumValue,_sumSelectedTiles);
+            _currentPlayer.GetComponent<Player>().SetPlayerSelectables(selectableTiles,_sumValue-_sumSelectedTiles);
         }
         else if (_sumSelectedTiles == _sumValue) //the player have selected all the tiles necessary to reach the dices sum, he ended his turn
         {

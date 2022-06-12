@@ -3,43 +3,55 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Scenes.Scripts;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
 public class mcts
 {
-    private ArrayList _movesSets;
     private int _remainingValue;
-    private List<State> _tree;
     private int _allTimeSimulations;
     private const float C = 1.4142135624f; //sqrt(2) 
     private int _maximumScore;
-    private int _sumDices;
-    private int _sumSelectedTiles;
     private PlayerAI _caller;
+    private ArrayList _possibleExpansionState;
 
-    public IEnumerator computeBestMove(PlayerAI caller, int maximumScore, ArrayList selectableTiles, int sumDices,
-        int sumSelectedTiles)
+    public IEnumerator computeBestMove(PlayerAI caller, int maximumScore, ArrayList selectableTiles, int sumDices)
     {
         _caller = caller;
         yield return new WaitForSeconds(0.1f); //temporary 
-        _movesSets = legalMoves.computeSets(selectableTiles,sumDices);
-        _sumDices = sumDices;
-        _sumSelectedTiles = sumSelectedTiles;
         _maximumScore = maximumScore;
+        _possibleExpansionState = new ArrayList();
+        for (int i = 2; i <= 12; i++) _possibleExpansionState.Add(i); //'constant' arraylist needed for expansion phase
 
-        buildStateSpace(selectableTiles);
-        var selected = selection();
+        State root = buildRootNode(selectableTiles,sumDices);
+        
+        var selected = selection(root,float.MinValue);
         var expanded = expansion(selected);
         var newScore = simulation(expanded);
         backpropagation(expanded,newScore);
         
-        Queue<int> bestMove = new Queue<int>();
+        //Queue<int> bestMove = new Queue<int>();
         
 
-        //adviceBestMove(bestMove);
+        adviceBestMove();
     }
 
+    private State buildRootNode(ArrayList selectableTiles,int sumDices)
+    {
+        State root = new State(null, _possibleExpansionState, selectableTiles, null);
+        ArrayList legalMovesRoot = LegalMoves.computeSets(selectableTiles, sumDices);
+        foreach (HashSet<int> possibleMove in legalMovesRoot)
+        {
+            var newChildRoot = new State(root, _possibleExpansionState, 
+                tilesAfterMove(selectableTiles,possibleMove), possibleMove);
+            root.addChild(newChildRoot);
+        }
+        return root;
+    }
+    
+    
     private int randomLaunch()
     {
         int valueDices = (int)Random.Range(1f, 6.99f);
@@ -47,117 +59,109 @@ public class mcts
         return valueDices;
     }
 
-    private void buildStateSpace(ArrayList selectableTilesOfRoot)
+    private float Ucb(State state)
     {
-        _tree = new List<State>();
-        foreach (HashSet<int> legalSet in _movesSets)
+        var allTimeScore = state.getAllTimeScore();
+        var visits = state.getVisits();
+        var parentVisits = 1;
+        if (state.getParent() != null)
         {
-            State s = new State(null, selectableTilesOfRoot, _remainingValue, legalSet.ToArray()[0]);
-            _tree.Add(s);
+            parentVisits = state.getParent().getVisits();
         }
-        //delete redundant states 
-        var treePruned = new List<State>();
-        foreach (State state in _tree)
-        {
-            Boolean alreadyIn = false;
-            foreach (State statePruned in treePruned)
-            {
-                if (statePruned.getPlayed() != state.getPlayed()) continue;
-                alreadyIn = true;
-                break;
-            }
-            if(!alreadyIn)treePruned.Add(state);
-        }
-        _tree = treePruned;
-    }
-
-    private float Ucb(int allTimeScore, int visits, int parentVisits)
-    {
-        if (visits == 0 || parentVisits == 0) return 0f;
+        if (visits == 0 || parentVisits == 0) return float.MinValue;
         float ucb = (float)(allTimeScore / (_maximumScore * visits) + C * Math.Sqrt(Math.Log(parentVisits) / visits));
         return ucb;
     }
-
-
-    private void adviceBestMove(Queue<int> bestMove)
+    
+    private void adviceBestMove()
     {
-        _caller.takeAdvice(bestMove);
+        _caller.takeAdvice();
     }
 
-    private State selection()
+    private State selection(State selectedState, float bestUcb)
     {
-        State selectedState = null;
-        var bestUCB = float.MinValue;
-        foreach (var state in _tree)
+        if (selectedState.getChildren().Count > 0)
         {
-            if (state.getUcb() > bestUCB) selectedState = state;
+            foreach (var state in selectedState.getChildren())
+            {
+                if (state.getUcb() >= bestUcb) selectedState = state;
+            }
+            return selection(selectedState,bestUcb);
         }
         return selectedState;
     }
 
-    private State expansion(State selectedOne)
+    private State expansion(State stateToExpand)
     {
-        selectedOne.incrementVisits();
-        if (selectedOne.getRemainingValue() == 0) return selectedOne; //leaf node
-        State expandedChild = selectedOne;
-        while (expandedChild.getRemainingValue() == 0)
+        stateToExpand.incrementVisits();
+        var tiles = stateToExpand.getTiles();
+        State newChild = null;
+        while (!stateToExpand.isFullExpanded()) 
         {
-            if (expandedChild.getChildren().Count == 0)
+            if (stateToExpand.getTiles().Count==0) return stateToExpand; //leaf node
+            ArrayList unexpanded = stateToExpand.returnUnexpandedLaunches();
+            float rangePossibleChild = unexpanded.Count + 0.9999f; 
+            //to expand only the UNEXPANDED ONES and not states already expanded
+            int randomExpansion = (int)unexpanded[(int)Random.Range(0f, rangePossibleChild)]; 
+            stateToExpand.newExpandedChild(randomExpansion);
+            ArrayList expandedStates = LegalMoves.computeSets(stateToExpand.getTiles(),randomExpansion);
+            foreach (HashSet<int> possibleMove in expandedStates)
             {
-                var move =
-                    (int)legalMoves.compute(expandedChild.getTiles(), _sumDices, _sumDices)[0];
-
-                var moveResult = expandedChild.getTiles();
-                moveResult.Remove(move);
-                expandedChild = new State(expandedChild, moveResult, expandedChild.getRemainingValue() - move, move);
+                var newExpanded = new State(stateToExpand, _possibleExpansionState, 
+                    tilesAfterMove(tiles,possibleMove), possibleMove);
+                stateToExpand.addChild(newExpanded);
+                newChild = newExpanded;
             }
-            else
-            {
-                expandedChild = expandedChild.getChildren()[0];
-            }
-            expandedChild.incrementVisits();
+            if (newChild != null) break; //new state expanded from random move, it will be simulated if not null, otherwise continuing until full expansion 
         }
-        return expandedChild;
+
+        if (newChild == null) return stateToExpand;
+        return stateToExpand;
     }
-
-
+    
     public int simulation(State simulatedChild)
     {
-        while (simulatedChild.getTiles().Count!=0)
+        var tiles = simulatedChild.getTiles();
+        var possibleMoves = new ArrayList();
+        while (true)
         {
-            var randomDiceLaunch = randomLaunch();
-            var possibleMoves = new ArrayList();
-            do
-            {
-                possibleMoves =
-                    legalMoves.compute(simulatedChild.getTiles(), randomDiceLaunch, randomDiceLaunch-simulatedChild.getRemainingValue());
-                if (possibleMoves.Count == 0) break;
-                var randomMove = (int)possibleMoves[(int)Random.Range(0f, possibleMoves.Count-0.00001f)];
-                var moveResult = simulatedChild.getTiles();
-                moveResult.Remove(randomMove);
-                simulatedChild = new State(simulatedChild, moveResult, simulatedChild.getRemainingValue() - randomMove,
-                    randomMove);
-            } while (simulatedChild.getRemainingValue() > 0);
-
+            var launch = randomLaunch();
+            possibleMoves = LegalMoves.computeSets(simulatedChild.getTiles(), launch);
             if (possibleMoves.Count == 0) break;
+            HashSet<int> randomMove =
+                (HashSet<int>)possibleMoves[(int)Random.Range(0f, possibleMoves.Count - 0.00001f)];
+            var moveResult = tilesAfterMove(tiles, randomMove);
+            simulatedChild = new State(simulatedChild, _possibleExpansionState, moveResult, randomMove);
         }
 
-        int remainingTilesSum = 0;
-        foreach (int remainingTile in simulatedChild.getTiles())
+        int score = _maximumScore;
+        foreach (int tileNotFlipped in simulatedChild.getTiles())
         {
-            remainingTilesSum += remainingTile;
+            score -= tileNotFlipped;
         }
 
-        return _maximumScore - remainingTilesSum;
+        return score;
     }
 
     private void backpropagation(State expandedState, int scoreLastSimulation)
     {
-        while (expandedState.getParent() != null)
+        while (expandedState.getParent() != null) //root 
         {
+            expandedState.incrementVisits();
             expandedState.incrementScore(scoreLastSimulation);
-            var newUCB = Ucb(expandedState.getAllTimeScore(), expandedState.getVisits(), expandedState.getParent().getVisits());
-            expandedState.setUcb(newUCB);
+            var newUcb = Ucb(expandedState);
+            expandedState.setUcb(newUcb);
+            expandedState = expandedState.getParent();
         }
+    }
+
+
+    private ArrayList tilesAfterMove(ArrayList array,HashSet<int> moveSet)
+    {
+        foreach (int tile in moveSet)
+        {
+            array.Remove(tile);
+        }
+        return array;
     }
 }
