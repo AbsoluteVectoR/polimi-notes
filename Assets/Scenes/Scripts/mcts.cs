@@ -101,9 +101,11 @@ public class mcts
         State bestChild = null;
         foreach (var child in selectedState.getChildren())
         {
-            if (child.getUcb() < bestUcb) continue;
-            bestChild = child;
+            var newUcb = Ucb(child);
+            child.setUcb(newUcb);
+            if (newUcb < bestUcb) continue;
             bestUcb = child.getUcb();
+            bestChild = child;
         }
         return selection(bestChild);
     }
@@ -163,8 +165,6 @@ public class mcts
         {
             expandedState.incrementSimulations();
             expandedState.incrementScore(scoreLastSimulation);
-            var newUcb = Ucb(expandedState);
-            expandedState.setUcb(newUcb);
             expandedState = expandedState.getParent();
         }
         expandedState.incrementSimulations(); //root total simulations

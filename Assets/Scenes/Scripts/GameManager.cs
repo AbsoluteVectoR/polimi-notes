@@ -100,9 +100,10 @@ public class GameManager : MonoBehaviour
         }
         else //the player hasn't enough tiles to reach the dices sum, game over for the player
         {
-            _currentPlayer.GetComponent<Player>().EnableSelect(false);
-            PlayerGameOver(_currentPlayer);
-            if(_playersPlaying.Count>0)ChangePlayer();
+            var deletedPlayer = _currentPlayer;
+            deletedPlayer.GetComponent<Player>().EnableSelect(false);
+            if(_playersPlaying.Count-1>0)ChangePlayer();
+            PlayerGameOver(deletedPlayer);
         }
     }
     
@@ -143,11 +144,7 @@ public class GameManager : MonoBehaviour
     private void ChangePlayer()
     {
         int currentIndex = _playersPlaying.IndexOf(_currentPlayer);
-        if (currentIndex != _playersPlaying.Count - 1) //circular array 
-            _currentPlayer = _playersPlaying[currentIndex + 1];
-        else
-            _currentPlayer = _playersPlaying[0];
-
+        _currentPlayer = _playersPlaying[(currentIndex + 1)%_numPlayers]; //circular array
         launcher.transform.position = _currentPlayer.transform.position;
         launcher.transform.rotation = _currentPlayer.transform.rotation;
         launcher.enabled = true;

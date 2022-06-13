@@ -24,8 +24,8 @@ public class PlayerAI : Player
             {
                 mcts oracle = new mcts();
                 var sumDices = remainingValue;
-                StartCoroutine(oracle.computeBestMove(this,gameMan.maximumScore(),tiles, sumDices));
                 _computing = true;
+                StartCoroutine(oracle.computeBestMove(this,gameMan.maximumScore(),tiles, sumDices));
             }
         }
 
