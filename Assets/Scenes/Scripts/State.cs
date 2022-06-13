@@ -1,19 +1,16 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine;
 
 public class State 
 {
     private double _ucb;
     private readonly ArrayList _tiles;
-    private State _parent;
-    private List<State> _childrens;
-    private HashSet<int> _played;
+    private readonly State _parent;
+    private readonly List<State> _children;
+    private readonly HashSet<int> _played;
     private int _simulations;
     private int _allTimeScores;
-    private ArrayList _unexpandedChildren;
+    private readonly ArrayList _unexpandedChildren;
     private bool completelyExpanded;
 
     public State(State parent, ArrayList possibleExpansions, ArrayList tiles, HashSet<int> played)
@@ -24,7 +21,7 @@ public class State
         _played = played;
         _simulations = 0;
         _allTimeScores = 0;
-        _childrens = new List<State>();
+        _children = new List<State>();
         _unexpandedChildren = possibleExpansions;
     }
 
@@ -76,7 +73,7 @@ public class State
 
     public List<State> getChildren()
     {
-        return _childrens;
+        return _children;
     }
 
     public State getParent()
@@ -96,7 +93,7 @@ public class State
 
     public void addChild(State newChild)
     {
-        _childrens.Add(newChild);
+        _children.Add(newChild);
     }
     
 }

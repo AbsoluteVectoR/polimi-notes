@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using Scenes.Scripts;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -12,7 +10,7 @@ public class mcts
 {
     private int _remainingValue;
     private int _allTimeSimulations;
-    private const float C = 1.4142135624f; //sqrt(2) 
+    private const float C = 1.4142135624f; //sqrt(2) for ucb 
     private int _maximumScore;
     private PlayerAI _caller;
     private ArrayList _possibleExpansionState;
@@ -23,25 +21,39 @@ public class mcts
         _totalSim = 1;
         _caller = caller;
         _tilesRoot = tiles;
-        yield return new WaitForSeconds(0.1f); //temporary 
         _maximumScore = maximumScore;
         _possibleExpansionState = new ArrayList();
         for (int i = 2; i <= 12; i++) _possibleExpansionState.Add(i); //'constant' arraylist needed for expansion phase
-
         State root = buildRootNode(sumDices);
-        
-        while (_totalSim < 1000000)
+        State bestMove = null;
+        if (root.getChildren().Count == 1)
         {
-            var selected = selection(root);
-            var expanded = expansion(selected);
-            var newScore = simulation(expanded);
-            backpropagation(expanded,newScore);
-            _totalSim++;
+            bestMove = root.getChildren()[0];
         }
+        else
+        {
+            while (_totalSim < 100000)
+            {
+                var selected = selection(root);
+                var expanded = expansion(selected);
+                var newScore = simulation(expanded);
+                backpropagation(expanded,newScore);
+                _totalSim++;
+                if(_totalSim%300==0) yield return null;
+            }
 
-        //Queue<int> bestMove = new Queue<int>();
-
-        adviceBestMove();
+            double bestUcb = double.MinValue;
+            foreach (State possibleMove in root.getChildren())
+            {
+                if (possibleMove.getUcb() > bestUcb)
+                {
+                    bestMove = possibleMove;
+                    bestUcb = bestMove.getUcb();
+                }
+            }
+        }
+        
+        adviceBestMove(bestMove);
     }
 
     private State buildRootNode(int sumDices)
@@ -69,37 +81,29 @@ public class mcts
     {
         var allTimeScore = state.getAllTimeScore();
         var sims = state.getSimulations();
-        /*
-        var parentSimulations = 1;
-        if (state.getParent() != null)
-        {
-            parentSimulations = state.getParent().getSimulations();
-        }
-        */
         if (sims == 0) return Double.MaxValue;
-        //if (parentSimulations == 0) parentSimulations = 1;
-        double ucb = ((double)allTimeScore / (_maximumScore * sims) + C * Math.Sqrt((Math.Log(_totalSim))/ sims));
+        double ucb = ((double)allTimeScore /(_maximumScore * sims) + C * Math.Sqrt((Math.Log(_totalSim))/ sims));
         return ucb;
     }
     
-    private void adviceBestMove()
+    private void adviceBestMove(State bestMove)
     {
-        _caller.takeAdvice();
+        Debug.Log("simulations on this move:"+bestMove.getSimulations());
+        Debug.Log("ucb score:"+bestMove.getUcb());
+        _caller.takeAdvice(bestMove.getPlayed());
     }
 
     private State selection(State selectedState)
     {
-        var bestUcb = double.MinValue;
-        if (selectedState.getChildren().Count <= 0) return selectedState;
+        if (selectedState.getChildren().Count == 0) return selectedState;
         
+        var bestUcb = double.MinValue;
         State bestChild = null;
         foreach (var child in selectedState.getChildren())
         {
-            if (child.getUcb() >= bestUcb)
-            {
-                bestChild = child;
-                bestUcb = child.getUcb();
-            }
+            if (child.getUcb() < bestUcb) continue;
+            bestChild = child;
+            bestUcb = child.getUcb();
         }
         return selection(bestChild);
     }
@@ -135,9 +139,8 @@ public class mcts
         while (true)
         {
             var tiles = simulatedChild.getTiles();
-            var possibleMoves = new ArrayList();
             var launch = randomLaunch();
-            possibleMoves = LegalMoves.computeSets(simulatedChild.getTiles(), launch);
+            var possibleMoves = LegalMoves.computeSets(simulatedChild.getTiles(), launch);
             if (possibleMoves.Count == 0) break;
             HashSet<int> randomMove =
                 (HashSet<int>)possibleMoves[(int)Random.Range(0f, possibleMoves.Count - 0.00001f)];

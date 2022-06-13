@@ -15,13 +15,13 @@ public class Player : MonoBehaviour
     protected int remainingValue;
     protected bool selectEnabled;
 
-    public void startPlaying(GameManager gameMan, int numOfTiles, string username){
+    public void startPlaying(GameManager gameManager, int numberOfTiles, string userName){
         score = 99;
-        this.gameMan = gameMan;
-        this.numOfTiles = numOfTiles;
-        this.username = username;
-        tiles = new ArrayList(numOfTiles);
-        tilesObj = new GameObject[numOfTiles];
+        this.gameMan = gameManager;
+        this.numOfTiles = numberOfTiles;
+        this.username = userName;
+        tiles = new ArrayList(numberOfTiles);
+        tilesObj = new GameObject[numberOfTiles];
         InstantiateTiles();
     }
 
