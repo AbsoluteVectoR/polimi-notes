@@ -11,7 +11,6 @@ public class State
     private int _simulations;
     private int _allTimeScores;
     private readonly ArrayList _unexpandedChildren;
-    private bool completelyExpanded;
 
     public State(State parent, ArrayList possibleExpansions, ArrayList tiles, HashSet<int> played)
     {

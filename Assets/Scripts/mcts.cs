@@ -96,17 +96,34 @@ public class mcts
     private State selection(State selectedState)
     {
         if (selectedState.getChildren().Count == 0) return selectedState;
+        State bestChildNotExpanded = null;
+        State bestChildCompletelyExpanded = null;
+        var bestUcbExpanded = double.MinValue;
+        var bestUcbNotExpanded = double.MinValue;
         
-        var bestUcb = double.MinValue;
-        State bestChild = null;
         foreach (var child in selectedState.getChildren())
         {
+            //updating the ucb of child
             var newUcb = Ucb(child);
             child.setUcb(newUcb);
-            if (newUcb < bestUcb) continue;
-            bestUcb = child.getUcb();
-            bestChild = child;
+            //I find the best child not full expanded, meanwhile I always tracked the best child already expanded in case I already expand all children
+            if (!child.isFullExpanded())
+            {
+                if (newUcb < bestUcbNotExpanded) continue;
+                bestUcbNotExpanded = child.getUcb();
+                bestChildNotExpanded = child;
+            }
+            else
+            {
+                if (newUcb < bestUcbExpanded) continue;
+                bestUcbExpanded = child.getUcb();
+                bestChildCompletelyExpanded = child;
+            }
         }
+
+        State bestChild = null;
+        bestChild = bestChildNotExpanded ?? bestChildCompletelyExpanded; //if bestChildNotExpanded is null, I will select the best child already full expanded
+        
         return selection(bestChild);
     }
 

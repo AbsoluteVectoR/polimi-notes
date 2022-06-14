@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
         //main player
         var posTiles = new Vector3(0, seatHeight, -seatDistance);
         var humanPlayer = Instantiate(player, posTiles, Quaternion.identity);
-        humanPlayer.GetComponent<Player>().startPlaying(this, _numOfTiles, humanUsername);
+        humanPlayer.GetComponent<Player>().startPlaying(this, _numOfTiles, humanUsername,false);
         _playersPlaying.Add(humanPlayer);
 
 
@@ -45,14 +45,14 @@ public class GameManager : MonoBehaviour
         {
             posTiles = new Vector3(-seatDistance, seatHeight, 0);
             var leftPlayer = Instantiate(aiPlayer, posTiles, Quaternion.LookRotation(-posTiles));
-            leftPlayer.GetComponent<PlayerAI>().startPlaying(this, _numOfTiles, "Monte");
+            leftPlayer.GetComponent<PlayerAI>().startPlaying(this, _numOfTiles, "Monte",false);
             _playersPlaying.Add(leftPlayer);
         }
 
         //front player 
         posTiles = new Vector3(0, seatHeight, seatDistance);
         var frontPlayer = Instantiate(aiPlayer, posTiles, Quaternion.LookRotation(-posTiles));
-        frontPlayer.GetComponent<PlayerAI>().startPlaying(this, _numOfTiles, "Carlo");
+        frontPlayer.GetComponent<PlayerAI>().startPlaying(this, _numOfTiles, "Carlo",false);
         _playersPlaying.Add(frontPlayer);
 
         //right player 
@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
         {
             posTiles = new Vector3(seatDistance, seatHeight, 0);
             var rightPlayer = Instantiate(aiPlayer, posTiles, Quaternion.LookRotation(-posTiles));
-            rightPlayer.GetComponent<PlayerAI>().startPlaying(this, _numOfTiles, "Sir Tree");
+            rightPlayer.GetComponent<PlayerAI>().startPlaying(this, _numOfTiles, "Sir Tree",false);
             _playersPlaying.Add(rightPlayer);
         }
         
@@ -144,7 +144,7 @@ public class GameManager : MonoBehaviour
     private void ChangePlayer()
     {
         int currentIndex = _playersPlaying.IndexOf(_currentPlayer);
-        _currentPlayer = _playersPlaying[(currentIndex + 1)%_numPlayers]; //circular array
+        _currentPlayer = _playersPlaying[(currentIndex + 1)%(_playersPlaying.Count)]; //circular array
         launcher.transform.position = _currentPlayer.transform.position;
         launcher.transform.rotation = _currentPlayer.transform.rotation;
         launcher.enabled = true;
