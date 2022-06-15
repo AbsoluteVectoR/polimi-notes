@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
 public class PlayerAI : Player
@@ -9,6 +7,7 @@ public class PlayerAI : Player
         private bool _computing;
         private bool _computed;
         private Queue bestMove;
+        private PlayerStats _stats;
         
         private void Update()
         {
@@ -35,19 +34,19 @@ public class PlayerAI : Player
             foreach (int tile in bestMove)
             {
                 this.bestMove.Enqueue(tile);
-                Debug.Log(tile);
             }
             _computing = false;
             _computed = true;
         }
         
-        public new int returnTileTestBench()
+        public override int returnTileTestBench()
         {
-            if (_computing) return -1;
+            if (_computing) return 0;
             if (_computed) //when computed playerAI knows which are the best moves and play them 
             {
                 var tileToSelect = (int) bestMove.Dequeue();
                 if (bestMove.Count == 0) _computed = false; //my turn has finished
+                tiles.Remove(tileToSelect);
                 return tileToSelect;
             }
             else
@@ -56,8 +55,33 @@ public class PlayerAI : Player
                 var sumDices = remainingValue;
                 _computing = true;
                 StartCoroutine(oracle.computeBestMove(this,gameMan.maximumScore(),tiles, sumDices));
-                return -1;
+                return 0;
             }
+        }
+        
+        public override ArrayList GetTiles()
+        {
+            return tiles;
+        }
+
+        public override PlayerStats returnStats()
+        {
+            return _stats;
+        }
+
+        public override void increaseWins()
+        {
+            _stats.win();
+        }
+
+        public override void newScore(int newScore)
+        {
+            _stats.newScore(newScore);
+        }
+        
+        public override void keepStatistics()
+        {
+            _stats = new PlayerStats();
         }
         
     }

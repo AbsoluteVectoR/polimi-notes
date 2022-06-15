@@ -12,17 +12,18 @@ public class GameManager : MonoBehaviour
     public float seatDistance;
     public float seatHeight;
     public GameObject player;
-    [FormerlySerializedAs("AIplayer")] public GameObject aiPlayer;
+    public GameObject aiPlayer;
     public GameObject menuUI;
     public GameObject inGameUI;
-    public string humanUsername;
-    private int _numPlayers;
-    private int _numOfTiles = 12;
+    private string _humanUsername;
+    protected int numPlayers;
+    protected int numOfTiles = 12;
+    protected int sumValue;
+    protected int sumSelectedTiles;
     private List<GameObject> _playersPlaying;
     private List<GameObject> _playersOut;
     private GameObject _currentPlayer;
-    private int _sumValue;
-    private int _sumSelectedTiles;
+    
 
     public void Awake()
     {
@@ -31,36 +32,36 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        _playersPlaying = new List<GameObject>(_numPlayers);
+        _playersPlaying = new List<GameObject>(numPlayers);
         _playersOut = new List<GameObject>();
         //main player
         var posTiles = new Vector3(0, seatHeight, -seatDistance);
         var humanPlayer = Instantiate(player, posTiles, Quaternion.identity);
-        humanPlayer.GetComponent<Player>().startPlaying(this, _numOfTiles, humanUsername,false);
+        humanPlayer.GetComponent<Player>().startPlaying(this, numOfTiles, _humanUsername,false);
         _playersPlaying.Add(humanPlayer);
 
 
         //left player
-        if (_numPlayers == 4)
+        if (numPlayers == 4)
         {
             posTiles = new Vector3(-seatDistance, seatHeight, 0);
             var leftPlayer = Instantiate(aiPlayer, posTiles, Quaternion.LookRotation(-posTiles));
-            leftPlayer.GetComponent<PlayerAI>().startPlaying(this, _numOfTiles, "Monte",false);
+            leftPlayer.GetComponent<PlayerAI>().startPlaying(this, numOfTiles, "Monte",false);
             _playersPlaying.Add(leftPlayer);
         }
 
         //front player 
         posTiles = new Vector3(0, seatHeight, seatDistance);
         var frontPlayer = Instantiate(aiPlayer, posTiles, Quaternion.LookRotation(-posTiles));
-        frontPlayer.GetComponent<PlayerAI>().startPlaying(this, _numOfTiles, "Carlo",false);
+        frontPlayer.GetComponent<PlayerAI>().startPlaying(this, numOfTiles, "Carlo",false);
         _playersPlaying.Add(frontPlayer);
 
         //right player 
-        if (_numPlayers == 4)
+        if (numPlayers == 4)
         {
             posTiles = new Vector3(seatDistance, seatHeight, 0);
             var rightPlayer = Instantiate(aiPlayer, posTiles, Quaternion.LookRotation(-posTiles));
-            rightPlayer.GetComponent<PlayerAI>().startPlaying(this, _numOfTiles, "Sir Tree",false);
+            rightPlayer.GetComponent<PlayerAI>().startPlaying(this, numOfTiles, "Sir Tree",false);
             _playersPlaying.Add(rightPlayer);
         }
         
@@ -72,21 +73,21 @@ public class GameManager : MonoBehaviour
     
     public void DicesStopped(int sum)
     {
-        _sumValue = sum;
+        sumValue = sum;
         UpdatingPlayerTiles();
     }
 
     private void UpdatingPlayerTiles()
     {
-        ArrayList selectableTiles = LegalMoves.compute(_currentPlayer.GetComponent<Player>().GetTiles(), _sumValue, _sumSelectedTiles);
+        ArrayList selectableTiles = LegalMoves.compute(_currentPlayer.GetComponent<Player>().GetTiles(), sumValue, sumSelectedTiles);
         if (selectableTiles.Count > 0)
         {
             _currentPlayer.GetComponent<Player>().EnableSelect(true);
-            _currentPlayer.GetComponent<Player>().SetPlayerSelectables(selectableTiles,_sumValue-_sumSelectedTiles);
+            _currentPlayer.GetComponent<Player>().SetPlayerSelectables(selectableTiles,sumValue-sumSelectedTiles);
         }
-        else if (_sumSelectedTiles == _sumValue) //the player have selected all the tiles necessary to reach the dices sum, he ended his turn
+        else if (sumSelectedTiles == sumValue) //the player have selected all the tiles necessary to reach the dices sum, he ended his turn
         {
-            _sumSelectedTiles = 0;
+            sumSelectedTiles = 0;
             _currentPlayer.GetComponent<Player>().EnableSelect(false);
             if (_currentPlayer.GetComponent<Player>().GetTiles().Count == 0) //Check in case of immediate win
             {
@@ -112,7 +113,7 @@ public class GameManager : MonoBehaviour
         int score = 0;
         var tiles = eliminatedPlayer.GetComponent<Player>().GetTiles();
         foreach (int number in tiles) score += number; //counting the score
-        score = sum(_numOfTiles) - score;
+        score = sum(numOfTiles) - score;
         eliminatedPlayer.GetComponent<Player>().SetScore(score);
         _playersPlaying.Remove(eliminatedPlayer);
         _playersOut.Add(eliminatedPlayer);
@@ -153,34 +154,34 @@ public class GameManager : MonoBehaviour
 
     public void SelectTile(int selectedTile)
     {
-        _sumSelectedTiles += selectedTile;
+        sumSelectedTiles += selectedTile;
         UpdatingPlayerTiles();
     }
 
 
     public void setNumOfPlayers(int num)
     {
-        this._numPlayers = num;
+        this.numPlayers = num;
     }
 
     public void setNumOfTiles(int num)
     {
-        this._numOfTiles = num;
+        this.numOfTiles = num;
     }
 
     public void setHumanNickname(string username)
     {
-        humanUsername = username;
+        _humanUsername = username;
     }
 
     public int getNumOfPlayers()
     {
-        return _numPlayers;
+        return numPlayers;
     }
 
     public string getHumanNickname()
     {
-        return humanUsername;
+        return _humanUsername;
     }
 
 
@@ -193,7 +194,7 @@ public class GameManager : MonoBehaviour
 
     public int maximumScore()
     {
-        return sum(_numOfTiles);
+        return sum(numOfTiles);
     }
 
     public void newPlay()

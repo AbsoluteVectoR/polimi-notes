@@ -88,8 +88,8 @@ public class mcts
     
     private void adviceBestMove(State bestMove)
     {
-        Debug.Log("simulations on this move:"+bestMove.getSimulations());
-        Debug.Log("ucb score:"+bestMove.getUcb());
+        //Debug.Log("simulations on this move:"+bestMove.getSimulations());
+        //Debug.Log("ucb score:"+bestMove.getUcb());
         _caller.takeAdvice(bestMove.getPlayed());
     }
 

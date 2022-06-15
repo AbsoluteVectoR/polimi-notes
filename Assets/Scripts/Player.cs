@@ -67,7 +67,7 @@ public class Player : MonoBehaviour
         return selectEnabled;
     }
 
-    public ArrayList GetTiles()
+    public virtual ArrayList GetTiles()
     {
         return tiles;
     }
@@ -92,8 +92,29 @@ public class Player : MonoBehaviour
         return username;
     }
 
-    public int returnTileTestBench()
+    public virtual int returnTileTestBench()
     {
         return -1;
     }
+
+    public virtual PlayerStats returnStats()
+    {
+        return null;
+    }
+
+    public virtual void increaseWins()
+    {
+        return;
+    }
+
+    public virtual void newScore(int newScore)
+    {
+        return;
+    }
+
+    public virtual void keepStatistics()
+    {
+        return;
+    }
+    
 }

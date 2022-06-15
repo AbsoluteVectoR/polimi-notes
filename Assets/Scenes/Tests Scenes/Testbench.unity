@@ -152,6 +152,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a391d47ec2d4ad49a856b4dc21e9354, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  launcher: {fileID: 0}
+  seatDistance: 0
+  seatHeight: 0
+  player: {fileID: 0}
+  aiPlayer: {fileID: 0}
+  menuUI: {fileID: 0}
+  inGameUI: {fileID: 0}
+  numOfRandomPlayers: 1
+  numOfAi: 1
 --- !u!4 &64638851
 Transform:
   m_ObjectHideFlags: 0
