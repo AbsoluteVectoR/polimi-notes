@@ -185,7 +185,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    private static int sum(int numOfTiles)
+    public static int sum(int numOfTiles)
     {
         int sum = 0;
         for (int x = 1; x <= numOfTiles; x++) sum += x;

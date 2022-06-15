@@ -51,21 +51,22 @@ public class TestBench : GameManager
     private IEnumerator bench()
     {
         int numberMatches = 100;
+        sumValue = Random.Range(1, 6) + Random.Range(1, 6);
         while (numberMatches > 0)
         {
             while (_playing.Count>0)
             {
-                sumValue = Random.Range(1, 6) + Random.Range(1, 6);
-                //Debug.Log("Dices said " + sumValue);
-                sumSelectedTiles = 0;
                 while(sumSelectedTiles<sumValue)
                 {
                     var playersAlive = _playing.Count();
                     UpdatingPlayerTiles(); //this is also responsible to playerChange and gameover
+                    sumSelectedTiles = 0;
                     if (playersAlive != _playing.Count()) break; // player lose!
                     int selected = 0;
                     while (selected == 0)
                     {
+                        //Debug.Log(_current);
+                        sumValue = Random.Range(1, 6) + Random.Range(1, 6); //random launch
                         yield return new WaitForSeconds(0.1f);
                         selected = _current.returnTileTestBench();
                         if (selected != 0)
@@ -154,14 +155,7 @@ public class TestBench : GameManager
     {
         int currentIndex = _playing.IndexOf(_current);
         _current = _playing[(currentIndex + 1)%(_playing.Count)]; //circular array
-        
     }
     
-    private static int sum(int numOfTiles)
-    {
-        int sum = 0;
-        for (int x = 1; x <= numOfTiles; x++) sum += x;
-        return sum;
-    }
 
 }
