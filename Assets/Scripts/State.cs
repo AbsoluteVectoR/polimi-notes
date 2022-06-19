@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class State 
 {
-    private double _ucb;
+    private float _ucb;
     private readonly ArrayList _tiles;
     private readonly State _parent;
     private readonly List<State> _children;
@@ -55,7 +55,7 @@ public class State
         return _ucb;
     }
 
-    public void setUcb(double newUcb)
+    public void setUcb(float newUcb)
     {
         _ucb = newUcb;
     }

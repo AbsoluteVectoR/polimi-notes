@@ -32,14 +32,14 @@ public class mcts
         }
         else
         {
-            while (_totalSim < 100000)
+            while (_totalSim < 1000000)
             {
                 var selected = selection(root);
                 var expanded = expansion(selected);
                 var newScore = simulation(expanded);
                 backpropagation(expanded,newScore);
                 _totalSim++;
-                if(_totalSim%300==0) yield return null;
+                if (_totalSim % 2000 == 0)yield return null;
             }
 
             double bestUcb = double.MinValue;
@@ -77,54 +77,41 @@ public class mcts
         return valueDices;
     }
 
-    private double Ucb(State state)
+    private float Ucb(State state)
     {
         var allTimeScore = state.getAllTimeScore();
         var sims = state.getSimulations();
-        if (sims == 0) return Double.MaxValue;
-        double ucb = ((double)allTimeScore /(_maximumScore * sims) + C * Math.Sqrt((Math.Log(_totalSim))/ sims));
-        return ucb;
+        if (sims == 0) return float.MaxValue;
+        return ((float)allTimeScore /(_maximumScore * sims) + C * (float)Math.Sqrt((Math.Log(_totalSim))/ sims));
     }
     
     private void adviceBestMove(State bestMove)
     {
-        //Debug.Log("simulations on this move:"+bestMove.getSimulations());
-        //Debug.Log("ucb score:"+bestMove.getUcb());
+        Debug.Log("simulations on this move:"+bestMove.getSimulations());
+        Debug.Log("ucb score:"+bestMove.getUcb());
         _caller.takeAdvice(bestMove.getPlayed());
     }
 
     private State selection(State selectedState)
     {
+        State bestChild = null;
+        var bestUcb = float.MinValue;
+
         if (selectedState.getChildren().Count == 0) return selectedState;
-        State bestChildNotExpanded = null;
-        State bestChildCompletelyExpanded = null;
-        var bestUcbExpanded = double.MinValue;
-        var bestUcbNotExpanded = double.MinValue;
         
-        foreach (var child in selectedState.getChildren())
+        foreach (State child in selectedState.getChildren())
         {
-            //updating the ucb of child
             var newUcb = Ucb(child);
             child.setUcb(newUcb);
-            //I find the best child not full expanded, meanwhile I always tracked the best child already expanded in case I already expand all children
-            if (!child.isFullExpanded())
-            {
-                if (newUcb < bestUcbNotExpanded) continue;
-                bestUcbNotExpanded = child.getUcb();
-                bestChildNotExpanded = child;
-            }
-            else
-            {
-                if (newUcb < bestUcbExpanded) continue;
-                bestUcbExpanded = child.getUcb();
-                bestChildCompletelyExpanded = child;
-            }
+            if (newUcb < bestUcb) continue;
+            bestChild = child;
+            bestUcb = newUcb;
         }
 
-        State bestChild = null;
-        bestChild = bestChildNotExpanded ?? bestChildCompletelyExpanded; //if bestChildNotExpanded is null, I will select the best child already full expanded
+        if (!bestChild.isFullExpanded()) return bestChild;
         
         return selection(bestChild);
+
     }
 
     private State expansion(State stateToExpand)
