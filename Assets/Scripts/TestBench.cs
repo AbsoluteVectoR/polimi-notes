@@ -52,22 +52,22 @@ public class TestBench : GameManager
     {
         int numberMatches = 100;
         sumValue = Random.Range(1, 6) + Random.Range(1, 6);
+        sumSelectedTiles = 0;
+        
         while (numberMatches > 0)
         {
             while (_playing.Count>0)
             {
-                while(sumSelectedTiles<sumValue)
+                Debug.Log(_current);
+                sumValue = Random.Range(1, 6) + Random.Range(1, 6); //random launch
+                Debug.Log(sumValue);
+                var selectableTiles = UpdatingPlayerTiles();
+                while (selectableTiles.Count>0) 
                 {
-                    var playersAlive = _playing.Count();
-                    UpdatingPlayerTiles(); //this is also responsible to playerChange and gameover
-                    sumSelectedTiles = 0;
-                    if (playersAlive != _playing.Count()) break; // player lose!
                     int selected = 0;
                     while (selected == 0)
                     {
-                        //Debug.Log(_current);
-                        sumValue = Random.Range(1, 6) + Random.Range(1, 6); //random launch
-                        yield return new WaitForSeconds(0.1f);
+                        if(_current.GetType() == typeof(PlayerAI))yield return new WaitForSeconds(0.5f);
                         selected = _current.returnTileTestBench();
                         if (selected != 0)
                         {
@@ -75,12 +75,15 @@ public class TestBench : GameManager
                         }
                     }
                     sumSelectedTiles += selected;
+                    selectableTiles = UpdatingPlayerTiles();
                 }
+
+                turnFinished();
             }
-            Debug.Log("FINISHED");
+            Debug.Log("FINISHED, number of matches: "+ (100-numberMatches));
             foreach (var p in _out)
             {
-                Debug.Log(p.GetType() + "won "+p.returnStats().getRatioWins()*100 +" % of total matches");
+                Debug.Log(p.GetType() + " won "+p.returnStats().getRatioWins()*100 +" % of total matches");
                 Debug.Log(" with average score of "+ p.returnStats().getAverageScore());
             }
             numberMatches--;
@@ -94,14 +97,22 @@ public class TestBench : GameManager
         }
     }
 
-    private void UpdatingPlayerTiles()
+    
+    
+    private ArrayList UpdatingPlayerTiles()
     {
         ArrayList selectableTiles = LegalMoves.compute(_current.GetComponent<Player>().GetTiles(), sumValue, sumSelectedTiles);
         if (selectableTiles.Count > 0)
         {
             _current.GetComponent<Player>().SetPlayerSelectables(selectableTiles,sumValue-sumSelectedTiles);
         }
-        else if (sumSelectedTiles == sumValue) //the player have selected all the tiles necessary to reach the dices sum, he ended his turn
+        return selectableTiles;
+    }
+    
+    
+    private void turnFinished()
+    {
+        if (sumSelectedTiles == sumValue) 
         {
             sumSelectedTiles = 0;
             if (_current.GetComponent<Player>().GetTiles().Count == 0) //Check in case of immediate win
