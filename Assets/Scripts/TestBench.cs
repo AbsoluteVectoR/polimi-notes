@@ -59,7 +59,7 @@ public class TestBench : GameManager
             while (_playing.Count>0)
             {
                 Debug.Log(_current);
-                sumValue = Random.Range(1, 6) + Random.Range(1, 6); //random launch
+                sumValue = Random.Range(1, 7) + Random.Range(1, 7); //random launch
                 Debug.Log(sumValue);
                 var selectableTiles = UpdatingPlayerTiles();
                 while (selectableTiles.Count>0) 
@@ -80,7 +80,7 @@ public class TestBench : GameManager
 
                 turnFinished();
             }
-            Debug.Log("FINISHED, number of matches: "+ (100-numberMatches));
+            Debug.Log("FINISHED, number of matches: "+ (1001-numberMatches));
             foreach (var p in _out)
             {
                 Debug.Log(p.GetType() + " won "+p.returnStats().getRatioWins()*100 +" % of total matches");

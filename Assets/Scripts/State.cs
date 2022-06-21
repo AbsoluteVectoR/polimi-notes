@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Scenes.Scripts;
 
 public class State 
 {
@@ -10,10 +11,12 @@ public class State
     private readonly HashSet<int> _played;
     private int _simulations;
     private int _allTimeScores;
-    private readonly ArrayList _unexpandedChildren;
+    private readonly Hashtable _unexpandedChildren;
+    private int _sumDices;
 
-    public State(State parent, ArrayList possibleExpansions, ArrayList tiles, HashSet<int> played)
+    public State(State parent, ArrayList tiles, HashSet<int> played, int sumDices)
     {
+        _sumDices = sumDices;
         _parent = parent;
         _ucb = float.MaxValue;
         _tiles = tiles;
@@ -21,20 +24,47 @@ public class State
         _simulations = 0;
         _allTimeScores = 0;
         _children = new List<State>();
-        _unexpandedChildren = possibleExpansions;
+        _unexpandedChildren = new Hashtable();
+        for (int i = 2; i <= 12; i++)
+        {
+            _unexpandedChildren.Add(i,new ArrayList()); 
+        }
     }
 
+    public int getSumDices()
+    {
+        return _sumDices;
+    }
+    
     public bool isFullExpanded()
     {
-        return (_tiles.Count == 0 || _unexpandedChildren.Count == 0);
+        if (_tiles.Count == 0) return true;
+
+        if (_unexpandedChildren.Count > 0) return false; 
+        
+        return true;
     }
 
-    public void newExpandedChild(int expandedLaunch)
+    public void newExpandedLaunch(int launchDices, ArrayList possibleMoves)
     {
-        _unexpandedChildren.Remove(expandedLaunch);
+        if (possibleMoves.Count > 0)
+        {
+            _unexpandedChildren[launchDices]=possibleMoves;
+        }
+        else
+        {
+            _unexpandedChildren.Remove(launchDices);
+        }
     }
 
-    public ArrayList returnUnexpandedLaunches()
+    public void newExpandedMove(int launchDices, HashSet<int> expandedMove)
+    {
+        var arrayOfPossibleMoves = (ArrayList)_unexpandedChildren[launchDices];
+        arrayOfPossibleMoves.Remove(expandedMove);
+        if (arrayOfPossibleMoves.Count == 0) _unexpandedChildren.Remove(launchDices);
+    }
+    
+    public Hashtable returnUnexpandedLaunches()
     {
         return _unexpandedChildren;
     }
