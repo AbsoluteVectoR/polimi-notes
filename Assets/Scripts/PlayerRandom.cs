@@ -12,8 +12,9 @@ public class PlayerRandom : Player
     
     public override int returnTileTestBench()
     {
-        tiles.Remove((int)selectableTiles[0]);
-        return (int)selectableTiles[0]; //selectable tiles is set by TestBench
+        var selected = (int)selectableTiles[Random.Range(0, selectableTiles.Count)];
+        tiles.Remove(selected);
+        return selected; //selectable tiles is set by TestBench
     }
     
     public override ArrayList GetTiles()
