@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     public GameObject inGameUI;
     private string _humanUsername;
     protected int numPlayers;
-    protected int numOfTiles = 12;
+    [SerializeField]protected int numOfTiles = 12;
     protected int sumValue;
     protected int sumSelectedTiles;
     private List<GameObject> _playersPlaying;

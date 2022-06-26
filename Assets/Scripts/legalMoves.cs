@@ -56,6 +56,8 @@ namespace Scenes.Scripts
     
         public static ArrayList computeSets(ArrayList currentTiles, int sumDices)
         {
+            if (currentTiles.Count == 0) return new ArrayList();
+            
             var tmp = currentTiles;
             var sets = new ArrayList();
 

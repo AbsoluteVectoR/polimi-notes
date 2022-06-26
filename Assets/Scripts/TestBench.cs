@@ -50,17 +50,17 @@ public class TestBench : GameManager
 
     private IEnumerator bench()
     {
-        int numberMatches = 100;
-        sumValue = Random.Range(1, 6) + Random.Range(1, 6);
+        int numberMatches = 1000;
+        sumValue = Random.Range(1, 7) + Random.Range(1, 7);
         sumSelectedTiles = 0;
         
         while (numberMatches > 0)
         {
             while (_playing.Count>0)
             {
-                Debug.Log(_current);
+                //Debug.Log(_current);
                 sumValue = Random.Range(1, 7) + Random.Range(1, 7); //random launch
-                Debug.Log(sumValue);
+                //Debug.Log(sumValue);
                 var selectableTiles = UpdatingPlayerTiles();
                 while (selectableTiles.Count>0) 
                 {
@@ -71,19 +71,18 @@ public class TestBench : GameManager
                         selected = _current.returnTileTestBench();
                         if (selected != 0)
                         {
-                            Debug.Log( _current.GetType() + " played "+selected);
+                            //Debug.Log( _current.GetType() + " played "+selected);
                         }
                     }
                     sumSelectedTiles += selected;
                     selectableTiles = UpdatingPlayerTiles();
                 }
-
                 turnFinished();
             }
             Debug.Log("FINISHED, number of matches: "+ (1001-numberMatches));
             foreach (var p in _out)
             {
-                Debug.Log(p.GetType() + " won "+p.returnStats().getRatioWins()*100 +" % of total matches");
+                Debug.Log(p.GetType() + " won "+ (int)(p.returnStats().getRatioWins()*100) +" % of total matches");
                 Debug.Log(" with average score of "+ p.returnStats().getAverageScore());
             }
             numberMatches--;
@@ -117,7 +116,14 @@ public class TestBench : GameManager
             sumSelectedTiles = 0;
             if (_current.GetComponent<Player>().GetTiles().Count == 0) //Check in case of immediate win
             {
-                var allPlayers = _playing;
+                var allPlayers = new List<Player>();
+                
+                //TODO refactor
+                foreach (var p in _playing)
+                {
+                    allPlayers.Add(p);
+                }
+                
                 foreach (var p in allPlayers) PlayerGameOver(p); //immediate win, immediate Game Over for everyone
             }
             else
