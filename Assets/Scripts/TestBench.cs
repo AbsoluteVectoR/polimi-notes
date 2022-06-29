@@ -113,7 +113,6 @@ public class TestBench : GameManager
     {
         if (sumSelectedTiles == sumValue) 
         {
-            sumSelectedTiles = 0;
             if (_current.GetComponent<Player>().GetTiles().Count == 0) //Check in case of immediate win
             {
                 var allPlayers = new List<Player>();
@@ -137,6 +136,7 @@ public class TestBench : GameManager
             if (_playing.Count - 1 > 0) ChangePlayer();
             PlayerGameOver(deletedPlayer);
         }
+        sumSelectedTiles = 0;
     }
     
     private void PlayerGameOver(Player eliminatedPlayer)

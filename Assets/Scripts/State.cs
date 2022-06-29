@@ -58,8 +58,7 @@ public class State
 
     public bool isFullExpanded()
     {
-        if (tiles.Count == 0) return true;
-        return unexpandedPlays.Count != 0;
+        return unexpandedPlays.Count == 0;
     }
 
     public void expandPlay(int dicePlay)

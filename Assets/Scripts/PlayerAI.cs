@@ -9,7 +9,7 @@ public class PlayerAI : Player
         private Queue bestMove;
         private PlayerStats _stats;
         
-        private void Update()
+        private void Update() // used in a normal match
         {
             if (!selectEnabled) return; //selectEnabled is true when the Game Manager receive the result of the dices from the DicesLauncher 
             if (_computing) return;
@@ -39,7 +39,7 @@ public class PlayerAI : Player
             _computed = true;
         }
         
-        public override int returnTileTestBench()
+        public override int returnTileTestBench() //used in testbench
         {
             if (_computing) return 0;
             if (_computed) //when computed playerAI knows which are the best moves and play them 

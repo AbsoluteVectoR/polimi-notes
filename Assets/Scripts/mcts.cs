@@ -2,10 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Scenes.Scripts;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
 public class mcts
@@ -17,12 +14,18 @@ public class mcts
     private State root;
 
     //compute best move only when there is at least one move
-    public IEnumerator computeBestMove(PlayerAI caller, int maximumScore, ArrayList tilesRoot, int sumDices){
+    public IEnumerator computeBestMove(PlayerAI caller, int maximumScore, ArrayList tilesRoot, int sumDices)
+    {
+
+        _maximumScore = maximumScore; 
         root = new State(null, tilesRoot, null);
+        // to  make the root already full expanded, not necessity to explore different launches at root
+        for(int unexpandedPlay = 2; unexpandedPlay<=12; unexpandedPlay++)root.expandPlay(unexpandedPlay);
         
         //generate children root
         var possibleMoves = LegalMoves.computeSets(tilesRoot, sumDices);
         var bestMove = (HashSet<int>)possibleMoves[0]; 
+        
         if (possibleMoves.Count > 1){
             foreach (HashSet<int> possibleMove in possibleMoves)
             {
@@ -39,26 +42,33 @@ public class mcts
                 backup(simulated);
                 if(root.getSimulations()%1000==0) yield return null;
             }
-            
-            float highestWinRate = -1f;
-            foreach (State child in root.getChildren())
+
+            bestMove = moveHighestWinRate(root);
+        }
+        caller.takeAdvice(bestMove);
+    }
+
+    private HashSet<int> moveHighestWinRate(State parent)
+    {
+        var bestMove = new HashSet<int>();
+        float highestWinRate = -1f;
+        foreach (State child in parent.getChildren())
+        {
+            var winRate = (float)child.getHeritageScore() / (_maximumScore * child.getSimulations());
+            if (winRate > highestWinRate)
             {
-                var winRate = (float)child.getHeritageScore() / (_maximumScore * child.getSimulations());
-                if (winRate > highestWinRate)
-                {
-                    highestWinRate = winRate;
-                    bestMove = child.getPlayed();
-                }
+                highestWinRate = winRate;
+                bestMove = child.getPlayed();
             }
         }
-        
-        caller.takeAdvice(bestMove);
+        Debug.Log("highestWinRate" + highestWinRate);
+        return bestMove;
     }
 
     private State selection(State state)
     {
         var selected = state;
-        while (!selected.isFullExpanded())
+        while (selected.isFullExpanded()&&selected.getChildren().Count>0)
         {
             selected = findBestChild(selected);
         }
@@ -76,7 +86,7 @@ public class mcts
         var childrenToSimulate = new ArrayList();
         foreach (HashSet<int> possibleMove in possibleMoves)
         {
-            var newChild = new State(state, tilesAfterPlay(possibleMoves, possibleMove), possibleMove);
+            var newChild = new State(state, tilesAfterPlay(state.getTiles(), possibleMove), possibleMove);
             state.addChild(newChild);
             childrenToSimulate.Add(newChild);
         }
@@ -109,7 +119,9 @@ public class mcts
             state.increaseSimulations();
             state = state.getParent();
         }
+        state.addScore(newScore);
         state.increaseSimulations();
+        var move = moveHighestWinRate(state); //root debug
     }
 
     private int computeScore(State leaf)
