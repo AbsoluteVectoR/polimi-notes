@@ -18,10 +18,10 @@ public class mcts
 
     //compute best move only when there is at least one move
     public IEnumerator computeBestMove(PlayerAI caller, int maximumScore, ArrayList tilesRoot, int sumDices){
-        
-        root = new State(null, tilesRoot, null);
         _maximumScore = maximumScore;
-        
+        root = new State(null, tilesRoot, null);
+        for(int i = 2; i<=12;i++)root.expandPlay(i); //it's not necessary for the root node exploring alternatives dice launches 
+
         //generate children root
         var possibleMoves = LegalMoves.computeSets(tilesRoot, sumDices);
         var bestMove = (HashSet<int>)possibleMoves[0]; 
@@ -40,11 +40,7 @@ public class mcts
                 var simulated = expanded;
                 if(selected!=expanded) simulated=simulation(expanded);
                 backup(simulated);
-                if (root.getSimulations() % 1000 == 0)
-                {
-                    Debug.Log("test");
-                    yield return null;
-                }
+                if (root.getSimulations() % 1000 == 0) yield return null;
             }
             
             float highestWinRate = -1f;

@@ -16,33 +16,45 @@ public class TestBench : GameManager
     private Player _current;
     public int numOfRandomPlayers = 4;
     public int numOfAi = 4;
+    public int numOfStrategyPlayers = 4;
 
     public void Start()
     {
-        numPlayers = numOfRandomPlayers + numOfAi; 
+        numPlayers = numOfRandomPlayers + numOfAi + numOfStrategyPlayers; 
         
         _playing = new List<Player>(numPlayers);
         _out = new List<Player>();
 
-        for (int i = 0; i < numPlayers; i++)
+        for (int i = 0; i < numOfRandomPlayers; i++)
         {
             Player p = null;
-            if (i < numOfRandomPlayers)
-            {
-                GameObject newPlayer = new GameObject("Random");
-                p = newPlayer.AddComponent<PlayerRandom>();
-                _playing.Add(p);   
-            }
-            else
-            {
-                GameObject newPlayer = new GameObject("AI");
-                p = newPlayer.AddComponent<PlayerAI>();
-                _playing.Add(p);  
-            }
+            GameObject newPlayer = new GameObject("Random");
+            p = newPlayer.AddComponent<PlayerRandom>();
+            _playing.Add(p);
             p.keepStatistics();
             p.startPlaying(this, numOfTiles, "testbench",true);
         }
-
+        
+        for (int i = 0; i < numOfAi; i++)
+        {
+            Player p = null;
+            GameObject newPlayer = new GameObject("AI");
+            p = newPlayer.AddComponent<PlayerAI>();
+            _playing.Add(p);  
+            p.keepStatistics();
+            p.startPlaying(this, numOfTiles, "testbench",true);
+        }
+        
+        for (int i = 0; i < numOfStrategyPlayers; i++)
+        {
+            Player p = null;
+            GameObject newPlayer = new GameObject("StrategyPlayer");
+            p = newPlayer.AddComponent<PlayerStrategy>();
+            _playing.Add(p);  
+            p.keepStatistics();
+            p.startPlaying(this, numOfTiles, "testbench",true);
+        }
+        
         _out = new List<Player>();
         StartCoroutine(bench());
     }
@@ -59,22 +71,15 @@ public class TestBench : GameManager
             _current = _playing[Random.Range(0, _playing.Count)]; //random init player of the match
             while (_playing.Count>0)
             {
-                Debug.Log("Turn of "+_current.GetType()+" with tiles:");
-                printArray(_current.GetTiles());
                 sumValue = Random.Range(1, 7) + Random.Range(1, 7); //random launch
-                Debug.Log("Random launch is "+sumValue);
                 var selectableTiles = UpdatingPlayerTiles();
                 while (selectableTiles.Count>0) 
                 {
                     var selected = 0;
                     while (selected == 0)
                     {
-                        if(_current.GetType() == typeof(PlayerAI))yield return new WaitForSeconds(0.1f); //waiting MCTS computing 
+                        if(_current.GetType() == typeof(PlayerAI))yield return new WaitForSeconds(0.01f); //waiting MCTS computing 
                         selected = _current.returnTileTestBench();
-                        if (selected != 0)
-                        {
-                            Debug.Log( _current.GetType() + " played "+selected);
-                        }
                     }
                     sumSelectedTiles += selected;
                     selectableTiles = UpdatingPlayerTiles();
@@ -177,13 +182,4 @@ public class TestBench : GameManager
         _current = _playing[(currentIndex + 1)%(_playing.Count)]; //circular array
     }
 
-
-    private void printArray(ArrayList tiles)
-    {
-        foreach (var tile in tiles)
-        {
-            Debug.Log((int)tile);
-        }
-    }
-    
 }
