@@ -32,7 +32,7 @@ public class PlayerRandom : Player
         _stats.win();
     }
 
-    public override void newScore(int newScore)
+    public override void updateScoreStatistics(int newScore)
     {
         _stats.newScore(newScore);
     }

@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
         float offset = (1.1f * (numOfTiles + 1) * tileBreadth) / 2f;
         for (int i = 1; i <= numOfTiles; i++)
         {
-            if (!isTesting)
+            if (!isTesting) // in the TestBench this is not necessary
             {
                 Vector3 tilePos = transform.position + transform.right * (i * 1.1f * tileBreadth - offset);
                 tilesObj[i - 1] = Instantiate(tile, tilePos, transform.rotation);
@@ -107,7 +107,7 @@ public class Player : MonoBehaviour
         return;
     }
 
-    public virtual void newScore(int newScore)
+    public virtual void updateScoreStatistics(int newScore)
     {
         return;
     }

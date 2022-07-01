@@ -18,11 +18,14 @@ public class mcts
 
     //compute best move only when there is at least one move
     public IEnumerator computeBestMove(PlayerAI caller, int maximumScore, ArrayList tilesRoot, int sumDices){
+        
         root = new State(null, tilesRoot, null);
+        _maximumScore = maximumScore;
         
         //generate children root
         var possibleMoves = LegalMoves.computeSets(tilesRoot, sumDices);
         var bestMove = (HashSet<int>)possibleMoves[0]; 
+        
         if (possibleMoves.Count > 1){
             foreach (HashSet<int> possibleMove in possibleMoves)
             {
@@ -37,7 +40,11 @@ public class mcts
                 var simulated = expanded;
                 if(selected!=expanded) simulated=simulation(expanded);
                 backup(simulated);
-                if(root.getSimulations()%1000==0) yield return null;
+                if (root.getSimulations() % 1000 == 0)
+                {
+                    Debug.Log("test");
+                    yield return null;
+                }
             }
             
             float highestWinRate = -1f;
@@ -50,6 +57,7 @@ public class mcts
                     bestMove = child.getPlayed();
                 }
             }
+            Debug.Log("Win rate of selected move: "+highestWinRate);
         }
         
         caller.takeAdvice(bestMove);
@@ -64,7 +72,6 @@ public class mcts
         }
         return selected;
     }
-
     private State expansion(State state)
     {
         if (state.isFullExpanded()) return state;
@@ -83,7 +90,6 @@ public class mcts
         state = (State)childrenToSimulate[Random.Range(0, childrenToSimulate.Count)];
         return state;
     }
-
     private State simulation(State state)
     {
         int sumDices = randomLaunch();
@@ -99,7 +105,6 @@ public class mcts
             else return state;
         }
     }
-
     private void backup(State state)
     {
         var newScore = computeScore(state);
@@ -111,21 +116,18 @@ public class mcts
         }
         state.increaseSimulations();
     }
-
     private int computeScore(State leaf)
     {
         var score = _maximumScore;
         foreach (int tile in leaf.getTiles()) score -= tile;
         return score;
     }
-
     private int randomLaunch()
     {
         var dicesValue = Random.Range(1, 7);
         dicesValue+=Random.Range(1, 7);
         return dicesValue;
     }
-
     private State findBestChild(State state)
     {
         var maxUcb = float.MinValue;
@@ -142,8 +144,6 @@ public class mcts
 
         return bestOne;
     }
-
-    
     public float computeUcb(State state)
     {
         float newUcb;
@@ -154,7 +154,6 @@ public class mcts
         state.ucb = newUcb;
         return newUcb;
     }
-    
     private ArrayList tilesAfterPlay(ArrayList tiles, HashSet<int> move)
     {
         var tilesAfterMove = new ArrayList();
@@ -164,5 +163,4 @@ public class mcts
         }
         return tilesAfterMove;
     }
-
 }

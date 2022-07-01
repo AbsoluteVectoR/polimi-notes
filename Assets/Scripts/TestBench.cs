@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,7 +44,6 @@ public class TestBench : GameManager
         }
 
         _out = new List<Player>();
-        _current = _playing[Random.Range(0, _playing.Count)];
         StartCoroutine(bench());
     }
 
@@ -56,22 +56,24 @@ public class TestBench : GameManager
         
         while (numberMatches > 0)
         {
+            _current = _playing[Random.Range(0, _playing.Count)]; //random init player of the match
             while (_playing.Count>0)
             {
-                //Debug.Log(_current);
+                Debug.Log("Turn of "+_current.GetType()+" with tiles:");
+                printArray(_current.GetTiles());
                 sumValue = Random.Range(1, 7) + Random.Range(1, 7); //random launch
-                //Debug.Log(sumValue);
+                Debug.Log("Random launch is "+sumValue);
                 var selectableTiles = UpdatingPlayerTiles();
                 while (selectableTiles.Count>0) 
                 {
-                    int selected = 0;
+                    var selected = 0;
                     while (selected == 0)
                     {
-                        if(_current.GetType() == typeof(PlayerAI))yield return new WaitForSeconds(0.5f);
+                        if(_current.GetType() == typeof(PlayerAI))yield return new WaitForSeconds(0.1f); //waiting MCTS computing 
                         selected = _current.returnTileTestBench();
                         if (selected != 0)
                         {
-                            //Debug.Log( _current.GetType() + " played "+selected);
+                            Debug.Log( _current.GetType() + " played "+selected);
                         }
                     }
                     sumSelectedTiles += selected;
@@ -79,7 +81,7 @@ public class TestBench : GameManager
                 }
                 turnFinished();
             }
-            Debug.Log("FINISHED, number of matches: "+ (1001-numberMatches));
+            Debug.Log("FINISHED MATCH, number of matches: "+ (1001-numberMatches));
             foreach (var p in _out)
             {
                 Debug.Log(p.GetType() + " won "+ (int)(p.returnStats().getRatioWins()*100) +" % of total matches");
@@ -92,7 +94,6 @@ public class TestBench : GameManager
             {
                 p.startPlaying(this,numOfTiles,"test",true);
             }
-            _current = _playing[Random.Range(0, _playing.Count)];
         }
     }
 
@@ -113,16 +114,11 @@ public class TestBench : GameManager
     {
         if (sumSelectedTiles == sumValue) 
         {
-            sumSelectedTiles = 0;
             if (_current.GetComponent<Player>().GetTiles().Count == 0) //Check in case of immediate win
             {
                 var allPlayers = new List<Player>();
                 
-                //TODO refactor
-                foreach (var p in _playing)
-                {
-                    allPlayers.Add(p);
-                }
+                foreach (var p in _playing) allPlayers.Add(p);
                 
                 foreach (var p in allPlayers) PlayerGameOver(p); //immediate win, immediate Game Over for everyone
             }
@@ -137,6 +133,7 @@ public class TestBench : GameManager
             if (_playing.Count - 1 > 0) ChangePlayer();
             PlayerGameOver(deletedPlayer);
         }
+        sumSelectedTiles = 0; //new launch
     }
     
     private void PlayerGameOver(Player eliminatedPlayer)
@@ -146,7 +143,7 @@ public class TestBench : GameManager
         foreach (int number in tiles) score += number; //counting the score
         score = sum(numOfTiles) - score;
         eliminatedPlayer.SetScore(score);
-        eliminatedPlayer.newScore(score);
+        eliminatedPlayer.updateScoreStatistics(score);
         _playing.Remove(eliminatedPlayer);
         _out.Add(eliminatedPlayer);
         Debug.Log(eliminatedPlayer.GetType() + " game over with score: " + eliminatedPlayer.GetScore());
@@ -156,23 +153,37 @@ public class TestBench : GameManager
     private void GameOver()
     {
         Player winner = _out[0];
+        var winnerScore = int.MinValue;
         foreach (Player p in _out)
         {
             var playerScore = p.GetScore();
-            var winnerScore = winner.GetScore();
             if (playerScore > winnerScore)
             {
                 winner = p;
+                winnerScore = playerScore;
+            }
+            else if (playerScore == winnerScore)
+            {
+                winner = null;
             }
         }
-        winner.increaseWins();
+        
+        if(winner!=null) winner.increaseWins();
     }
 
     private void ChangePlayer()
     {
-        int currentIndex = _playing.IndexOf(_current);
+        var currentIndex = _playing.IndexOf(_current);
         _current = _playing[(currentIndex + 1)%(_playing.Count)]; //circular array
     }
-    
 
+
+    private void printArray(ArrayList tiles)
+    {
+        foreach (var tile in tiles)
+        {
+            Debug.Log((int)tile);
+        }
+    }
+    
 }
