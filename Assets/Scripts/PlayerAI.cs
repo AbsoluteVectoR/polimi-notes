@@ -7,9 +7,8 @@ public class PlayerAI : Player
         private bool _computing;
         private bool _computed;
         private Queue bestMove;
-        private PlayerStats _stats;
-        
-        private void Update() // used in a normal match
+
+        private void Update() //update() used during a normal game with human player
         {
             if (!selectEnabled) return; //selectEnabled is true when the Game Manager receive the result of the dices from the DicesLauncher 
             if (_computing) return;
@@ -24,7 +23,7 @@ public class PlayerAI : Player
                 mcts oracle = new mcts();
                 var sumDices = remainingValue;
                 _computing = true;
-                StartCoroutine(oracle.computeBestMove(this,gameMan.maximumScore(),tiles, sumDices));
+                StartCoroutine(oracle.computeBestMove(this,10000,gameMan.maximumScore(),tiles, sumDices));
             }
         }
 
@@ -39,7 +38,7 @@ public class PlayerAI : Player
             _computed = true;
         }
         
-        public override int returnTileTestBench() //used in testbench
+        public override int returnTileTestBench() //used during a Testbench play 
         {
             if (_computing) return 0;
             if (_computed) //when computed playerAI knows which are the best moves and play them 
@@ -54,35 +53,11 @@ public class PlayerAI : Player
                 mcts oracle = new mcts();
                 var sumDices = remainingValue;
                 _computing = true;
-                StartCoroutine(oracle.computeBestMove(this,gameMan.maximumScore(),tiles, sumDices));
+                StartCoroutine(oracle.computeBestMove(this,20000,gameMan.maximumScore(),tiles, sumDices));
                 return 0;
             }
         }
         
-        public override ArrayList GetTiles()
-        {
-            return tiles;
-        }
-
-        public override PlayerStats returnStats()
-        {
-            return _stats;
-        }
-
-        public override void increaseWins()
-        {
-            _stats.win();
-        }
-
-        public override void newScore(int newScore)
-        {
-            _stats.newScore(newScore);
-        }
-        
-        public override void keepStatistics()
-        {
-            _stats = new PlayerStats();
-        }
         
     }
 
