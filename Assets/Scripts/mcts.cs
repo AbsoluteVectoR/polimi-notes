@@ -17,7 +17,7 @@ public class mcts
     private State root;
 
     //compute best move only when there is at least one move
-    public IEnumerator computeBestMove(PlayerAI caller, int maximumScore, ArrayList tilesRoot, int sumDices){
+    public IEnumerator computeBestMove(PlayerAI caller, int mctsIterations, int maximumScore, ArrayList tilesRoot, int sumDices){
         _maximumScore = maximumScore;
         root = new State(null, tilesRoot, null);
         for(int i = 2; i<=12;i++)root.expandPlay(i); //it's not necessary for the root node exploring alternatives dice launches 
@@ -33,20 +33,23 @@ public class mcts
                 root.addChild(newChild);
             }
 
-            while (root.getSimulations() < 100000)
+            while (root.getSimulations() < mctsIterations)
             {
                 var selected = selection(root);
                 var expanded = expansion(selected);
-                var simulated = expanded;
-                if(selected!=expanded) simulated=simulation(expanded);
+                var simulated = simulation(expanded);
                 backup(simulated);
-                if (root.getSimulations() % 1000 == 0) yield return null;
+                if (root.getSimulations() % 2000 == 0)
+                {
+                    Debug.Log("");
+                    yield return null;
+                }
             }
             
             float highestWinRate = -1f;
             foreach (State child in root.getChildren())
             {
-                var winRate = (float)child.getHeritageScore() / (_maximumScore * child.getSimulations());
+                var winRate = computeWinRate(child);
                 if (winRate > highestWinRate)
                 {
                     highestWinRate = winRate;
@@ -62,10 +65,7 @@ public class mcts
     private State selection(State state)
     {
         var selected = state;
-        while (!selected.isFullExpanded())
-        {
-            selected = findBestChild(selected);
-        }
+        while (selected.isFullExpanded()&&selected.getChildren().Count>0) selected = findBestChild(selected);
         return selected;
     }
     private State expansion(State state)
@@ -79,7 +79,7 @@ public class mcts
         var childrenToSimulate = new ArrayList();
         foreach (HashSet<int> possibleMove in possibleMoves)
         {
-            var newChild = new State(state, tilesAfterPlay(possibleMoves, possibleMove), possibleMove);
+            var newChild = new State(state, tilesAfterPlay(state.getTiles(), possibleMove), possibleMove);
             state.addChild(newChild);
             childrenToSimulate.Add(newChild);
         }
@@ -140,23 +140,32 @@ public class mcts
 
         return bestOne;
     }
-    public float computeUcb(State state)
+    private float computeUcb(State state)
     {
-        float newUcb;
         if (state.getSimulations() == 0) return float.MaxValue;
         if(state.getParent().getSimulations()==0) return float.MaxValue;
-        newUcb = (float)state.getHeritageScore() / (_maximumScore * state.getSimulations());
-        newUcb += 1.41f * (float)Math.Sqrt(Math.Log(state.getParent().getSimulations()) / state.getSimulations());
+        var newWinRate = computeWinRate(state);
+        var newUcb = newWinRate + 1.41f * (float)Math.Sqrt(Math.Log(state.getParent().getSimulations()) / state.getSimulations());
         state.ucb = newUcb;
         return newUcb;
     }
+
+    private float computeWinRate(State state)
+    {
+        if(state.getParent().getSimulations()==0) return 0f;
+        var newWinRate = (float)state.getHeritageScore() / (_maximumScore * state.getSimulations());
+        state.winRate = newWinRate;
+        return newWinRate;
+    }
+    
     private ArrayList tilesAfterPlay(ArrayList tiles, HashSet<int> move)
     {
         var tilesAfterMove = new ArrayList();
-        foreach (int tile in tiles)
+        foreach (var tile in tiles)
         {
-            if (!move.Contains(tile)) tilesAfterMove.Add(tile);
+            if (!move.Contains((int)tile)) tilesAfterMove.Add(tile);
         }
         return tilesAfterMove;
     }
+    
 }

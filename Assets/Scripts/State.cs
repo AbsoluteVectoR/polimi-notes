@@ -9,6 +9,7 @@ public class State
     private HashSet<int> move;
     private ArrayList children;
     public float ucb;
+    public float winRate;
     private int heritageScore;
     private int simulations;
     private ArrayList unexpandedPlays;
@@ -59,7 +60,7 @@ public class State
     public bool isFullExpanded()
     {
         if (tiles.Count == 0) return true;
-        return unexpandedPlays.Count != 0;
+        return unexpandedPlays.Count == 0;
     }
 
     public void expandPlay(int dicePlay)

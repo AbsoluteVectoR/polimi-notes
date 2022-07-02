@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     protected ArrayList selectableTiles;
     protected int remainingValue;
     protected bool selectEnabled;
+    protected PlayerStats _stats;
 
     public void startPlaying(GameManager gameManager, int numberOfTiles, string userName,bool testingMatch){
         score = 99;
@@ -67,7 +68,7 @@ public class Player : MonoBehaviour
         return selectEnabled;
     }
 
-    public virtual ArrayList GetTiles()
+    public ArrayList GetTiles()
     {
         return tiles;
     }
@@ -94,27 +95,27 @@ public class Player : MonoBehaviour
 
     public virtual int returnTileTestBench()
     {
-        return -1;
+        return 0;
     }
 
-    public virtual PlayerStats returnStats()
+    public PlayerStats returnStats()
     {
-        return null;
+        return _stats;
     }
 
     public virtual void increaseWins()
     {
-        return;
+        _stats.win();
     }
 
     public virtual void updateScoreStatistics(int newScore)
     {
-        return;
+        _stats.newScore(newScore);
     }
 
     public virtual void keepStatistics()
     {
-        return;
+        _stats = new PlayerStats();
     }
     
 }
