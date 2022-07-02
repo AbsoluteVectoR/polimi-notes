@@ -46,14 +46,14 @@ public class GameManager : MonoBehaviour
         {
             posTiles = new Vector3(-seatDistance, seatHeight, 0);
             var leftPlayer = Instantiate(aiPlayer, posTiles, Quaternion.LookRotation(-posTiles));
-            leftPlayer.GetComponent<PlayerAI>().startPlaying(this, numOfTiles, "Monte",false);
+            leftPlayer.GetComponent<AIPlayer>().startPlaying(this, numOfTiles, "Monte",false);
             _playersPlaying.Add(leftPlayer);
         }
 
         //front player 
         posTiles = new Vector3(0, seatHeight, seatDistance);
         var frontPlayer = Instantiate(aiPlayer, posTiles, Quaternion.LookRotation(-posTiles));
-        frontPlayer.GetComponent<PlayerAI>().startPlaying(this, numOfTiles, "Carlo",false);
+        frontPlayer.GetComponent<AIPlayer>().startPlaying(this, numOfTiles, "Carlo",false);
         _playersPlaying.Add(frontPlayer);
 
         //right player 
@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
         {
             posTiles = new Vector3(seatDistance, seatHeight, 0);
             var rightPlayer = Instantiate(aiPlayer, posTiles, Quaternion.LookRotation(-posTiles));
-            rightPlayer.GetComponent<PlayerAI>().startPlaying(this, numOfTiles, "Sir Tree",false);
+            rightPlayer.GetComponent<AIPlayer>().startPlaying(this, numOfTiles, "Sir Tree",false);
             _playersPlaying.Add(rightPlayer);
         }
         

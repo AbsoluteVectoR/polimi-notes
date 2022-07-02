@@ -14,10 +14,11 @@ public class TestBench : GameManager
     private List<Player> _playing;
     private List<Player> _out;
     private Player _current;
+    public int numberOfMatches = 1000;
     public int numOfRandomPlayers = 4;
     public int numOfAi = 4;
     public int numOfStrategyPlayers = 4;
-
+    
     public void Start()
     {
         numPlayers = numOfRandomPlayers + numOfAi + numOfStrategyPlayers; 
@@ -25,48 +26,46 @@ public class TestBench : GameManager
         _playing = new List<Player>(numPlayers);
         _out = new List<Player>();
 
-        for (int i = 0; i < numOfRandomPlayers; i++)
+        for (var i = 0; i < numOfRandomPlayers; i++)
         {
             Player p = null;
             GameObject newPlayer = new GameObject("Random");
-            p = newPlayer.AddComponent<PlayerRandom>();
+            p = newPlayer.AddComponent<RandomPlayer>();
             _playing.Add(p);
-            p.keepStatistics();
+            p.KeepStatistics();
             p.startPlaying(this, numOfTiles, "testbench",true);
         }
         
-        for (int i = 0; i < numOfAi; i++)
+        for (var i = 0; i < numOfAi; i++)
         {
             Player p = null;
             GameObject newPlayer = new GameObject("AI");
-            p = newPlayer.AddComponent<PlayerAI>();
+            p = newPlayer.AddComponent<AIPlayer>();
             _playing.Add(p);  
-            p.keepStatistics();
+            p.KeepStatistics();
             p.startPlaying(this, numOfTiles, "testbench",true);
         }
         
-        for (int i = 0; i < numOfStrategyPlayers; i++)
+        for (var i = 0; i < numOfStrategyPlayers; i++)
         {
             Player p = null;
             GameObject newPlayer = new GameObject("StrategyPlayer");
-            p = newPlayer.AddComponent<PlayerStrategy>();
+            p = newPlayer.AddComponent<StrategyPlayer>();
             _playing.Add(p);  
-            p.keepStatistics();
+            p.KeepStatistics();
             p.startPlaying(this, numOfTiles, "testbench",true);
         }
         
         _out = new List<Player>();
-        StartCoroutine(bench());
+        StartCoroutine(Bench());
     }
 
-
-    private IEnumerator bench()
+    private IEnumerator Bench()
     {
-        int numberMatches = 1000;
         sumValue = Random.Range(1, 7) + Random.Range(1, 7);
         sumSelectedTiles = 0;
-        
-        while (numberMatches > 0)
+        var matches = 1;
+        while (matches <= numberOfMatches)
         {
             _current = _playing[Random.Range(0, _playing.Count)]; //random init player of the match
             while (_playing.Count>0)
@@ -78,31 +77,29 @@ public class TestBench : GameManager
                     var selected = 0;
                     while (selected == 0)
                     {
-                        if(_current.GetType() == typeof(PlayerAI))yield return new WaitForSeconds(0.01f); //waiting MCTS computing 
-                        selected = _current.returnTileTestBench();
+                        if(_current.GetType() == typeof(AIPlayer))yield return new WaitForSeconds(0.01f); //waiting MCTS computing 
+                        selected = _current.ReturnTileTestBench();
                     }
                     sumSelectedTiles += selected;
                     selectableTiles = UpdatingPlayerTiles();
                 }
-                turnFinished();
+                TurnFinished();
             }
-            Debug.Log("FINISHED MATCH, number of matches: "+ (1001-numberMatches));
+            
+            Debug.Log("FINISHED MATCH, number of matches: "+ matches);
             foreach (var p in _out)
             {
-                Debug.Log(p.GetType() + " won "+ (int)(p.returnStats().getRatioWins()*100) +" % of total matches");
-                Debug.Log(" with average score of "+ p.returnStats().getAverageScore());
+                Debug.Log(p.GetType() + " won "+ (int)(p.ReturnStats().getRatioWins()*100) +" % of total matches");
+                Debug.Log(" with average score of "+ p.ReturnStats().getAverageScore());
             }
-            numberMatches--;
+
+            matches++;
             _playing = _out;
+            foreach (var p in _playing) p.startPlaying(this,numOfTiles,"test",true);
+            
             _out = new List<Player>();
-            foreach (var p in _playing)
-            {
-                p.startPlaying(this,numOfTiles,"test",true);
-            }
         }
     }
-
-    
     
     private ArrayList UpdatingPlayerTiles()
     {
@@ -113,9 +110,8 @@ public class TestBench : GameManager
         }
         return selectableTiles;
     }
-    
-    
-    private void turnFinished()
+
+    private void TurnFinished()
     {
         if (sumSelectedTiles == sumValue) 
         {
@@ -148,7 +144,7 @@ public class TestBench : GameManager
         foreach (int number in tiles) score += number; //counting the score
         score = sum(numOfTiles) - score;
         eliminatedPlayer.SetScore(score);
-        eliminatedPlayer.updateScoreStatistics(score);
+        eliminatedPlayer.UpdateScoreStatistics(score);
         _playing.Remove(eliminatedPlayer);
         _out.Add(eliminatedPlayer);
         Debug.Log(eliminatedPlayer.GetType() + " game over with score: " + eliminatedPlayer.GetScore());
@@ -173,7 +169,7 @@ public class TestBench : GameManager
             }
         }
         
-        if(winner!=null) winner.increaseWins();
+        if(winner!=null) winner.IncreaseWins();
     }
 
     private void ChangePlayer()

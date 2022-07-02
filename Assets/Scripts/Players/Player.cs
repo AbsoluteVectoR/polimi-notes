@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     protected ArrayList selectableTiles;
     protected int remainingValue;
     protected bool selectEnabled;
-    protected PlayerStats _stats;
+    private PlayerStats _stats;
 
     public void startPlaying(GameManager gameManager, int numberOfTiles, string userName,bool testingMatch){
         score = 99;
@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
         InstantiateTiles(testingMatch);
     }
 
-    protected void InstantiateTiles(bool isTesting)
+    private void InstantiateTiles(bool isTesting)
     {
         float offset = (1.1f * (numOfTiles + 1) * tileBreadth) / 2f;
         for (int i = 1; i <= numOfTiles; i++)
@@ -93,29 +93,30 @@ public class Player : MonoBehaviour
         return username;
     }
 
-    public virtual int returnTileTestBench()
+    //Next methods used only in testbench
+    
+    public virtual int ReturnTileTestBench()
     {
         return 0;
     }
 
-    public PlayerStats returnStats()
+    public void KeepStatistics()
+    {
+        _stats = new PlayerStats();
+    }
+    public PlayerStats ReturnStats()
     {
         return _stats;
     }
 
-    public virtual void increaseWins()
+    public void IncreaseWins()
     {
         _stats.win();
     }
 
-    public virtual void updateScoreStatistics(int newScore)
+    public void UpdateScoreStatistics(int newScore)
     {
         _stats.newScore(newScore);
     }
 
-    public virtual void keepStatistics()
-    {
-        _stats = new PlayerStats();
-    }
-    
 }

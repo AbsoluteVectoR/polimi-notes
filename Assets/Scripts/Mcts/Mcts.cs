@@ -2,25 +2,29 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Scenes.Scripts;
-using UnityEditor;
-using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.UIElements;
 using Random = UnityEngine.Random;
 
-public class mcts
+public class Mcts
 {
     private const float C = 1.41f; //sqrt(2) for ucb 
     private int _maximumScore;
-    private PlayerAI _caller;
+    private AIPlayer _caller;
     private ArrayList _tilesRoot;
     private State root;
 
     //compute best move only when there is at least one move
-    public IEnumerator computeBestMove(PlayerAI caller, int mctsIterations, int maximumScore, ArrayList tilesRoot, int sumDices){
+
+
+    public Mcts(int maximumScore, AIPlayer caller)
+    {
         _maximumScore = maximumScore;
+        _caller = caller;
+    }
+
+
+    public IEnumerator computeBestMove(int mctsIterations, ArrayList tilesRoot, int sumDices){
         root = new State(null, tilesRoot, null);
-        for(int i = 2; i<=12;i++)root.expandPlay(i); //it's not necessary for the root node exploring alternatives dice launches 
+        for(int i = 2; i<=12;i++)root.expandPlay(i); //making the root already expanded, no necessity to explore different launches at root node 
 
         //generate children root
         var possibleMoves = LegalMoves.computeSets(tilesRoot, sumDices);
@@ -39,33 +43,18 @@ public class mcts
                 var expanded = expansion(selected);
                 var simulated = simulation(expanded);
                 backup(simulated);
-                if (root.getSimulations() % 2000 == 0)
-                {
-                    Debug.Log("");
-                    yield return null;
-                }
+                if (root.getSimulations() % 1000 == 0) yield return null;
             }
-            
-            float highestWinRate = -1f;
-            foreach (State child in root.getChildren())
-            {
-                var winRate = computeWinRate(child);
-                if (winRate > highestWinRate)
-                {
-                    highestWinRate = winRate;
-                    bestMove = child.getPlayed();
-                }
-            }
-            Debug.Log("Win rate of selected move: "+highestWinRate);
+
+            bestMove = findBestWinRateFromChildren(root).getPlayed();
         }
-        
-        caller.takeAdvice(bestMove);
+        _caller.takeAdvice(bestMove);
     }
 
     private State selection(State state)
     {
         var selected = state;
-        while (selected.isFullExpanded()&&selected.getChildren().Count>0) selected = findBestChild(selected);
+        while (selected.isFullExpanded()&&selected.getChildren().Count>0) selected = findBestUcbFromChildren(selected);
         return selected;
     }
     private State expansion(State state)
@@ -103,11 +92,13 @@ public class mcts
     }
     private void backup(State state)
     {
+        var depth = 0.7f;
         var newScore = computeScore(state);
         while (state.getParent() != null)
         {
-            state.addScore(newScore);
+            state.addScore((int)(newScore*depth));
             state.increaseSimulations();
+            depth *= depth;
             state = state.getParent();
         }
         state.increaseSimulations();
@@ -124,20 +115,30 @@ public class mcts
         dicesValue+=Random.Range(1, 7);
         return dicesValue;
     }
-    private State findBestChild(State state)
+    private State findBestUcbFromChildren(State state)
     {
         var maxUcb = float.MinValue;
         var bestOne = state;
         foreach (State child in state.getChildren())
         {
             var newUcb = computeUcb(child);
-            if (newUcb > maxUcb)
-            {
-                maxUcb = newUcb;
-                bestOne = child;
-            }
+            if (newUcb < maxUcb) continue;
+            maxUcb = newUcb;
+            bestOne = child;
         }
-
+        return bestOne;
+    }
+    private State findBestWinRateFromChildren(State state)
+    {
+        var maxWinRate = float.MinValue;
+        var bestOne = state;
+        foreach (State child in state.getChildren())
+        {
+            var newWinRate = computeWinRate(child);
+            if (newWinRate < maxWinRate) continue;
+            maxWinRate = newWinRate;
+            bestOne = child;
+        }
         return bestOne;
     }
     private float computeUcb(State state)
@@ -149,7 +150,6 @@ public class mcts
         state.ucb = newUcb;
         return newUcb;
     }
-
     private float computeWinRate(State state)
     {
         if(state.getParent().getSimulations()==0) return 0f;
@@ -157,15 +157,10 @@ public class mcts
         state.winRate = newWinRate;
         return newWinRate;
     }
-    
     private ArrayList tilesAfterPlay(ArrayList tiles, HashSet<int> move)
     {
         var tilesAfterMove = new ArrayList();
-        foreach (var tile in tiles)
-        {
-            if (!move.Contains((int)tile)) tilesAfterMove.Add(tile);
-        }
+        foreach (var tile in tiles) if (!move.Contains((int)tile)) tilesAfterMove.Add(tile);
         return tilesAfterMove;
     }
-    
 }

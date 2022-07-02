@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAI : Player
+public class AIPlayer : Player
     {
         private bool _computing;
         private bool _computed;
         private Queue bestMove;
 
-        private void Update() //update() used during a normal game with human player
+        private void Update() //used during a normal game with human player
         {
             if (!selectEnabled) return; //selectEnabled is true when the Game Manager receive the result of the dices from the DicesLauncher 
             if (_computing) return;
@@ -20,14 +20,14 @@ public class PlayerAI : Player
             }
             else
             {
-                mcts oracle = new mcts();
+                Mcts oracle = new Mcts(gameMan.maximumScore(),this);
                 var sumDices = remainingValue;
                 _computing = true;
-                StartCoroutine(oracle.computeBestMove(this,10000,gameMan.maximumScore(),tiles, sumDices));
+                StartCoroutine(oracle.computeBestMove(20000,tiles, sumDices));
             }
         }
 
-        public void takeAdvice(HashSet<int> bestMove)
+        public void takeAdvice(HashSet<int> bestMove) //used to receive the best move from MonteCarlo Tree Search Algorithm
         {
             this.bestMove = new Queue();
             foreach (int tile in bestMove)
@@ -38,7 +38,7 @@ public class PlayerAI : Player
             _computed = true;
         }
         
-        public override int returnTileTestBench() //used during a Testbench play 
+        public override int ReturnTileTestBench() //used during the TestBench  
         {
             if (_computing) return 0;
             if (_computed) //when computed playerAI knows which are the best moves and play them 
@@ -48,16 +48,13 @@ public class PlayerAI : Player
                 tiles.Remove(tileToSelect);
                 return tileToSelect;
             }
-            else
-            {
-                mcts oracle = new mcts();
-                var sumDices = remainingValue;
-                _computing = true;
-                StartCoroutine(oracle.computeBestMove(this,20000,gameMan.maximumScore(),tiles, sumDices));
-                return 0;
-            }
+
+            Mcts oracle = new Mcts(gameMan.maximumScore(),this);
+            var sumDices = remainingValue;
+            _computing = true;
+            StartCoroutine(oracle.computeBestMove(1000000,tiles, sumDices));
+            return 0;
         }
-        
-        
+
     }
 
