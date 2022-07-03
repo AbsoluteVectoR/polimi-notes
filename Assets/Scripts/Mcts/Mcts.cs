@@ -3,21 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using Game;
 using Players;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Mcts
 {
     public class Mcts
     {
-        private const float C = 1.41f; //sqrt(2) for ucb 
-        private int _maximumScore;
-        private AIPlayer _caller;
+        private readonly int _maximumScore;
+        private readonly AIPlayer _caller;
         private ArrayList _tilesRoot;
         private State root;
-
-        //compute best move only when there is at least one move
-
-
+        
         public Mcts(int maximumScore, AIPlayer caller)
         {
             _maximumScore = maximumScore;
@@ -33,6 +30,7 @@ namespace Mcts
             var possibleMoves = LegalMoves.computeSets(tilesRoot, sumDices);
             var bestMove = (HashSet<int>)possibleMoves[0]; 
         
+            //compute best move only when there is at least one move
             if (possibleMoves.Count > 1){
                 foreach (HashSet<int> possibleMove in possibleMoves)
                 {
@@ -46,7 +44,11 @@ namespace Mcts
                     var expanded = expansion(selected);
                     var simulated = simulation(expanded);
                     backup(simulated);
-                    if (root.getSimulations() % 1000 == 0) yield return null; 
+                    if (root.getSimulations() % 1000 == 0)
+                    {
+                        //Debug.Log("debug");
+                        yield return null;
+                    } 
                 }
                 bestMove = findBestWinRateFromChildren(root).getPlayed();
             }
@@ -79,7 +81,7 @@ namespace Mcts
         }
         private State simulation(State state)
         {
-            int sumDices = randomLaunch();
+            var sumDices = randomLaunch();
             while (true)
             {
                 var possibleMoves = LegalMoves.computeSets(state.getTiles(), sumDices);
@@ -94,16 +96,16 @@ namespace Mcts
         }
         private void backup(State state)
         {
-            var depth = 0.7f;
+            var discount = 0.7f;
             var newScore = computeScore(state);
-            while (state.getParent() != null)
+            while (state.getParent() != null) 
             {
-                state.addScore((int)(newScore*depth));
+                state.addScore((int)(newScore*discount));
                 state.increaseSimulations();
-                depth *= depth;
+                discount *= discount;
                 state = state.getParent();
             }
-            state.increaseSimulations();
+            state.increaseSimulations(); //root 
         }
         private int computeScore(State leaf)
         {

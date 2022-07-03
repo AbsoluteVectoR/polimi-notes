@@ -15,7 +15,7 @@ namespace Game.ui
 
         public GameObject nicknameInput;
 
-        private TMPro.TMP_InputField  nicknameInputField;
+        private TMP_InputField  nicknameInputField;
 
         public GameObject gameMan;
         public GameObject inGameCanvas;

@@ -160,7 +160,7 @@ MonoBehaviour:
   menuUI: {fileID: 0}
   inGameUI: {fileID: 0}
   numOfTiles: 12
-  numberOfMatches: 10000
+  numberOfMatches: 200
   numOfRandomPlayers: 1
   numOfAi: 1
   numOfStrategyPlayers: 0
