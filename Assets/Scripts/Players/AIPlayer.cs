@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using Game;
 
-public class AIPlayer : Player
+namespace Players
+{
+    public class AIPlayer : Player
     {
         private bool _computing;
         private bool _computed;
@@ -20,10 +22,10 @@ public class AIPlayer : Player
             }
             else
             {
-                Mcts oracle = new Mcts(gameMan.maximumScore(),this);
+                Mcts.Mcts oracle = new Mcts.Mcts(gameMan.maximumScore(),this);
                 var sumDices = remainingValue;
                 _computing = true;
-                StartCoroutine(oracle.computeBestMove(20000,tiles, sumDices));
+                StartCoroutine(oracle.computeBestMove(50000,tiles, sumDices));
             }
         }
 
@@ -41,7 +43,7 @@ public class AIPlayer : Player
         public override int ReturnTileTestBench() //used during the TestBench  
         {
             if (_computing) return 0;
-            if (_computed) //when computed playerAI knows which are the best moves and play them 
+            if (_computed) 
             {
                 var tileToSelect = (int) bestMove.Dequeue();
                 if (bestMove.Count == 0) _computed = false; //my turn has finished
@@ -49,12 +51,13 @@ public class AIPlayer : Player
                 return tileToSelect;
             }
 
-            Mcts oracle = new Mcts(gameMan.maximumScore(),this);
+            Mcts.Mcts oracle = new Mcts.Mcts(gameMan.maximumScore(),this);
             var sumDices = remainingValue;
             _computing = true;
-            StartCoroutine(oracle.computeBestMove(1000000,tiles, sumDices));
+            StartCoroutine(oracle.computeBestMove(50000,tiles, sumDices));
             return 0;
         }
 
     }
+}
 

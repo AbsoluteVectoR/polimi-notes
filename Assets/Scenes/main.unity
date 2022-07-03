@@ -2297,8 +2297,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1110438304}
-        m_TargetAssemblyTypeName: menuManager, Assembly-CSharp
+      - m_Target: {fileID: 1110438306}
+        m_TargetAssemblyTypeName: Game.ui.MenuManager, Assembly-CSharp
         m_MethodName: set12TilesButtonAction
         m_Mode: 1
         m_Arguments:
@@ -2985,8 +2985,8 @@ GameObject:
   - component: {fileID: 1110438302}
   - component: {fileID: 1110438301}
   - component: {fileID: 1110438300}
-  - component: {fileID: 1110438304}
   - component: {fileID: 1110438305}
+  - component: {fileID: 1110438306}
   m_Layer: 5
   m_Name: MenuCanvas
   m_TagString: Untagged
@@ -3079,7 +3079,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 500, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1110438304
+--- !u!225 &1110438305
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1110438299}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &1110438306
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3097,18 +3109,6 @@ MonoBehaviour:
   nicknameInput: {fileID: 1182809589}
   gameMan: {fileID: 1349740053}
   inGameCanvas: {fileID: 1086677622}
---- !u!225 &1110438305
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1110438299}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!1 &1150942156
 GameObject:
   m_ObjectHideFlags: 0
@@ -3309,8 +3309,8 @@ MonoBehaviour:
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1110438304}
-        m_TargetAssemblyTypeName: menuManager, Assembly-CSharp
+      - m_Target: {fileID: 1110438306}
+        m_TargetAssemblyTypeName: Game.ui.MenuManager, Assembly-CSharp
         m_MethodName: inputFieldDeselected
         m_Mode: 1
         m_Arguments:
@@ -3517,8 +3517,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1110438304}
-        m_TargetAssemblyTypeName: menuManager, Assembly-CSharp
+      - m_Target: {fileID: 1110438306}
+        m_TargetAssemblyTypeName: Game.ui.MenuManager, Assembly-CSharp
         m_MethodName: set9TilesButtonAction
         m_Mode: 1
         m_Arguments:
@@ -3798,8 +3798,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1110438304}
-        m_TargetAssemblyTypeName: menuManager, Assembly-CSharp
+      - m_Target: {fileID: 1110438306}
+        m_TargetAssemblyTypeName: Game.ui.MenuManager, Assembly-CSharp
         m_MethodName: set2PlayersButtonAction
         m_Mode: 1
         m_Arguments:
@@ -3897,7 +3897,7 @@ MonoBehaviour:
   aiPlayer: {fileID: 7376210551516294192, guid: faf04acaf52e9ad4cab0d19ab9d2ee2f, type: 3}
   menuUI: {fileID: 1110438299}
   inGameUI: {fileID: 1086677622}
-  humanUsername: 
+  numOfTiles: 12
 --- !u!4 &1349740055
 Transform:
   m_ObjectHideFlags: 0
@@ -5500,8 +5500,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1110438304}
-        m_TargetAssemblyTypeName: menuManager, Assembly-CSharp
+      - m_Target: {fileID: 1110438306}
+        m_TargetAssemblyTypeName: Game.ui.MenuManager, Assembly-CSharp
         m_MethodName: set4PlayersButtonAction
         m_Mode: 1
         m_Arguments:

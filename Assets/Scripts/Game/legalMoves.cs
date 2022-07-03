@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Scenes.Scripts
+namespace Game
 {
     public static class LegalMoves 
     {
