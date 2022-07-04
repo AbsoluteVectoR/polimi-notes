@@ -91,8 +91,10 @@ namespace Game
                 _currentPlayer.GetComponent<Player>().EnableSelect(false);
                 if (_currentPlayer.GetComponent<Player>().GetTiles().Count == 0) //Check in case of immediate win
                 {
-                    var allPlayers = _playersPlaying;
-                    foreach (GameObject p in allPlayers) PlayerGameOver(p); //immediate win, immediate Game Over for everyone
+                    var allPlayers = new List<GameObject>();
+                    foreach (var p in _playersPlaying) allPlayers.Add(p);
+                    foreach (var p in allPlayers) PlayerGameOver(p); //immediate win, immediate Game Over for everyone
+                    
                 }
                 else
                 {
