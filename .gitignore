@@ -49,7 +49,7 @@ sysinfo.txt
 
 # Builds
 *.apk
-*.unitypackage
+!*.unitypackage
 *.*.log
 
 # Crashlytics generated file
