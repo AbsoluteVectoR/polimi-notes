@@ -122,7 +122,7 @@ namespace Game.ui
             yield return new WaitForSeconds(3f);
             var inGameUIcanvas = inGameCanvas.GetComponent<CanvasGroup>();
             inGameCanvas.SetActive(true);
-            inGameCanvas.GetComponent<UIManager>().startMatch();
+            inGameCanvas.GetComponent<uiManager>().startMatch();
             StartCoroutine(fadeIn(inGameUIcanvas));
         }
 
@@ -130,7 +130,7 @@ namespace Game.ui
         {
             var inGameUIcanvas = inGameCanvas.GetComponent<CanvasGroup>();
             yield return StartCoroutine(fadeOut(inGameUIcanvas));
-            inGameCanvas.GetComponent<UIManager>().resetScore();
+            inGameCanvas.GetComponent<uiManager>().resetScore();
             inGameCanvas.SetActive(false);
             StartCoroutine(numOfPlayersTitle());
         }

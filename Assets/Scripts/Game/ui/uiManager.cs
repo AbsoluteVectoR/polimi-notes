@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Game.ui
 {
-    public class UIManager : MonoBehaviour
+    public class uiManager : MonoBehaviour
     {
         public GameObject leftPlayerName;
         public GameObject leftPlayerScore;

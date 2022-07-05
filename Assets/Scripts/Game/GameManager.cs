@@ -120,7 +120,7 @@ namespace Game
             _playersPlaying.Remove(eliminatedPlayer);
             _playersOut.Add(eliminatedPlayer);
             if (_playersPlaying.Count == 0) GameOver();
-            inGameUI.GetComponent<UIManager>().updateScores(_playersOut); //updates the scores
+            inGameUI.GetComponent<uiManager>().updateScores(_playersOut); //updates the scores
         }
 
         private void GameOver()
@@ -140,8 +140,8 @@ namespace Game
                     winner = null;
                 }
             }
-            if(winner==null)inGameUI.GetComponent<UIManager>().declareTie();
-            else inGameUI.GetComponent<UIManager>().declareWinner(winner.GetComponent<Player>().GetUsername());
+            if(winner==null)inGameUI.GetComponent<uiManager>().declareTie();
+            else inGameUI.GetComponent<uiManager>().declareWinner(winner.GetComponent<Player>().GetUsername());
         }
 
         private void ChangePlayer()
