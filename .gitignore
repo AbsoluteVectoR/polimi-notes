@@ -109,3 +109,7 @@ Assets/PlayFabEditorExtensions/Editor/Resources/PlayFabUnitySdk.unitypackage.met
 # MISC.
 *.ahbuildinfo
 .vscode/
+
+
+#added 05/7/22
+!ProjectSettings/EditorSetting.asset
