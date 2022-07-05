@@ -785,7 +785,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -2004151554135174706, guid: 1e669a30c90f8f74cb2ad6979b1e726e, type: 3}
       propertyPath: m_Drag
-      value: 0.1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -2004151554135174706, guid: 1e669a30c90f8f74cb2ad6979b1e726e, type: 3}
       propertyPath: m_UseGravity
