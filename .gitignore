@@ -113,3 +113,4 @@ Assets/PlayFabEditorExtensions/Editor/Resources/PlayFabUnitySdk.unitypackage.met
 
 #added 05/7/22
 !ProjectSettings/EditorSetting.asset
+!*.preset
