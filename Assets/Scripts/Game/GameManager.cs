@@ -125,23 +125,23 @@ namespace Game
 
         private void GameOver()
         {
-            GameObject winner = _playersOut[0];
+            GameObject winner = null;
+            var winnerScore = int.MinValue;
             foreach (GameObject p in _playersOut)
             {
                 var playerScore = p.GetComponent<Player>().GetScore();
-                var winnerScore = winner.GetComponent<Player>().GetScore();
                 if (playerScore > winnerScore)
                 {
                     winner = p;
+                    winnerScore = playerScore;
                 }
-                else if (playerScore == winnerScore &&
-                         (p.GetComponent<Player>().GetUsername() != winner.GetComponent<Player>().GetUsername()))
+                else if (playerScore == winnerScore)
                 {
-                    inGameUI.GetComponent<UIManager>().declareTie();
-                    return;
+                    winner = null;
                 }
             }
-            inGameUI.GetComponent<UIManager>().declareWinner(winner.GetComponent<Player>().GetUsername());
+            if(winner==null)inGameUI.GetComponent<UIManager>().declareTie();
+            else inGameUI.GetComponent<UIManager>().declareWinner(winner.GetComponent<Player>().GetUsername());
         }
 
         private void ChangePlayer()

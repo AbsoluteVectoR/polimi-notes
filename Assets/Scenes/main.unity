@@ -804,6 +804,18 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8395345904222443416, guid: 1e669a30c90f8f74cb2ad6979b1e726e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8395345904222443416, guid: 1e669a30c90f8f74cb2ad6979b1e726e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8395345904222443416, guid: 1e669a30c90f8f74cb2ad6979b1e726e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8395345904222443416, guid: 1e669a30c90f8f74cb2ad6979b1e726e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 13
       objectReference: {fileID: 0}
@@ -1251,6 +1263,18 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8395345904222443416, guid: 1e669a30c90f8f74cb2ad6979b1e726e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8395345904222443416, guid: 1e669a30c90f8f74cb2ad6979b1e726e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8395345904222443416, guid: 1e669a30c90f8f74cb2ad6979b1e726e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8395345904222443416, guid: 1e669a30c90f8f74cb2ad6979b1e726e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 17
       objectReference: {fileID: 0}
@@ -1260,7 +1284,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8395345904222443416, guid: 1e669a30c90f8f74cb2ad6979b1e726e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -17
+      value: -13.3
       objectReference: {fileID: 0}
     - target: {fileID: 8395345904222443416, guid: 1e669a30c90f8f74cb2ad6979b1e726e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3897,7 +3921,7 @@ MonoBehaviour:
   aiPlayer: {fileID: 7376210551516294192, guid: faf04acaf52e9ad4cab0d19ab9d2ee2f, type: 3}
   menuUI: {fileID: 1110438299}
   inGameUI: {fileID: 1086677622}
-  numOfTiles: 12
+  numOfTiles: 3
 --- !u!4 &1349740055
 Transform:
   m_ObjectHideFlags: 0
