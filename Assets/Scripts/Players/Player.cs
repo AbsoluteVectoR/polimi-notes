@@ -9,7 +9,7 @@ namespace Players
         public GameManager gameMan;
         public GameObject tile;
         public int numOfTiles;
-        public float tileBreadth = 3f;
+        private const float tileBreadth = 3f;
         private int score;
         private string username = "HumanPlayer";
         protected ArrayList tiles;
