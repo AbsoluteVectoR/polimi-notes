@@ -46,7 +46,7 @@ https://www.researchgate.net/publication/235985858_A_Survey_of_Monte_Carlo_Tree_
 | RandomPlayer  | 11%| 23/78  | 
 | AI | 88% | 42/78 |   
 
-Introduction of a Strategy Player: a player who always plays the combinations which involves as few tiles as possible. 
+Introduction of a Strategy Player: a player who always plays the combination which involves as few tiles as possible. 
 
 ### Strategy vs Random (1000 matches, 12 tiles)
 
