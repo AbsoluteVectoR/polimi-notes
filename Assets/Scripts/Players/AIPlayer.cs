@@ -25,7 +25,7 @@ namespace Players
                 Mcts.Mcts oracle = new Mcts.Mcts(gameMan.maximumScore(),this);
                 var sumDices = remainingValue;
                 _computing = true;
-                StartCoroutine(oracle.computeBestMove(50000,tiles, sumDices));
+                StartCoroutine(oracle.ComputeBestMove(100000,tiles, sumDices));
             }
         }
 
@@ -54,7 +54,7 @@ namespace Players
             Mcts.Mcts oracle = new Mcts.Mcts(gameMan.maximumScore(),this);
             var sumDices = remainingValue;
             _computing = true;
-            StartCoroutine(oracle.computeBestMove(50000,tiles, sumDices));
+            StartCoroutine(oracle.ComputeBestMove(50000,tiles, sumDices));
             return 0;
         }
 

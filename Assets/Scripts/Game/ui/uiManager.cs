@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Game.ui
 {
-    public class uiManager : MonoBehaviour
+    public class UIManager : MonoBehaviour
     {
         public GameObject leftPlayerName;
         public GameObject leftPlayerScore;
@@ -40,16 +40,16 @@ namespace Game.ui
             scores.Add(humanPlayerScore);
         }
 
-        private void scoreHider(){
+        private void ScoreHider(){
             foreach(GameObject score in scores){
                 var text = score.GetComponent<TextMeshProUGUI>().text;
                 var canvas = score.GetComponent<CanvasGroup>();
                 if (text.Equals("99")) canvas.alpha = 0f;
-                else if(canvas.alpha!=1f)StartCoroutine(fadeIn(canvas));
+                else if(canvas.alpha!=1f)StartCoroutine(FadeIn(canvas));
             }
         }
 
-        public void resetScore()
+        public void ResetScore()
         {
             foreach(GameObject score in scores)
             {
@@ -57,7 +57,7 @@ namespace Game.ui
             }
         }
 
-        public void startMatch(){
+        public void StartMatch(){
             var gameMan = gameManObj.GetComponent<GameManager>();
             humanPlayerName.GetComponent<TextMeshProUGUI>().text=gameMan.getHumanNickname();
             if(gameMan.getNumOfPlayers()==2)
@@ -65,7 +65,7 @@ namespace Game.ui
                 leftPlayerName.SetActive(false);
                 rightPlayerName.SetActive(false);
             }
-            else //don't delete this branch!
+            else
             {
                 leftPlayerName.SetActive(true);
                 rightPlayerName.SetActive(true);
@@ -74,10 +74,10 @@ namespace Game.ui
             tieTitle.SetActive(false);
             winnerTitle.SetActive(false);
             winnerTitle.GetComponent<TextMeshProUGUI>().text = "The winner is \n";
-            scoreHider();
+            ScoreHider();
         }
 
-        public void updateScores(List<GameObject> playersOut){
+        public void UpdateScores(List<GameObject> playersOut){
             foreach(GameObject player in playersOut){
                 Player playerOut = player.GetComponent<Player>();
                 if (playerOut.GetUsername().Equals("Monte")){
@@ -93,35 +93,35 @@ namespace Game.ui
                     humanPlayerScore.GetComponent<TextMeshProUGUI>().text=playerOut.GetScore().ToString();
                 }
             }
-            scoreHider();
+            ScoreHider();
         }
 
-        public void declareWinner(string winnerUsername)
+        public void DeclareWinner(string winnerUsername)
         {
             winnerTitle.SetActive(true);
             winnerTitle.GetComponent<TextMeshProUGUI>().text = winnerTitle.GetComponent<TextMeshProUGUI>().text + winnerUsername + "!";
-            StartCoroutine(fadeIn(winnerTitle.GetComponent<CanvasGroup>()));
+            StartCoroutine(FadeIn(winnerTitle.GetComponent<CanvasGroup>()));
             gameManObj.GetComponent<GameManager>().setDicesToDefaultPosition();
-            StartCoroutine(showNewPlay());
+            StartCoroutine(ShowNewPlay());
         }
     
-        public void declareTie()
+        public void DeclareTie()
         {
             tieTitle.SetActive(true);
-            StartCoroutine(fadeIn(tieTitle.GetComponent<CanvasGroup>()));
+            StartCoroutine(FadeIn(tieTitle.GetComponent<CanvasGroup>()));
             gameManObj.GetComponent<GameManager>().setDicesToDefaultPosition();
-            StartCoroutine(showNewPlay());
+            StartCoroutine(ShowNewPlay());
         }
 
-        public IEnumerator showNewPlay()
+        public IEnumerator ShowNewPlay()
         {
             yield return new WaitForSeconds(1f);
             newPlayButton.SetActive(true);
             newPlayButton.GetComponent<Button>().enabled = true;
-            StartCoroutine(fadeIn(newPlayButton.GetComponent<CanvasGroup>()));
+            StartCoroutine(FadeIn(newPlayButton.GetComponent<CanvasGroup>()));
         }
 
-        private IEnumerator fadeIn(CanvasGroup canvas){
+        private IEnumerator FadeIn(CanvasGroup canvas){
             var opacity = canvas.alpha; 
             while(opacity<=1f){
                 opacity+=0.033f;
@@ -130,7 +130,7 @@ namespace Game.ui
             }
         }
     
-        private IEnumerator fadeOut(CanvasGroup canvas)
+        private IEnumerator FadeOut(CanvasGroup canvas)
         {
             var opacity = canvas.alpha;
             while(opacity>=0f){
