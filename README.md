@@ -3,6 +3,8 @@
 A little game where you play against 1-3 AIplayers. Made in the Unity game engine, the focus of this project is the implementation of the heuristic search algorithm Monte Carlo Tree Search.
 MCTS algorithm is used to solve the game tree and permits to the AIs to play the best move possible in any situation.
 
+![shutTheBoxGIF](https://user-images.githubusercontent.com/72280379/183460879-b14aa260-955e-4dff-917d-7bba9a5dadaf.gif)
+
 # Shut The Box rules
 The game consists in the implementation of a simple board game called 'Shut The Box'. 
 Here the wikipedia page for the rules:
