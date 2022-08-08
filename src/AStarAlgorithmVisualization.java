@@ -9,24 +9,24 @@ public class AStarAlgorithmVisualization extends PApplet {
     }
     int w;
     int h;
-    int SizeNode;
+    int sizeNode;
     Node[][] grid;
     Node target;
     Node start;
     Node current;
-    PriorityQueue<Node> OpenSet;
+    PriorityQueue<Node> openSet;
     boolean finished;
-    Color bgcolor;
-    Color obstaclecolor;
-    Color linecolor;
+    Color bgColor;
+    Color obstacleColor;
+    Color lineColor;
 
     public void settings() {
         w = 800;
         h = 800;
-        SizeNode = 15;
-        bgcolor = new Color(0xFF08001A, true);
-        obstaclecolor = new Color(0x7171FF);
-        linecolor = new Color(0xFFD500);
+        sizeNode = 15;
+        bgColor = new Color(0xFF08001A, true);
+        obstacleColor = new Color(0x7171FF);
+        lineColor = new Color(0xFFD500);
         size(w,h);
     }
 
@@ -34,47 +34,47 @@ public class AStarAlgorithmVisualization extends PApplet {
         start=null;
         target=null;
         finished = false;
-        setupgrid();
-        drawgrid();
+        setupGrid();
+        drawGrid();
     }
 
-    public void setupgrid(){
-        grid = new Node[w/SizeNode][h/SizeNode];
-        for(int x = 0; x<w/SizeNode;x++){
-            for(int y = 0; y<h/SizeNode;y++){
+    public void setupGrid(){
+        grid = new Node[w/ sizeNode][h/ sizeNode];
+        for(int x = 0; x<w/ sizeNode; x++){
+            for(int y = 0; y<h/ sizeNode; y++){
                 grid[x][y] = new Node(x,y,true, MAX_INT);
             }
         }
     }
 
-    public void drawgrid(){
-        background(bgcolor.getRGB());
-        for (int x = 0; x < w / SizeNode; x++) {
-            for (int y = 0; y < h / SizeNode; y++) {
+    public void drawGrid(){
+        background(bgColor.getRGB());
+        for (int x = 0; x < w / sizeNode; x++) {
+            for (int y = 0; y < h / sizeNode; y++) {
                 noStroke();
                 if (random(0, 1) > 0.51f) grid[x][y].free = false;
-                if (grid[x][y].free) fill(bgcolor.getRGB());
-                else fill(obstaclecolor.getRGB());
-                circle(grid[x][y].x * SizeNode + SizeNode / 2, grid[x][y].y * SizeNode + SizeNode / 2, SizeNode);
+                if (grid[x][y].free) fill(bgColor.getRGB());
+                else fill(obstacleColor.getRGB());
+                circle(grid[x][y].x * sizeNode + sizeNode / 2, grid[x][y].y * sizeNode + sizeNode / 2, sizeNode);
             }
         }
     }
 
     //mouse event function used to select start and target node and to refresh grid
     public void mousePressed(){
-        if ((start==null||target==null)&&(grid[mouseX / SizeNode][mouseY / SizeNode].free)){ //second condition to not select obstacle node
-            fill(linecolor.getRGB());
-            circle((mouseX/SizeNode)*SizeNode + SizeNode/2, mouseY/SizeNode*SizeNode + SizeNode/2, SizeNode);
+        if ((start==null||target==null)&&(grid[mouseX / sizeNode][mouseY / sizeNode].free)){ //second condition to not select obstacle node
+            fill(lineColor.getRGB());
+            circle((mouseX/ sizeNode)* sizeNode + sizeNode /2, mouseY/ sizeNode * sizeNode + sizeNode /2, sizeNode);
             if (start == null) {
-                start = grid[mouseX / SizeNode][mouseY / SizeNode];
+                start = grid[mouseX / sizeNode][mouseY / sizeNode];
                 start.cost = 0;
                 println("registered start");
             }
             else if (target == null){
-                if (!grid[mouseX / SizeNode][mouseY / SizeNode].equals(start)){
-                    target = grid[mouseX / SizeNode][mouseY / SizeNode];
+                if (!grid[mouseX / sizeNode][mouseY / sizeNode].equals(start)){
+                    target = grid[mouseX / sizeNode][mouseY / sizeNode];
                     println("registered target");
-                    Astar(start,target); //start the pathfinder
+                    aStar(start,target); //start the pathfinder
                 }
             }
         }
@@ -83,13 +83,13 @@ public class AStarAlgorithmVisualization extends PApplet {
         }
     }
 
-    public void Astar(Node s, Node t){
-        OpenSet = new PriorityQueue<Node>();
+    public void aStar(Node s, Node t){
+        openSet = new PriorityQueue<Node>();
         start.cost = 0 + heuristic(start, target);
-        OpenSet.add(start);
+        openSet.add(start);
         Node expanded;
-        while(!OpenSet.isEmpty()){
-                current = OpenSet.poll();
+        while(!openSet.isEmpty()){
+                current = openSet.poll();
                 if (current.equals(t)){
                     finished = true;
                     current.visited=true;
@@ -103,32 +103,32 @@ public class AStarAlgorithmVisualization extends PApplet {
                             if (expanded.cost > tentativecost){
                                 expanded.cost = tentativecost;
                                 expanded.predecessor = current;
-                                if(OpenSet.contains(grid[current.x - 1][current.y]))OpenSet.remove(grid[current.x - 1][current.y]);
-                                OpenSet.add(grid[current.x - 1][current.y]);
+                                if(openSet.contains(grid[current.x - 1][current.y])) openSet.remove(grid[current.x - 1][current.y]);
+                                openSet.add(grid[current.x - 1][current.y]);
                             }
                         }
                     }
-                    if (current.x + 1 < w / SizeNode && !finished) {
+                    if (current.x + 1 < w / sizeNode && !finished) {
                         expanded = grid[current.x + 1][current.y];
                         if (expanded.free && !finished) {
                             int tentativecost = current.cost - heuristic(current, t) + heuristic(expanded, t) + 10;
                             if (expanded.cost > tentativecost) {
                                 expanded.cost = tentativecost;
                                 expanded.predecessor = current;
-                                if(OpenSet.contains(grid[current.x + 1][current.y]))OpenSet.remove(grid[current.x + 1][current.y]);
-                                OpenSet.add(grid[current.x + 1][current.y]);
+                                if(openSet.contains(grid[current.x + 1][current.y])) openSet.remove(grid[current.x + 1][current.y]);
+                                openSet.add(grid[current.x + 1][current.y]);
                             }
                         }
                     }
-                    if (current.y + 1 < h / SizeNode && !finished){
+                    if (current.y + 1 < h / sizeNode && !finished){
                         expanded = grid[current.x][current.y + 1];
                         if (expanded.free && !finished) {
                             int tentativecost = current.cost - heuristic(current, t) + heuristic(expanded, t) + 10;
                             if (expanded.cost > tentativecost) {
                                 expanded.cost = tentativecost;
                                 expanded.predecessor = current;
-                                if(OpenSet.contains(grid[current.x][current.y + 1]))OpenSet.remove(grid[current.x][current.y + 1]);
-                                OpenSet.add(grid[current.x][current.y + 1]);
+                                if(openSet.contains(grid[current.x][current.y + 1])) openSet.remove(grid[current.x][current.y + 1]);
+                                openSet.add(grid[current.x][current.y + 1]);
                             }
                         }
                     }
@@ -139,20 +139,20 @@ public class AStarAlgorithmVisualization extends PApplet {
                             if (expanded.cost > tentativecost) {
                                 expanded.cost = tentativecost;
                                 expanded.predecessor = current;
-                                if(OpenSet.contains(grid[current.x][current.y - 1]))OpenSet.remove(grid[current.x][current.y - 1]);
-                                OpenSet.add(grid[current.x][current.y - 1]);
+                                if(openSet.contains(grid[current.x][current.y - 1])) openSet.remove(grid[current.x][current.y - 1]);
+                                openSet.add(grid[current.x][current.y - 1]);
                             }
                         }
                     }
-                    if (current.y > 0 & current.x + 1 < w / SizeNode && !finished) {
+                    if (current.y > 0 & current.x + 1 < w / sizeNode && !finished) {
                         expanded = grid[current.x + 1][current.y - 1];
                         if (expanded.free && !finished) {
                             int tentativecost = current.cost - heuristic(current, t) + heuristic(expanded, t) + 14;
                             if (expanded.cost > tentativecost) {
                                 expanded.cost = tentativecost;
                                 expanded.predecessor = current;
-                                if(OpenSet.contains(grid[current.x + 1][current.y - 1]))OpenSet.remove(grid[current.x + 1][current.y - 1]);
-                                OpenSet.add(grid[current.x + 1][current.y - 1]);
+                                if(openSet.contains(grid[current.x + 1][current.y - 1])) openSet.remove(grid[current.x + 1][current.y - 1]);
+                                openSet.add(grid[current.x + 1][current.y - 1]);
                             }
                         }
                     }
@@ -163,32 +163,32 @@ public class AStarAlgorithmVisualization extends PApplet {
                             if (expanded.cost > tentativecost) {
                                 expanded.cost = tentativecost;
                                 expanded.predecessor = current;
-                                if(OpenSet.contains(grid[current.x - 1][current.y - 1]))OpenSet.remove(grid[current.x - 1][current.y - 1]);
-                                OpenSet.add(grid[current.x - 1][current.y - 1]);
+                                if(openSet.contains(grid[current.x - 1][current.y - 1])) openSet.remove(grid[current.x - 1][current.y - 1]);
+                                openSet.add(grid[current.x - 1][current.y - 1]);
                             }
                         }
                     }
-                    if (current.y + 1 < h / SizeNode & current.x > 0 && !finished) {
+                    if (current.y + 1 < h / sizeNode & current.x > 0 && !finished) {
                         expanded = grid[current.x - 1][current.y + 1];
                         if (expanded.free && !finished) {
                             int tentativecost = current.cost - heuristic(current, t) + heuristic(expanded, t) + 14;
                             if (expanded.cost > tentativecost) {
                                 expanded.cost = tentativecost;
                                 expanded.predecessor = current;
-                                if(OpenSet.contains(grid[current.x - 1][current.y + 1]))OpenSet.remove(grid[current.x - 1][current.y + 1]);
-                                OpenSet.add(grid[current.x - 1][current.y + 1]);
+                                if(openSet.contains(grid[current.x - 1][current.y + 1])) openSet.remove(grid[current.x - 1][current.y + 1]);
+                                openSet.add(grid[current.x - 1][current.y + 1]);
                             }
                         }
                     }
-                    if (current.y + 1 < h / SizeNode & current.x + 1 < w / SizeNode && !finished) {
+                    if (current.y + 1 < h / sizeNode & current.x + 1 < w / sizeNode && !finished) {
                         expanded = grid[current.x + 1][current.y + 1];
                         if (expanded.free && !finished) {
                             int tentativecost = current.cost - heuristic(current, t) + heuristic(expanded, t) + 14;
                             if (expanded.cost > tentativecost){
                                 expanded.cost = tentativecost;
                                 expanded.predecessor = current;
-                                if(OpenSet.contains(grid[current.x + 1][current.y + 1]))OpenSet.remove(grid[current.x + 1][current.y + 1]);
-                                OpenSet.add(grid[current.x + 1][current.y + 1]);
+                                if(openSet.contains(grid[current.x + 1][current.y + 1])) openSet.remove(grid[current.x + 1][current.y + 1]);
+                                openSet.add(grid[current.x + 1][current.y + 1]);
                             }
                         }
                     }
@@ -211,15 +211,15 @@ public class AStarAlgorithmVisualization extends PApplet {
 
     public void draw(){
         if(start!=null && target!=null && finished){
-            drawpath();
+            drawPath();
         }
     }
 
-    public void drawpath(){
+    public void drawPath(){
         if(current.predecessor!=null){
-            stroke(linecolor.getRGB());
-            strokeWeight(SizeNode/2f);
-            line(current.x*SizeNode + SizeNode/2f,current.y*SizeNode+SizeNode/2f,current.predecessor.x*SizeNode+SizeNode/2,current.predecessor.y*SizeNode+SizeNode/2);
+            stroke(lineColor.getRGB());
+            strokeWeight(sizeNode /2f);
+            line(current.x* sizeNode + sizeNode /2f,current.y* sizeNode + sizeNode /2f,current.predecessor.x* sizeNode + sizeNode /2,current.predecessor.y* sizeNode + sizeNode /2);
             current = current.predecessor;
         }
     }

@@ -7,23 +7,23 @@ A* search algorithm visualization written in Java with Processing graphic librar
 ```Java
 public void settings()
 public void setup() //Processing function, the first that is called
-public void setupgrid() //makes the grid
-public void drawgrid() //draws the grid
-public void mousePressed() //Processing function used to determine when mouse is pressed
-public void Astar() //the search algorithm
+public void setupGrid() //makes the grid
+public void drawGrid() //draws the grid
+public void mousePressed() //Processing function, used to determine when mouse is pressed
+public void aStar() //the search algorithm
 public float heuristic() //the Heuristic function used by the algorithm
 public void draw() //Processing function used to update the screen
-public void drawpath() //it draws the path starting from the Target node and backtracks all the predecessors
+public void drawPath() //it draws the path starting from the Target node and backtracks all the predecessors
 ```
 #### Graphics
 ```Java
 public void settings() {  
-    w = 800;  
-    h = 800;  
-    SizeNode = 15;  
-    bgcolor = new Color(0x03045e);  
-    obstaclecolor = new Color(0x0077b6);  
-    linecolor = new Color(0xcaf0f8);  
+    w = 800;  //width in pixels of window
+    h = 800;  //height of window in pixels
+    sizeNode = 15; //always pixels 
+    bgColor = new Color(0x03045e);  
+    obstacleColor = new Color(0x0077b6);  
+    lineColor = new Color(0xcaf0f8);  
     size(w,h);  
 }
 ```
