@@ -10,7 +10,5 @@
 [[Dynamic programming]] 
 
 [Amortized Analysis](Amortized%20Analysis.md) 
- 
-[Competitive Analysis](Competitive%20Analysis.md)  
 
 [Parallel Programming](Parallel%20Programming.md) 
