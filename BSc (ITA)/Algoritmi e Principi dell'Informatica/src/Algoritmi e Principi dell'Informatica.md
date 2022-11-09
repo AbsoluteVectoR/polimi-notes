@@ -15,7 +15,7 @@ geometry:
 \tableofcontents
 \newpage
 
-## Linguaggi
+# Linguaggi
 'Ma cos''è un linguaggio? Un oggetto matematico formato da: 
 
 - alfabeto (segni/simboli)
@@ -441,15 +441,17 @@ Piccolo extra: *l'asintotico (di Analisi 1 per intenderci) è un caso particolar
 
 ## Metodi per risolvere ricorrenze:
 
+*nota che ci sono diverse versioni del MT che differiscono in base alla 'garanzia che danno' soprattutto nel caso 2*
+
 ### Master Theorem 
-Utili teorema per valutare complessità del tipo
+Utile teorema per valutare complessità del tipo:
 $$T(n)=aT(\frac{n}{b})+f(n)$$
 Il teorema ha tre casi e si tratta sempre di confrontare $n^{log_b(a)}$ con $f(n)$. Si tratta di applicare una formula e stabilire se la ricorsività delle chiamate pesa più della singola chiamata $f(n$) . 
 
 I 3 casi, con K = $log_b(a)$: 
 
 - se $f(n) = O(n^{K})$ allora $T(n) = O(n^{K})$
-- se $f(n) = \Theta((nlog(n))^k)$ allora $T(n) = \Theta(n^{k}(log(n))^{k+1})$
+- se $f(n) = \Theta((nlog(n))^k)$ allora $T(n) = \Theta(n^{k}(log(n))^{k+1})$. La versione *alternativa* è che se $f(n)=\Theta(n^k)$ allora $T(n) = \Theta(n^{K}\log(n))$
 - se $f(n) = \Omega(n^K)$ allora controllo che $af(\frac{n}{b}) \le cf(n)$ sia valida per qualche $c<1$ e per tutti gli $n$ grandi a sufficienza. In caso affermativo $T(n)=\Theta(f(n))$
 
 Il Master Theorem non si può applicare nel caso in cui $a<1$ .  Inoltre il MT copre solo i casi in cui le funzioni differiscono **polinomialmente**. Questo significa che non posso confrontare $n^2$ con $n^2log(n)$ ma posso confrontare $n^{2.3}$ e $n^2log(n)$ . 
@@ -660,6 +662,7 @@ HEAPSORT(A){
 ````
 
 ## Quicksort 
+
 - $T(n) = O(n^2)$ ma media $\Theta(n log(n))$ 
 - $S(n) = O(1)$
 - array 
@@ -698,7 +701,7 @@ private static int partition(int[] array, int start, int end) {
 }
 ````
 
-Altri tipi di sorting, [link interessante per l'ordinamento di una spirale](https://www.youtube.com/watch?v=LOZTuMds3LM) . 
+Lo pseudocodice qui sopra utilizza la partizione di Lomuto, la quale seleziona come pivot l'ultimo elemento. Questa in realtà non è la più efficiente. La partizione di Hoare è già più efficiente (anche più intuitiva a mio modesto parere) e pone il pivot al centro dell'array. In media la partizione di Hoare utilizza un terzo degli swaps usati nella partizione di Lomuto. 
 
 # Strutture dati
 

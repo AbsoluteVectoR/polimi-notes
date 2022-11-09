@@ -436,5 +436,9 @@ INTERESTING: last exercise is about storing continuations in a stack
 
 
 
+# esercitazione del 28/10 ancora una ripresa su continuations
+
+
+
 
 

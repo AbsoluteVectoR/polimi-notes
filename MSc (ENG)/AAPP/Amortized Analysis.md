@@ -1,10 +1,12 @@
 # Amortized Analysis
 
-An amortized analysis is any strategy for analyzing a sequence of operations in the average case. Generally we use AA over a specific data structure to evaluate it. Often a data structure has some little cheap operations and an expensive one. The goal of amortized analysis is to find an average cost of all of them without using any kind of probability. 
+Average time complexity takes a mean over many possible inputs to a single operation. The bound may be exceeded for a few “hard” inputs, but not for a sufficiently large number of inputs. For example think about the quick-sort algorithm where the average time complexity is $O( n \log {n})$ while for some hard inputs (already sorted or reverse sorted) is $O(n^2)$ . 
+Amortized time complexity takes a mean over many iterations of the same operation. The bound may be exceeded for single operations, but not for a sustained period of operation: if the total amortized time of a series of operations is $O(f(n))$ , some individual operations could take more time than $O(f(n))$ but they will be 'amortized' by 'lighter' operations .
+Generally we use AA over a data structure to evaluate it: often a data structure has some cheap operations and an expensive one. The goal of amortized analysis is to find an average cost of all of them without using any kind of probability. 
 
 # Aggregated analysis 
 
-The aggregate method is a simply method, not very precised that it's based on these relations:
+The aggregate method is a simply method of amortized analysis, not very precised that it's based on these relations:
 
 $$\text{amortized cost}=\frac{\text{Total cost}}{\text{number of operations}}$$
 
@@ -18,7 +20,7 @@ The concept is that you can 'store' some value during the analysis of the operat
 
 $$\text{amortized cost} = \text{actual cost} + \text{deposits}-\text{withdraws}$$
 
-An example for this could be the **table doubling** 
+An example for this could be the **table doubling** .
 
 
 # Potential analysis
@@ -28,6 +30,12 @@ It consists in :
 
 - First find the potential function which fits best 
 - the amortized cost of each operation is the actual cost + the difference in potential $\Delta ( \phi)$  that that operation caused
+$$\hat c = c + \phi(i+1)-\phi(i)$$
+
+So: 
+
+$$\sum \left ( c + \phi(i+1)-\phi(i) \right ) \ge \sum \left ( c \right )$$
+
 
 We would like to have a 0 potential energy at the "start" of the data structure (when for example it's empty) and then (based on the operations that we do) different potentials associated with the energy that we have 'stored' in the data structure and the energy we have used and subtracted from it. 
 For example the potential function $\phi$ for a dynamic table which doubles its size every time is almost full could be: $\phi = 2(D.num - \frac{D.size}{2})$ so that when the table is just ''re spawned" the potential is zero (we don't want $0$ potential when the data structure is empty but when the data structure has just re-allocated.  
@@ -35,5 +43,3 @@ For example the potential function $\phi$ for a dynamic table which doubles its 
 ### Binary counter 
 
 The potential function could be the number of 1s. More there are and more you are near the carry which will cause a 'big change of the system'. 
-
-[Competitive analysis](Competitive%20analysis.md) 

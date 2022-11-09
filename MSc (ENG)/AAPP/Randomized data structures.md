@@ -1,15 +1,11 @@
 # Randomized data structures 
 
+## Disjoint sets 
 
-# Disjoint sets 
-
-Disjoint sets is a data structure very useful for operations on graphs. 
-A collection of a set of objects where there are not intersections between sets. 
-each set is identified by a representative
-
-a representative is some member of the set (often it often does not matter which element is the representative irrelevant).
-
+Disjoint sets is a data structure very useful for operations on graphs. A collection of sets of objects, not intersected and each identified by a representative element.
+A representative is some member of the set (often it often does not matter which element is the representative irrelevant).
 A couple of operations over the disjoint sets:
+
 ````C
 make(x);
 union(x,y);
@@ -17,50 +13,70 @@ find-set(x);
 
 ````
 
-A possible way to implement it is using linked list, but the union will not be very efficient O(n^2) while make and find-set in O(1)
+The most efficient way is using 'forests' (rooted trees, where each tree is a set) with 2 optimizations: 
 
+- Union by Rank: Each node is associated with a rank, which is the upper bound on the height of the height of subtree rooted at the node. Then when ```union(x,y)```, let the root with smaller rank point to the root with larger rank.
+- Path Compression: used in ```find_set(x)``` operation, make each node in the path from $x$ to the root directly point to the root. 
 
+````C#
+public class DisjointSet 
+{
+    private int[] _set;
+    private int[] _rank;
 
+    public DisjointSet(int size)
+    {
+        _set = new int[size];
+        _rank = new int[size];
+    }
+    
+    public void MakeSet(int x)
+    {
+        _set[x] = x;
+        _rank[x] = 0;
+    }
+    
+    public int FindSet(int x)
+    {
+        if (x != _set[x]) return FindSet(_set[x]);
+        return x;
+    }
 
-A more efficient way is using 'forests' : rooted trees, where each tree is a set. 
-It resolves the problem with the union but change find-set to O(height of x's tree) and this is bad. 
-Let's solve it with these 2 optimizations: 
-
-Union by Rank: Each node is associated with a rank,
-which is the upper bound on the height of the node
-(i.e., the height of subtree rooted at the node), then
-when UNION, let the root with smaller rank point to
-the root with larger rank.
-
-Path Compression: used in FIND SET( x ) operation,
-make each node in the path from x to the root
-directly point to the root. Thus reduce the tree
-height. ???
-
-Worst case running time for
-m MAKE SET, UNION, FIND SET operations is:
-O
-m  n )) where  n  4. So nearly linear in m
-
-
-Disjoint-set data structures model the partitioning of a set, for example to keep track of the connected components "Connected component (graph theory)") of an undirected graph. This model can then be used to determine whether two vertices belong to the same component, or whether adding an edge between them would result in a cycle. The Union–Find algorithm is used in high-performance implementations of unification "Unification (computer science)").
-This data structure is used by the Boost Graph Library to implement its Incremental Connected Components functionality. It is also a key component in implementing Kruskal's algorithm to find the minimum spanning tree of a graph.
-Note that the regular implementation as disjoint-set forests does not allow the deletion of edges, even without path compression or the rank heuristic. However, there exist modern implementations that allow for constant-time deletion.
-Sharir and Agarwal report connections between the worst-case behavior of disjoint-sets and the length of Davenport–Schinzel sequences, a combinatorial structure from computational geometry.[18
-
-[random maze generation challenge](random%20maze%20generation%20challenge.md) 
+    public void UnionSet(int x, int y)
+    {
+        var parentX = FindSet(x);
+        var parentY = FindSet(y);
+        if (_rank[x] > _rank[y]) _set[parentY] = parentX;
+        else
+        {
+            _set[parentX] = parentY;
+            if (_rank[x] == _rank[y]) _rank[y]++;
+        }
+    }
+}
+````
 
 ## Treaps 
 
 Treaps are binary trees where each child has a greater priority to his parent, like max heap. To do this, each element $x$ is assigned a priority chosen uniformly at random before the insertion.
-With this magic trick, Treaps achieve essentially the same time bounds of balanced trees without requiring any explicit balance information. Also the expected number of rotations performed is smaller (an average of 2 rotations for each operation) than other self-balanced data structures. Also they are very simple to implement compared to AVL or RB trees for example.  If $n$ elements are inserted in random order into a binary search tree, the expected depth is always $1.39 log(n)$. 
+With this magic trick, a treap achieve essentially the same time bounds of balanced trees with an expected number of rotations performed of 2 rotations for each operation. Also they are very simple to implement compared to AVL or RB trees for example.  If $n$ elements are inserted in random order into a binary search tree, the expected depth is always $1.39 log(n)$. 
+
 Explained in spaghettata mode: I have a binary tree (so very good to search) but I have always the problem to balance it. So I assign to each key a random priority and then I consider my tree not only as a tree but also as a heap and I want to preserve the property of the heap using rotations. Note that the heap can be min heap or max heap without problems. 
+
+Ops: 
+
+- insert operation follows the logic of the insert in a BST. 
+- delete operation is dual. The element is searched and once the node to be deleted is found we rotate the node left/right until the node to be deleted is a leaf. Once the element to be deleted is a leaf we simply remove it. 
+- min and max can be found following the left/right subtree of all encountered nodes from root to leaf. 
+- Merge of two treaps can be performed finding a key greater than the max of $T_1$ and smaller than the min $T_2$ . Then we will add this key with lower probability (in max heap version) as root with $T_1$ as left subtree and $T_2$ as right subtree. The algorithm then deletes the root from the treap. The expected running time is $O(\log (n))$. 
+- The split of two treaps can be performed adding a key that doesn't exists in the tree and giving it maximum priority (in case of max heap) so that it will end up as the root. 
+
+
+All these operations have $O(\log (n))$ time complexity. 
 
 ## Skip Lists 
 
-Skip lists similar benefits to Treaps but are based on an alternative randomized data structure. 
-The starting point is a sorted linked list, a dynamic structure with $O(n)$ for search elements.
-The next step is adding a second sorted linked list shorter to 'skip' some elements of the list.
+Skip lists similar benefits to treaps but are based on an alternative randomized data structure. The starting point is a **sorted** linked list, a dynamic structure with $O(n)$ for search elements. The next step is adding a second sorted linked list shorter to 'skip' some elements of the list.
 
 
 ![](Pasted%20image%2020221019124724.png)
@@ -70,10 +86,12 @@ Let's expand the idea further:
 ![](Pasted%20image%2020221019125724.png)
 
 
-How we decide to promote an element to upper level? Randomly.
+We randomly decide to promote an element to upper level. It's proved that the there will be $\log (n)$ levels/lists and at the end there will be a 'balanced' structure. 
 
-Randomize the probability to 'promote' elements. 
+Ops: 
 
+- search is going to the 'right element' in the highest-level list until it is found an element greater than the one searched. If it's not already found the searched one and the element selected is lower than the one searched, it will be necessary to go to the lower list using the 'down' pointer. This process is repeated until the element is found or the last list is reached and there are not 'down pointers'.
+- insert (after the 'search operation') is like in a normal linked list but at the end you will randomly choose if 'promote' it .
+- deletion (after the 'search operation') is like in a normal linked list but at the end you will check to delete the element from all the lists.
 
-
-
+All these operations have $O(\log (n))$ time complexity. 

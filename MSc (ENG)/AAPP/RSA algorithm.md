@@ -1,0 +1,17 @@
+
+# RSA algorithm
+
+Possible application of the [Primality Test](Primality%20Test.md) this shit is public-key cryptosystems with public/secret keys cryptography. Basic description of public-key cryptosystems, fundamental for generating digital signatures:  
+
+1. $P$ (public key) and $S$ (secret key) can be computed efficiently
+2. With a $P$ , $S$ :
+3. $S$ is not computable from $P$ (without a quantum computer, during the life of this universe) 
+
+This is crazy, and this is how:
+
+1. randomly select two primes $p$ and $q$ of similar size, each with $l+1$ bits ( $l \ge 500$)
+2. let $n=p \cdot q$ 
+3. let $e$ an integer co-prime with $(p-1)(q-1)$ 
+4. $d= (\frac{1}{e})mod ((p-1)(q-1))$ 
+5. $P=(e,n)$ and $S=(d,n)$  
+6. let $M=\text{message} , C=M^e \space mod (n) \rightarrow M=C^d \space mod (n)$ 

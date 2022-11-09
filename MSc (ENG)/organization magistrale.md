@@ -1,6 +1,0 @@
-- Db2 seguo il prof Fraternali (differita) + prima lezione di martinenghi.
-- Advanced Algorithms seguo online 
-- FOR solo slides 
-- Sw2? 
-- FLC ? solo slides ed esercizi  
-- PPL ?
