@@ -43,6 +43,6 @@ se P fosse NP, noi potremmo dire che risolvere una formula 3-sat sarebbe diffici
 > Se è vero che trovare la dimostrazione di NP=P è tanto difficile tanto quanto verificarne la correttezza perchè non ci siamo ancora riusciti? 
 
 
-![](Pasted%20image%2020220621101538.png)
+![](np%20complete%20e%20non.png)
 
-![](Pasted%20image%2020220621101614.png)
+![](gerarchia%20complexity.png)
