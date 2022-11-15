@@ -181,8 +181,6 @@ operations:
 - * reflexive transitive closure on binary relations
 - tilde transpose operator always on binary relations
 
-
-
 ### Esercizi per cazzi miei 
 
 Tutte le variabili si indicano 
@@ -197,16 +195,6 @@ Tutte le volte che voglio indicare la cardinalitá uso ```#nome_variabile``` .
 
 
 let wants the ```=``` while the declarations want 
-
-
-## Quiz
-
-In sostanza i requirements dovevano tutti avere natura tecnica e non lasciare spazio ad interpretazione ???? <- da verificare
-
-
-copiare dal riassunto di infsoft2 shared phenomena etc 
-
-
 
 # RASD 
 
@@ -235,159 +223,124 @@ copiare dal riassunto di infsoft2 shared phenomena etc
 
 # Software Design
 
-Architecture is the vehicle for communication: internal (different teams), external (teams and stakeholders) Architecture manifests the earliest set of design decisions Introduces constraints on implementation Introduces organizational structure Inhibits or enables quality attributes Architecture is a transferable abstraction of a system Product lines share a common architecture Allows for template-based development Basis for trainin
+Architecture is a transferable abstraction of a system.  The architecture manifests the earliest set of design decisions:
 
+- it introduces design constraints on implementation
+- it introduces organizational structure 
+- it inhibits or enables quality attributes 
 
-he notion of quality is central: the SA is derived according to qualities of the system at the earliest possible stage. External qualities: performance, security, availability, functionality, usability Internal qualities: modifiability, portability, reusability, integrability, testability
+# Architectural style 
 
-Architectural style
+## Layered style
 
-
-# Layered style
 ![](Pasted%20image%2020221030185136.png)
 
-Layers enable separation of concerns We can identify the main focuses of each layer at a glance. Each layer can be implemented using a different team Each layer remains independent from the others, provided that it respects the protocols defined for communication with the neighbour layers
-
+Layers archtecture enable separation of concerns, claryfying the main focuses of each layer. Each layer can be considered 'independent' from the others. Layered style can be used when it is possible to identify a specific (bounded) concern for each layer and clearly communication protocol between layers.
 
 ![](Pasted%20image%2020221030185228.png)
 
-Abstraction layers to dominate complexity When it is possible to identify a specific (bounded) concern for each layer When it is possible to identify clearly the communication protocols between layers
-
-
-# Client/Server
+## Client/Server
 
 ![](Pasted%20image%2020221030185632.png)
 
-Remote communication Separation of concerns between the clients and the server Note that a client-server architecture is a kind of layered architecture with two layers, also called tiers in this case Possibility to execute on heterogeneous computational units (virtual/physical) E.g., servers on powerful machines (complex computations), clients on commodity machines
+A client-server architecture is a kind of layered architecture with two layers (also called tiers).
 
 ![](Pasted%20image%2020221030185723.png)
 
 
-## Three-tier architecture
+### Three-tier architecture
 
-Note how the middle tier plays 2 roles (server and client ). 
 
 ![](Pasted%20image%2020221102165853.png)
 
+Note how the middle tier plays 2 roles (server and client). 
 
-# Event-based systems
-
+## Event-based systems
 
 This kind of style is popular in distributed systems (systems heavily distributed and decentralized). 
 
 ![](Pasted%20image%2020221102170135.png)
 
+There are producers of events and consumers of evens and everything is coordinated by an event dispatcher:
 
+- components can "register to" or  "send events"  
+- events are broadcast to all registered components by the event dispatcher
 
-There are producers of events and consumers of this event. Each consumer will register itself at the event dispatcher, so that they can receive the event. 
+Since publishers/subscribers are decoupled, addition/deletion of components is easy. The main problem is the scalability since the event dispatcher may become a bottleneck (under high workloads). Also notice that the architecture has an asynchronous nature so the ordering of events is not guaranteed.
 
-Components can register to / send events • Events are broadcast to all registered components • No explicit naming of target component
-
-Often called publish-subscribe Publish event generation Subscribe declaration of interest Different kinds of event languages possible
-
-Very common in modern development practices + E.g., continuous integration / deployment (such as GitHub Actions)
-Easy addition/deletion of components + Publishers/subscribers are decoupled + The event dispatcher handles this dynamic set
-
-
-Potential scalability problems
-The event dispatcher may become a bottleneck (under high workloads)
-Ordering of events – Not guaranteed, not straightforward
-
-Asynchrony send and forget Reactive computation driven by receipt of message Location/identity abstraction destination determined by receiver, not sender Loose coupling senders/receivers added without reconfiguration Flexible one-to-many, many-to-one, many-to-many
-
-# Service-oriented architecture (SOA)
-
-
+## Service-oriented architecture (SOA)
 
 ![](Pasted%20image%2020221102170557.png)
 
-Pros Enables reuse of registries and providers across organizational boundaries Relies on runtime discovery and dynamic binding Services offered through a well-defined Application Programming Interface (API) à Interface documented in a machine-interpretable form Cons Dynamic orchestration of discovered services is not trivial A lot of glue code is needed SOA systems are usually monolithic SOAP (XML based protocol) considered too heav
+Services offered through a API. 
 
-# Microservice architectural style
+## Microservice architectural style
 
-Each service uses its own technology stack Technology stack can be selected to fit the task best E.g., Data analysis vs Video streaming Teams can experiment with new technologies within a single microservice E.g., we can deploy the two versions and do A/B testing No unnecessary dependencies or libraries for each service
-
+Each service uses its own technology stack and it's isolated. 
 
 ![](Pasted%20image%2020221102170646.png)
 
-
-
-
-
-
-
-
-Microservices key benefits: technology heterogeneity
-
-Microservices key benefits: resilience
-
-Microservices key benefits: scaling
-Each microservice can be scaled independently Identified bottlenecks can be addressed directly Parts of the system that do not represent bottlenecks can remain simple and un-scale
-
-Microservices key benefits: independent codebases and deployment
-Each service has its own software repository Favor distributed teams No cross-dependencies between codebases Tools work faster Building, testing, refactoring, deployment takes seconds Each service can be deployed independently Independent CI/CD Startup takes a smaller amount of time
-
-Microservices key benefits: reuse and composability
-The functionality offered by a microservice can be used and reused in multiple contexts E.g., authentication It is possible to compose multiple microservices in different ways
-
-Microservices key benefit: replaceability
-Monolithic systems are often big and complex and their replacement is risky and costly Given its small size, replacing a microservice implementation is much easier The team can develop a new implementation As soon as the service is ready for operation, it can be moved in the operational environment The previous service can be shutdown
-
-
-
-
-PROBLEMS
-
-Issues with frequent deployments Need to redeploy everything to change one component Interrupt long running background jobs Increase risk of failure Overloaded containers Obstacle to scaling development Difficult fault localization Difficult maintenance Require long-term commitment to a technology stack
-If a microservice fails the others can still work, possibly with a degraded functionality (until the failure is resolved) Note: microservices can introduce other types of failures related to network and communication (microservices systems are typically more “chatty”)
-Forbid fine-grained scaling strategies It is not possible to scale “Product Catalog” up differently from “Customer Service” May lead to availability issues [~2008] Netflix reported that a single minor mistake (i.e., missing “;”) brought down the whole platform for many hours
-
+Microservices architecture is very resilience and scalable. Each service has its own software repository and there is no cross-dependencies between codebases. 
+While monolithic systems are often big and complex and their replacement is risky and costly; replacing a microservice implementation is much easier. 
 
 # Analysis of architectures
 
-Scalability   Usability
+A couple of parameters:
 
+- Mean Time to Repair ($MTTR$): time between the occurrence of a fault and service recovery, also known as the mean downtime.
+- Mean Time To Failures ($MTTF$): time between the recovery from one incident and the occurrence of the next incident, also known as uptime. 
+- Mean Time Between Failures ($MTBF$): Mean time between the occurrences of two consecutive incidents
 
-Availability: A service shall be continuously available to the user 
-
-Reliability: means that the service is available for an agreed period without interruptions (frequency). Note that a system could be available for 99% of time but have a lack of reliability since it continues to 'crash' and quickly restart. 
-
-Availability: The probability that a component is working properly at time t A = MTTF / (MTTF+MTTR) Reliability: The probability that a component has always been working properly during a time interval
-
-
-
-Reliability requires that the component never fails in the interval 
-
-From the availability perspective a given component could have failed in the interval (0,t), but it could have been repaired before
-
-
-Mean Time to Repair (MTTR): Average time between the occurrence of a fault and service recovery, also known as the downtime Mean Time To Failures (MTTF): Mean time between the recovery from one incident and the occurrence of the next incident, also known as uptime Mean Time Between Failures (MTBF): Mean time between the occurrences of two consecutive incidents
 
 ![](Pasted%20image%2020221102172739.png)
 
-
-A = MTTF / (MTTF+MTTR)
-
-
-R = e-λt  where λ = 1/MTTF
-
-Probability distribution about the failure 
+The we can define availability:
 
 
-Availability of a complex structure 
+$$A = \frac{MTTF}{(MTTF+MTTR)}$$
 
-alculated by modeling the system as an interconnection of parts in series and parallel If failure of a part leads to the combination becoming inoperable, the two parts are considered to be operating in series If failure of a part leads to the other part taking over the operations of the failed part, the two parts are considered to be operating in parallel
+The probability that a component is working properly at time (actual uptime).
 
-
-series = one depends from the other The combined system is operational only if every part is available. A chain is as strong as the weakest link!
-
+Reliability: means that the service is available for an agreed period without interruptions (frequency of interruptions). 
 
 
-parallel = one is basically the replica of the other. The combined system is operational if at least one part is available
+$$R = e - \lambda t  \text{ where } \lambda = \frac{1}{MTTF}$$
 
 
-ission critical systems are designed with redundant components!
+Note that a system could be available for 99% of time but have a lack of reliability since it continues to 'crash' and quickly restart. 
+
+
+# 03 11 
+
+Example of sequence UML diagram. 
+
+An example with two examples. One asynchronous and the other one synchronous. online/offline difference. 
+
+
+Example of 3 components in series, so the total availability is the multiplication of all the 3 components availability. 
+
+Then the example of parallelize the weakest component of the chain to increase the availability. 
+
+# UML models
+
+
+![](Pasted%20image%2020221112190820.png)
+
+
+Objects diagrams is the Class diagram with only distances. It is used to show links between instances. 
+
+Composite Structure Diagram captures the internal modular structure of a component. You can described nested components, bus and ports. Exist tools that mechanically extract structure diagrams from class diagrams. Strong focused on low-level details. Developed by architects and used by programmers. 
+
+Component Diagram used to show interfaces between components. 
+
+Deployment Diagram captures topology of a system: hardware, software and communications protocol between them. It is used to specify the distribution of components and identify performance bottlenecks. 
+
+![](Pasted%20image%2020221112192234.png)
+
+Sequence Diagram used to describe behavior time-oriented. Focused on internal message exchange among components. It is used to show the control flow and illustrate typical scenarios. 
 
 
 
+The top-down design generally produces more elegant systems but the individual components reuse is rare. The bottom up design is a bit rough end result, but it's very efficient since we re-use components and it s generally quicker. 
 
+In real life generally is used a trade-off between the two approaches. 

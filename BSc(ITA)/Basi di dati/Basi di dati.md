@@ -88,7 +88,7 @@ Operatori:
 - $\bowtie$ join... è un prodotto cartesiano in cui vengono eliminate le colonne no sense. 
 - $\ltimes$ semijoin. è un join in cui vengono tenute solo le colonne della tabella sinistra (o dx a seconda dove disegni la stanghetta aperta del simbolo). In pratica te lo puoi ricordare come il join nel quale usi le righe di una tabella per 'selezionare' le stesse righe in un'altra. 
 - operatore di divisione. Complicato da capire, sostituibile con le altre operazioni. 
-![esempio divisione query](kb/polimi-notes/BSc%20(ITA)/Basi%20di%20dati/esempio%20divisione%20query.png)
+![esempio divisione query](esempio%20divisione%20query.png)
 
 
 Algebra relazionale è un linguaggio procedurale, cioè l'ordine delle operazioni è molto importante. Or dunque usi le parentesi. 
@@ -115,7 +115,7 @@ $$\{ x | p(x) \}$$ dove $p(x)$ è una formula costruita tramite atomi. Un atomo 
 
 # Datalog
 Datalog è un linguaggio di programmazione logica basato su formule che prendono il nome di **regole** . è un linguaggio dichiarativo senza alcuna introduzione procedurale come ad esempio SQL. Sintatticamente derivato dal Prolog. 
-![Datalog Esempio](kb/polimi-notes/BSc%20(ITA)/Basi%20di%20dati/Datalog%20Esempio.png)
+![Datalog Esempio](Datalog%20Esempio.png)
 
 Ogni regola ha una **testa** e un **corpo** . 
 
@@ -166,7 +166,7 @@ In SQL te ne sbatti dell'interrogazione, vari modi ma alla fine SQL è ottimizza
 ## Progettazione fisica
 Da un punto di vista logico vediamo solo tabelle, ma come sono organizzati i dati fisicamente? 
 L'approccio più comune è tenere le tuple distribuite in modo sequenziale in memoria. In genere le tuple sono in ordine cronologico d'inserimento. Sopra questo blocco di memoria vengono poi costruiti degli indici. Questi indici sono nella maggior parte dei casi implementati con hash e albero B+ .
-![albero B+](kb/polimi-notes/BSc%20(ITA)/Basi%20di%20dati/albero%20B+.jpg)
+![albero B+](albero%20B+.jpg)
 
 Simile a un BST ma con più chiavi, infatti ogni nodo può avere n puntatori. 
 Inoltre un albero B+ è costruito in modo tale che si possono attraversare le foglie in modo sequenziale. 
@@ -221,7 +221,7 @@ Il ModelloAuto dipende funzionalmente dalla TargaAuto, duqnue ci sono attributi 
 All'esame, ogni tabella che facciamo, deve soddisfare almeno la terza forma normale. Normalmente quando faccio un progetto basato sul modello ER riusciremo a soddisfare tranqui Terza Forma Normale. 
 
 # Progetto concettuale e logico 
-![database conceptual](kb/polimi-notes/BSc%20(ITA)/Basi%20di%20dati/database%20conceptual.png)
+![database conceptual](database%20conceptual.png)
 
 IL **modello entità-relazione** (**modello ER**) è un modello teorico per la rappresentazione concettuale e grafica dei dati, formalizzato da Peter Chen nel 1976
 Il modello entità-relazione viene spesso utilizzato nella prima fase della progettazione di una base di dati, nella quale è necessario tradurre le informazioni analizzate in uno schema concettuale, detto **diagramma entità-relazione** (o **diagramma ER**).

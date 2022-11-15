@@ -36,7 +36,7 @@ $$\vec V= \dot Pe^{\theta i} + P \dot \theta i e^{\theta i}$$
 $$\vec c = \vec b \wedge \vec a$$
 Il prodotto vettoriale di due vettori è un terzo vettore con direzione ricavabile tramite la regola della mano destra e modulo $ba \sin(\alpha)$, dove $\alpha$ è l'angolo compreso tra $\vec b$ e $\vec{a}$ . Verrà utilizzato spesso per calcolare la velocità tangenziale di un punto che si muove lungo orbita circolare di raggio R ad esempio e con una certa velocità angolare.
 
-![](kb/polimi-notes/BSc%20(ITA)/Meccanica/ProdottoVettoriale.png)
+![](ProdottoVettoriale.png)
 
 ### Prodotto scalare
 $$\vec c = \vec b \cdot \vec a$$
@@ -46,7 +46,7 @@ Il prodotto scalare di due vettori è uno scalare uguale a $ba \cos(\alpha)$, do
 Comoda in alcuni casi per risparmiare conti.
 
 
-![](kb/polimi-notes/BSc%20(ITA)/Meccanica/Kramer.jpg)
+![](Kramer.jpg)
 
 
 ## Rivals per la velocità
@@ -155,7 +155,7 @@ Composto da:
 Serve per trasferire un moto rotatorio in uno traslatorio e viceversa, utilizzato in particolare in motori, compressori e presse. 
 
 
-![](kb/polimi-notes/BSc%20(ITA)/Meccanica/manovellaBiella.jpg)
+![](manovellaBiella.jpg)
 
 Il manovellismo ordinario è a catena cinematica chiusa. Possiamo identificare nel movimento due punti di nostro interesse, che dipendono dall'angolo $\alpha$ .
 - PME (Punto Morto Esterno) per $\alpha = 0$ 
@@ -475,7 +475,7 @@ $$W_p = -(1- \eta )W_{in}$$
 
 ## Tiro alla fune
 
-![](kb/polimi-notes/BSc%20(ITA)/Meccanica/Pasted%20image%2020220825113109.png)
+![](Pasted%20image%2020220825113109.png)
 
 Il modo migliore per calcolare il tiro alla fune nella sezione $H-H$ della fune è usando un equilibrio dei momenti nel punto di contatto tra disco e piano inclinato. Devi tenere conto della forza d'inerzia (e quindi del suo braccio $R$ dato che stai facendo un equilibrio dei momenti).
 Nel caso in cui ci fosse la forza d'attrito volvente devi rappresentare il discostamento infinitesimo $u$ e considerare tale come braccio del momento generato dalla forza d'attrito (ricordati che puoi usare la relazione $u=f_v R$). 
@@ -483,7 +483,7 @@ Nel caso in cui ci fosse la forza d'attrito volvente devi rappresentare il disco
 
 ## Disco collegato a fune all'estremità
 
-![](kb/polimi-notes/BSc%20(ITA)/Meccanica/Pasted%20image%2020220825112947.png)
+![](Pasted%20image%2020220825112947.png)
 
 Quando un disco si tira dal centro velocità centro disco = velocità del corpo. 
 Quando però lo si tira tramite fune collegata alla circonferenza del disco, la velocità baricentrica del disco è la metà dell'esterna. Per dimostrare ciò si usa molto semplicemente Rivals. 

@@ -1,4 +1,5 @@
 **Libro:**
+
 - Illustrare come il modello della Piramide di Anthony viene utilizzato per caratterizzare le tipologie di sistemi informativi e le loro relazioni.
   
 -  Confrontare gli elementi rappresentati dal modello della Piramide di Anthony e dal modello di Porter.  

@@ -110,7 +110,7 @@ E può essere classificata per:
 	 - Multinazionali 
 
 
-*L'[Italia](Italia) é fatta di Piccole-Medie imprese. Si parla di una dimensione media di 4 addetti!*
+*L'[Italia](Italia.md) é fatta di Piccole-Medie imprese. Si parla di una dimensione media di 4 addetti!*
 
 ![Pasted image 20220228121940](Pasted%20image%2020220228121940.png)
 (*Fonti Istat 2019*)

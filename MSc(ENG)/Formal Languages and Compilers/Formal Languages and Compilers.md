@@ -1,5 +1,9 @@
 https://www.dropbox.com/sh/jq1mmyjdk4pzqx5/AABlNlsFdOEJgRbh_ZwR_KgTa?dl=0
 
+1) https://politecnicomilano.webex.com/politecnicomilano/ldr.php?RCID=9aedbf33a2006f39a3e05054f906e573
+2) https://politecnicomilano.webex.com/politecnicomilano/ldr.php?RCID=d8a5ef448db9ebd998c272f83318960b
+
+
 
 # Formal Language Theory an Introduction
 
