@@ -18,7 +18,7 @@ $c_s(x)$ è la funzione caratteristica di un insieme. Restituisce 1 se l'element
 - **Ricorsivo** (**decidibile**) se e solo se $c_s(x)$ è computabile, cioè può essere verificata da una macchina di Turing in un periodo di tempo finito.
 - **Ricorsivamente Enumerabile** (**semidecidibile**) se e solo se $c_s(x)$ è computabile quando vale 1. Quando la $c_s(x)$ è 0, cioè l'elemento non appartiene all'insieme, non è necessario che la procedura si interrompa; può andare in loop per alcuni casi "non appartiene". 
 
-![insiemicomputabilità](insiemicomputabilità.png)
+![insiemicomputabilità](images/insiemicomputabilità.png)
 
 **Piccolo recap:**
 Se insieme è finito $\rightarrow$ ricorsivo.
@@ -86,11 +86,11 @@ bool halting(int i){
 - Sapere se due programmi che terminano per ogni input computano funzioni differenti
 - Sapere se due funzioni definite sullo stesso dominio sono differenti
 
-![Gran bella tabella sulla decidibilità del complemento dei problemi](tabella%20decidibilitá.png)
+![Gran bella tabella sulla decidibilità del complemento dei problemi](images/tabella%20decidibilitá.png)
 
 
 
-![Gran bella tabella sulla decidibilità](Gran%20bella%20tabella%20sulla%20decidibilità.png)
+![Gran bella tabella sulla decidibilità](images/Gran%20bella%20tabella%20sulla%20decidibilità.png)
 
 
 # Metodi per determinare decidibilitá

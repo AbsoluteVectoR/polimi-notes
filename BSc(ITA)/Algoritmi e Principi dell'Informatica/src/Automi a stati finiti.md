@@ -21,7 +21,7 @@ Se l'FSA è un traduttore/trasduttore di linguaggi avrà anche una funzione $\ga
 
 Si basa sul concetto di tenere il conto delle cifre modulo 3. Ragionamento applicabile per qualsiasi altro ASF in cui bisogna valutare la divisibilità per un certo numero. 
 
-![](FSA%20esempio.png)
+![](images/FSA%20esempio.png)
 
 
 
@@ -29,7 +29,7 @@ Si basa sul concetto di tenere il conto delle cifre modulo 3. Ragionamento appli
 
 Importante teorema che ci dice che se digerisco una stringa S, la quale $|S| > |Q|$ (dove |Q| è la cardinalità/numero degli stati della FSA) , allora posso digerire digerire un linguaggio infinito (fatto cioè di infinite stringhe di lunghezza finita). 
 
-![](fsa%20pumping%20lemma.png)
+![](images/fsa%20pumping%20lemma.png)
 
 Se $x \in  L \wedge |x| \ge |Q|$, allora esistono uno stato $q \in Q$ e una stringa $w \in I$  tali che: 
 $$x = ywz$$ con $\delta(q,w) = q$ Perciò vale anche quanto segue: 

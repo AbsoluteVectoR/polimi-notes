@@ -20,7 +20,7 @@ Problemi polinomiali: $P_{mt det}=\cup D_{time}(f(n^k))$
 Sovrainsieme dei problemi risolvibili con una MT non deterministica in maniera polinomiale. 
 $$NP = \cup N_{time}(f(n^k))$$
 
-![](np.jpg)
+![](images/np.jpg)
 *Ricordiamoci che una MT ND fa tutto quello che fa una MT D .. letteralmente è come se provasse tante MT D in parallelo raggiungendo la soluzione. Il fatto è che noi per certi problemi non riusciamo a risolverli con una MT D e basta*.
 
 Esiste un algoritmo che risolve i problemi di NP in P? 
@@ -33,8 +33,8 @@ cioè .. P=NP?
 Due problemi hanno stessa complessità se riduco A in B e riduco B in A. 
 
 
-![](nap.jpg)
-![](nphard.jpg)
+![](images/nap.jpg)
+![](images/nphard.jpg)
 
 Per ora siamo abbastanza convinti che $P \ne NP$
 
@@ -43,6 +43,6 @@ se P fosse NP, noi potremmo dire che risolvere una formula 3-sat sarebbe diffici
 > Se è vero che trovare la dimostrazione di NP=P è tanto difficile tanto quanto verificarne la correttezza perchè non ci siamo ancora riusciti? 
 
 
-![](np%20complete%20e%20non.png)
+![](images/np%20complete%20e%20non.png)
 
-![](gerarchia%20complexity.png)
+![](images/gerarchia%20complexity.png)

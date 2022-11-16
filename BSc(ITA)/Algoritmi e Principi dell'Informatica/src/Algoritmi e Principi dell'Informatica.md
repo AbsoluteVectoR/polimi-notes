@@ -18,6 +18,7 @@ geometry:
 [Linguaggi](Linguaggi.md)
 
 [Automi a stati finiti](Automi%20a%20stati%20finiti.md)
+
 [Automi a Pila](Automi%20a%20Pila.md)
 
 [Macchina di Touring](Macchina%20di%20Touring.md)

@@ -34,12 +34,12 @@ Diversi approcci per controllare:
 
 - Anello aperto ad azione diretta (feed forward)
 
-![feedforward](feedforward.png)
+![feedforward](images/feedforward.png)
 
 - Anello aperto ad azione diretta con controllo del disturbo, *stessa figura ma con controllo disturbo*
 - Anello chiuso Feedback/Retroazione (senza controllo disturbo)
 
-![feedback](feedback.png)
+![feedback](images/feedback.png)
 
 - Anello chiuso Feedback (con controllo disturbo)
 
@@ -139,7 +139,7 @@ Ancora ancora più in pratica:
 
 ### Tabella di Routh:
 
-![Routh Tabella](Routh%20Tabella.png)
+![Routh Tabella](images/Routh%20Tabella.png)
 Ad ogni cambio di segno degli elementi della prima colonna corrisponde un autovalore positivo di A → quindi instabile. 
 
 In pratica riassunto: *usa la tabella di Routh per evitare la diagonalizzazione, guarda sempre la prima colonna, appena trovi un elemento con segno discorde dagli altri di fermi e dici che il SD in quel punto d'equilibrio è instabile*
@@ -148,7 +148,7 @@ In pratica riassunto: *usa la tabella di Routh per evitare la diagonalizzazione,
 ## Linearizzazione 
 Intuitivamente in prossimitá di un equilibrio in un sistema dinamico (non lineare) la tangente é una valida approssimazione dell'intero sistema. 
 
-![Sistema Linearizzato](Sistema%20Linearizzato.png)
+![Sistema Linearizzato](images/Sistema%20Linearizzato.png)
 
 
 ### Segnali e Trasformate (Laplace e Fourier)
@@ -215,7 +215,7 @@ $$\lim _{t \rightarrow \infty} v(t) = \lim _{s \rightarrow 0} sV(s)$$
 
 La FDT di un SD è una funzione analitica nella variabile complessa $s=j \omega$.
 
-![fdt a blocchi](fdt%20a%20blocchi.png)
+![fdt a blocchi](images/fdt%20a%20blocchi.png)
 
 Pigliamo un attimo il nostro SD e famo la trasformata di Laplace:
 $$\begin{cases} sX(s)=AX(s) + bU(s) \\ Y(s)=cX(s)+dU(s) \end{cases}$$
@@ -309,7 +309,7 @@ Regoline rilevanti:
 
 ## Margine di fase, di guadagno e di modulo
 
-![ritardo](ritardo.jpg)
+![ritardo](images/ritardo.jpg)
 
 - effetto del ritardo sul progetto: nel margine di fase sarà $w_c * ritardo*(\frac{180}{\pi})$ (i ritardi/sfasatori influenzano solo la fase e non il modulo, il $\frac{180}{\pi}$ serve per convertire i radianti della pulsazione ($\frac{radianti}{secondo}secondo$) ).
 - quando fai il conto del margine di fase non ci devi mettere il polo vero e proprio .. ma il suo inverso .. cioè 'quello che vedi nell'equazione'
@@ -320,9 +320,10 @@ $s=\sigma+j \omega$ che in regime sinusoidale diventa $s=\sigma+j \omega$.
 Per un generico valore di $\omega$ la funzione diventa, a sua volta, un numero complesso: Al variare di $\omega 2 \pi f$ da zero a infinito, il vettore $G(j \omega)$ varia in modulo e direzione.  
 In questo modo può essere definito un luogo geometrico ( curva ) rappresentativo della posizione del vettore $G(j \omega)$ : questa curva è il diagramma di Nyquist della funzione di trasferimento.  
 I diagrammi di Nyquist sono dunque, rappresentati su un piano complesso ( piano di Gauss ) dove l'asse delle ascisse rappresenta l'insieme dei numeri reali, mentre quello delle ordinate rappresenta i numeri immaginari.In molte applicazioni, soprattutto in quelle per lo studio della stabilità di un sistema, non interessa la precisione con la quale viene tracciato il diagramma, ma la sua forma qualitativa in particolar modo l'andamento del diagramma per $\omega$ tendente a zero e a infinito.
-![](esempi%20diagrammi%20polari%201.png) 
-![](esempi%20diagrammi%20polari%202.png)
-![](esempi%20diagrammi%20polari%203.png)
+
+![](images/esempi%20diagrammi%20polari%201.png) 
+![](images/esempi%20diagrammi%20polari%202.png)
+![](images/esempi%20diagrammi%20polari%203.png)
 
 ## Criterio di Nyquist e di Bode
 Il diagramma di Nyquist è il diagramma polare 'specchiato verticalmente ed eventualmente con 'l'infinito' che si chiude a semicerchio. 
@@ -381,7 +382,7 @@ Nella pratica non stiamo a calcolare l'arcotangente manualmente (a meno che in c
 
 
 
-![Regolo fasi in scala logaritmica](Regolo%20fasi%20in%20scala%20logaritmica.png)
+![Regolo fasi in scala logaritmica](images/Regolo%20fasi%20in%20scala%20logaritmica.png)
 
 ## Compensazione in anello aperto di disturbi misurabili
 Progettazione di un regolatore (chiamato compensatore) per regolare il disturbo in andata. In pratica vuoi il disturbo compensato ad un valore prossimo allo 0 (di modulo) quindi poni delle restrizioni sulla funzione di Trasferimento Y/D . Questa ti darà condizioni su come fare il Compensatore Ideale. Se è realizzabile (\#poli $\ge$ \#zeri) allora $C_{id}$ coinciderà con $C_{reale}$ altrimenti devi introdurre poli per renderla realizzabile a piacimento o seguendo la consegna del prof (in esame). 
@@ -389,7 +390,8 @@ Progettazione di un regolatore (chiamato compensatore) per regolare il disturbo 
 
 # Regolatori industriali PID 
 Regolatori Proporzionali Integrali e Derivativi. Utilizzati largamente nell'industria. 
-![PID](PID.png)
+
+![PID](images/PID.png)
 
 Visione alternativa:
 $$U(s)=K_pE(s)+\frac{K_iE(s)}{s}+K_dsE(s)$$
@@ -424,10 +426,12 @@ $$R(s)=k\frac{(1+\tau _{z_1} s)(1+\tau _{z_2} s)}{s(1+\tau _{p_2} s)}$$
 ## IMC - Internal Model Control
 Si tratta sempre di tarare un regolatore ma ci basiamo sul modello interno del controllo. 
 
-![IMC schema](IMC%20schema.png)
+![IMC schema](images/IMC%20schema.png)
 
 M è il modello del nostro processo. 
-![IMC from Wikipedia](IMC%20from%20Wikipedia.png)
+
+![IMC from Wikipedia](images/IMC%20from%20Wikipedia.png)
+
 In pratica cerca di 'predire' il processo.  
 Sappiamo che $\frac Y W = FQM$ poichè $M=P$ e non c'è quindi feedback. A questo punto cerco di porre $Q=\frac1M$. Se $Q$ risulta realizzabile allora prendo come $F$ la dinamica $\frac Y W$ voluta. (in genere data dal testo del esercizio), basta che $FQ$ sia realizzabile e che durante i calcoli non ci siano cancellazioni critiche (cioè vuol dire che eventuali zeri destri di $P$ rimangono). 
 Infine mi ricordo che $$R(s)= \frac{FQ(s)}{(1-FQM(s))}$$
@@ -458,7 +462,7 @@ Lista Trasformate di Zeta note:
 
 ## Schema di Controllo
 
-![Schema di Controllo S&H](Schema%20di%20Controllo%20SH.png)
+![Schema di Controllo S&H](images/Schema%20di%20Controllo%20SH.png)
 
 $$R^*(z)=\frac{U(z)}{E(z)}$$
 
