@@ -30,7 +30,7 @@ $$\forall x,y( y = x + 9 \implies \neg (\exists z1,z2( x \le z1 \wedge z1 < z2 \
 
 E' possibile utilizzare la logica anche in maniera ricorsiva, l'importante ovviamente è che non vada in loop all'infinito. 
 
-![](images/classificazione%20linguaggi.png)
+![](images/eeb41aa98d2779ff44e69a7bb940284c.png)
 
 ### Logica di Hoare
 La notazione di Hoare serve per specificare opportune **pre-condizioni** e **post-condizioni** per un programma. (In questo caso usiamo FOL).

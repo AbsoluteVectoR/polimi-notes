@@ -2,12 +2,12 @@
 
 Un modello più vicino ai calcolatori reali rispetto alle MT. 
 
-![Pasted image 20210610104613](images/RAM.png)
+![Pasted image 20210610104613](images/260a54529d109bf9c10409bb5c50cdd1.png)
 
 La RAM è dotata di una memoria con accesso a indirizzamento diretto. **L’accesso non necessita quindi di scorrimento delle celle**. Le istruzioni di un programma usano normalmente come sorgente il primo operando e come destinazione $N[0]$. Ogni cella contiene un intero. 
 Istruzioni della RAM:
 
-![Pasted image 20210610104956](images/RAM%20semantica.png)
+![Pasted image 20210610104956](images/a01a891929b674ccf3005f66e6934257.png)
 
 NB: *SUB= 1* decrementa N[0] di 1
 

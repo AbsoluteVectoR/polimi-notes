@@ -34,12 +34,12 @@ Diversi approcci per controllare:
 
 - Anello aperto ad azione diretta (feed forward)
 
-![feedforward](images/feedforward.png)
+![](images/5e6bf7f4e4ce2035663e5624b208f0a6.png)
 
 - Anello aperto ad azione diretta con controllo del disturbo, *stessa figura ma con controllo disturbo*
 - Anello chiuso Feedback/Retroazione (senza controllo disturbo)
 
-![feedback](images/feedback.png)
+![](images/d26153c2187888df440310bc5148c6e8.png)
 
 - Anello chiuso Feedback (con controllo disturbo)
 
@@ -139,7 +139,7 @@ Ancora ancora più in pratica:
 
 ### Tabella di Routh:
 
-![Routh Tabella](images/Routh%20Tabella.png)
+![](images/ded903169de8c78cd5a989e107fbb8ac.png)
 Ad ogni cambio di segno degli elementi della prima colonna corrisponde un autovalore positivo di A → quindi instabile. 
 
 In pratica riassunto: *usa la tabella di Routh per evitare la diagonalizzazione, guarda sempre la prima colonna, appena trovi un elemento con segno discorde dagli altri di fermi e dici che il SD in quel punto d'equilibrio è instabile*
@@ -148,7 +148,7 @@ In pratica riassunto: *usa la tabella di Routh per evitare la diagonalizzazione,
 ## Linearizzazione 
 Intuitivamente in prossimitá di un equilibrio in un sistema dinamico (non lineare) la tangente é una valida approssimazione dell'intero sistema. 
 
-![Sistema Linearizzato](images/Sistema%20Linearizzato.png)
+![](images/0b7083b87f187e4d140c063060624dc4.png)
 
 
 ### Segnali e Trasformate (Laplace e Fourier)
@@ -215,7 +215,7 @@ $$\lim _{t \rightarrow \infty} v(t) = \lim _{s \rightarrow 0} sV(s)$$
 
 La FDT di un SD è una funzione analitica nella variabile complessa $s=j \omega$.
 
-![fdt a blocchi](images/fdt%20a%20blocchi.png)
+![](images/f888d9a5fefab97746d458bb514bfa5d.png)
 
 Pigliamo un attimo il nostro SD e famo la trasformata di Laplace:
 $$\begin{cases} sX(s)=AX(s) + bU(s) \\ Y(s)=cX(s)+dU(s) \end{cases}$$
@@ -309,7 +309,7 @@ Regoline rilevanti:
 
 ## Margine di fase, di guadagno e di modulo
 
-![ritardo](images/ritardo.jpg)
+![](images/460ccc88e2f5ab95e9da7da22286b94e.jpg)
 
 - effetto del ritardo sul progetto: nel margine di fase sarà $w_c * ritardo*(\frac{180}{\pi})$ (i ritardi/sfasatori influenzano solo la fase e non il modulo, il $\frac{180}{\pi}$ serve per convertire i radianti della pulsazione ($\frac{radianti}{secondo}secondo$) ).
 - quando fai il conto del margine di fase non ci devi mettere il polo vero e proprio .. ma il suo inverso .. cioè 'quello che vedi nell'equazione'
@@ -321,9 +321,9 @@ Per un generico valore di $\omega$ la funzione diventa, a sua volta, un numero c
 In questo modo può essere definito un luogo geometrico ( curva ) rappresentativo della posizione del vettore $G(j \omega)$ : questa curva è il diagramma di Nyquist della funzione di trasferimento.  
 I diagrammi di Nyquist sono dunque, rappresentati su un piano complesso ( piano di Gauss ) dove l'asse delle ascisse rappresenta l'insieme dei numeri reali, mentre quello delle ordinate rappresenta i numeri immaginari.In molte applicazioni, soprattutto in quelle per lo studio della stabilità di un sistema, non interessa la precisione con la quale viene tracciato il diagramma, ma la sua forma qualitativa in particolar modo l'andamento del diagramma per $\omega$ tendente a zero e a infinito.
 
-![](images/esempi%20diagrammi%20polari%201.png) 
-![](images/esempi%20diagrammi%20polari%202.png)
-![](images/esempi%20diagrammi%20polari%203.png)
+![](images/f957dc62640f3077ded47cc1587b46d9.png) 
+![](images/dcdd79913be7b4b131607952779f1b00.png)
+![](images/de1c191e60532244319dfa1313a032f6.png)
 
 ## Criterio di Nyquist e di Bode
 Il diagramma di Nyquist è il diagramma polare 'specchiato verticalmente ed eventualmente con 'l'infinito' che si chiude a semicerchio. 
@@ -378,11 +378,9 @@ In poche parole sottraggo da 180 gradi l'$arcotan(\frac{\omega _ c}{ \omega _x})
 - (segno -) un polo negativo o zero positivo 
 - (segno +) uno zero negativo o polo positivo (che non possono esserci eh) 
 
-Nella pratica non stiamo a calcolare l'arcotangente manualmente (a meno che in casi specifici in cui vogliamo dei vincoli ben precisi sul margine di fase) ma usiamo il regolo delle fasi in scala logaritmica (posizionando il $45^o$ sulla pulsazione critica)
+Nella pratica non stiamo a calcolare l'arcotangente manualmente (a meno che in casi specifici in cui vogliamo dei vincoli ben precisi sul margine di fase) ma usiamo il regolo delle fasi in scala logaritmica (posizionando il $45^o$ sulla pulsazione critica).
 
-
-
-![Regolo fasi in scala logaritmica](images/Regolo%20fasi%20in%20scala%20logaritmica.png)
+![Regolo fasi in scala logaritmica](images/daaeb6dee4a9cb181321a998bbe9ba70.png)
 
 ## Compensazione in anello aperto di disturbi misurabili
 Progettazione di un regolatore (chiamato compensatore) per regolare il disturbo in andata. In pratica vuoi il disturbo compensato ad un valore prossimo allo 0 (di modulo) quindi poni delle restrizioni sulla funzione di Trasferimento Y/D . Questa ti darà condizioni su come fare il Compensatore Ideale. Se è realizzabile (\#poli $\ge$ \#zeri) allora $C_{id}$ coinciderà con $C_{reale}$ altrimenti devi introdurre poli per renderla realizzabile a piacimento o seguendo la consegna del prof (in esame). 
@@ -391,7 +389,7 @@ Progettazione di un regolatore (chiamato compensatore) per regolare il disturbo 
 # Regolatori industriali PID 
 Regolatori Proporzionali Integrali e Derivativi. Utilizzati largamente nell'industria. 
 
-![PID](images/PID.png)
+![PID](images/82c695f4669caa3ac8da1528908f80a7.png)
 
 Visione alternativa:
 $$U(s)=K_pE(s)+\frac{K_iE(s)}{s}+K_dsE(s)$$
@@ -426,11 +424,11 @@ $$R(s)=k\frac{(1+\tau _{z_1} s)(1+\tau _{z_2} s)}{s(1+\tau _{p_2} s)}$$
 ## IMC - Internal Model Control
 Si tratta sempre di tarare un regolatore ma ci basiamo sul modello interno del controllo. 
 
-![IMC schema](images/IMC%20schema.png)
+![IMC schema](images/62761629164ef134f9c82fa6effe3c16.png)
 
 M è il modello del nostro processo. 
 
-![IMC from Wikipedia](images/IMC%20from%20Wikipedia.png)
+![IMC from Wikipedia](images/7bace23ac53560a0120e635066b5068d.png)
 
 In pratica cerca di 'predire' il processo.  
 Sappiamo che $\frac Y W = FQM$ poichè $M=P$ e non c'è quindi feedback. A questo punto cerco di porre $Q=\frac1M$. Se $Q$ risulta realizzabile allora prendo come $F$ la dinamica $\frac Y W$ voluta. (in genere data dal testo del esercizio), basta che $FQ$ sia realizzabile e che durante i calcoli non ci siano cancellazioni critiche (cioè vuol dire che eventuali zeri destri di $P$ rimangono). 
@@ -462,7 +460,7 @@ Lista Trasformate di Zeta note:
 
 ## Schema di Controllo
 
-![Schema di Controllo S&H](images/Schema%20di%20Controllo%20SH.png)
+![Schema di Controllo S&H](images/6f66df57307ecbd312c2aa65500efc09.png)
 
 $$R^*(z)=\frac{U(z)}{E(z)}$$
 

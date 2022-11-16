@@ -48,5 +48,6 @@ Esatto! Un automa a pila non deterministico ha più espressività.. è come se a
 
 ### Una MT ND è potente tanto quanto una MT D
 
-## Operazioni su linguaggi  
-![](images/Operazioni%20su%20famiglie%20di%20linguaggi.png)
+## Operazioni su linguaggi 
+
+![](images/e51838f5de722efe4be88b0650ea7336.png)

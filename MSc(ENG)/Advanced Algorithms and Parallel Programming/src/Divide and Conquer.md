@@ -87,12 +87,12 @@ The number $2.81$ may not seem much smaller than 3, but because the difference i
 ## VLSI Layout
 
 Embed a complete binary tree with $n$ leaves in a grid using minimal area.
-![](images/Pasted%20image%2020221104160403.png)
+![](images/8feaca2979409cfc3b36f5d35343229a.png)
 
 where $H(n)=H(\frac{n}{2})+\Theta (1)=\log _2 (n)$  and $W(n)=2W(\frac{n}{2})=\Theta (n)$ using respectively the second and first case of MT. 
 So we obtain a total complexity (area) of $\Theta ( n \log (n))$ that can be improved using this new arrangement :
 
-![](images/Pasted%20image%2020221104161538.png)
+![](images/f560b4b0b0e1fb155d691e7f9fdd3177.png)
 
 This new solution based on Divide and Conquer has a total complexity of $\Theta (n)$ obtained by $L(n) \cdot L(n)$ where $L(n)=2L(\frac{n}{4}) + \Theta (1)$ which is $\sqrt{n}$ using the MT (first case). 
 

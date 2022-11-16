@@ -79,11 +79,11 @@ All these operations have $O(\log (n))$ time complexity.
 Skip lists similar benefits to treaps but are based on an alternative randomized data structure. The starting point is a **sorted** linked list, a dynamic structure with $O(n)$ for search elements. The next step is adding a second sorted linked list shorter to 'skip' some elements of the list.
 
 
-![](images/Pasted%20image%2020221019124724.png)
+![](images/e191f6eb26b506f9012bc91dc053628a.png)
 
 Let's expand the idea further: 
 
-![](images/Pasted%20image%2020221019125724.png)
+![](images/0a0ab759a0ea37f48460f25c31329e3b.png)
 
 
 We randomly decide to promote an element to upper level. It's proved that the there will be $\log (n)$ levels/lists and at the end there will be a 'balanced' structure. 

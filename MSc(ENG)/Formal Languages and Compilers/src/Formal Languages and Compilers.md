@@ -205,7 +205,7 @@ Said ```R``` a regular expression:
 
 It's implemented as non-deterministic finite state automaton. 
 
-![](images/Pasted%20image%2020221024161609.png)
+![](images/4741ab5c6ef0e10af277ee29b77d8f62.png)
 
 - definitions: where you can declare useful REs
 - rules: most important part where you bind RE combinations to actions 

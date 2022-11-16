@@ -91,8 +91,6 @@ Languages we will see:
 - Erlang, for concurrency-oriented programming
 
 Not very useful to write real stuff, more useful to learn new concepts and be flexible. We will never used this languages (probably) in our careers.  
-![](Pasted%20image%2020220915122036.png)
-
 
 # Scheme
 Scheme is a little bit strange because the structure of the program is given by its syntax itself.

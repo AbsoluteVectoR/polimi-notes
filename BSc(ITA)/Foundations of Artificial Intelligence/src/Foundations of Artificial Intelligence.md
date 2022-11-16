@@ -62,7 +62,7 @@ The idea is to search between many alternatives. Many problems could be formulat
 A directed graph that rapresents all the possible states. We can't use graph theory! The state space are too big! 
 A problem-solving agent has to find a solution only with a small portion of the graph. We have to simplify the search. To do this we create a 'search tree' from the graph. 
 For example: DeepBlue used a tree-search algorithm. In a similar way also AlphaGo.
-![search](src/images/searchAlgo.png)
+![search](images/78874cf63f3868827a0970d1b1b92c8f.png)
 Strategies to order nodes in the frontier. Yes, all the search strategies are basically 'take a node from the graph and take it to the frontier where it will be analyzed/expanded'.
 
 Evaluation of search strategies:
@@ -150,7 +150,7 @@ The **golden rule** to remember how to apply MiniMax with $\alpha - \beta$ pruni
 > The max node makes the check on beta to prune (it prunes only if $v \ge \beta$) otherwise it updates the value of alpha (if $v > \alpha$) while the min node makes the check on alpha to prune (only if $v \le \alpha$) otherwise it updates the value of beta (only if $v<\beta$).
 
 
-![](src/images/minimax%20Search.png)
+![](images/35dafbfad5dc315e8080055fdd4acd13.png)
 
 ## Montecarlo Search
 For complex game it's not easy to evaluate the next state and build on the minimax algorithm. So we need a method to evaluate the next move without knowing anything about the game. How?
@@ -169,7 +169,7 @@ MCTS works by iterating four steps:
 - **Backpropagation** :
 	the simulation result is propagated up through the selected nodes to update their statistics.
 
-![mcts](src/images/mcts.png)
+![mcts](images/c3f9f49839b6912455ae16784515b944.png)
 So MCTS use 2 policies: 
 
 - **Tree policy** that selects or creates a leaf node from the nodes already contained within the search tree (selection and expansion).
@@ -257,7 +257,7 @@ This is the base to say that every formulas derived from $KB$, if $KB$ is true i
 ### Model checking:
 A simple algorithm to prove entailments. This reasoning procedure is sound and complete and always terminates, making reasoning in PL decidable. But remember that it works if the models space is finite!
 Also MC is inefficient when many propositional symbols are involved, because it has to compute a table of size $2n \times M$, where $n$ is the number of propositional symbols and $M$ is the number of subsentences the appear in the premises and the conclusion.
-![](src/images/Model%20Checking.png)
+![](images/eada9d119f5f4ee67ab9389939179c10.png)
 
 ### DPLL 
 Certain applications of PL require an agent to establish whether a set of sentences $\alpha$ is or is not satisfiable (there is an assignment of values to the symbols of $\alpha$ that makes  $\alpha$  true?).
@@ -298,7 +298,7 @@ Where DPLL is used?
 Resolution is similar to DPLL (when this is used to establish entailment): it starts from a CNF representation of the premises and the negation of the conclusion.
 Propositional resolution is an extremely powerful rule of inference for PL.
 
-![](src/images/Resolution.png)
+![](images/7b2b378cc18dc2a26484b5cd9c8c81fe.png)
 
 #### Forward chaining and backword chaining
 

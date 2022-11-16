@@ -34,7 +34,7 @@ Informazione: un dato a cui si associa una certa importanza/contesto
 Conoscenza: giudizio dell'informazione 
 Saggezza: conoscenza++ 
 
-![piramide DIKW](images/piramideDIKW.jpg)
+![piramide DIKW](images/cf3d9264d36704fd3c423a4ed01165b6.jpg)
 
 ## Modelli per rappresentazione SI
 
@@ -42,7 +42,7 @@ Esistono vari modelli per rappresentare l’intero sistema informativo.
 
 ### La Piramide di Anthony
 
-![processi](images/processii.jpg)
+![processi](images/1327f24e8d31b4d19329d34ba597d1d4.jpg)
 
 Il modello di Anthony (la piramide riportata qua sopra) è un modello gerarchico organizzativo diviso in livelli:
 
@@ -87,7 +87,7 @@ In un SI possiamo avere sistemi:
 - **OLAP (Online Analytical Processing)**: ha come metrica il **response time** .  Operazioni non strutturate, complesse che operano su tanti dati aggregati. Non è importante rispettare la proprietà ACID in quanto le operazioni solo di sola lettura e casuali. 
 - **OLTP (Online Transaction Processing)**: orientate alle transazioni. Tante transazioni, tanti utenti. La metrica di valutazione é il **throughput** .  
 
-![Pasted image 20220129101228](images/OLTPvsOLAP.png)
+![Pasted image 20220129101228](images/3b9d1636ed0d46f0887937f2e4c2d1e5.png)
 
 ## Progettazione SI
 ### Framework di Zachmann
@@ -98,11 +98,11 @@ Esso è organizzato in:
 - **Colonne**: definiscono gli aspetti da analizzare.
 
 Nel framework di Zachman non c'è alcun ordinamento tra le colonne, e ciascuna di esse (dall’alto verso il basso) mostra tutti i passaggi a partire dal business per arrivare all’effettiva realizzazione del sistema.  
-![Framework di Zachmann](images/FrameworkZachmann.png)
+![Framework di Zachmann](images/06528001c40e2a8b8c742e537a3643ff.png)
 Le celle del framework di Zachman create dall’intersezione tra righe e colonne definiscono le **Viste** . 
 
 ## Progettazione e gestione SI 
-![plan, develop, manage and control](images/PlanDevManageControl.png)
+![plan, develop, manage and control](images/6ec7212e97f36d622bfe5f5e20cf674f.png)
 C'è l’esigenza di progettare e gestire in modo strutturato un sistema informa-  
 tivo nel suo funzionamento e nella sua evoluzione. 
 Identifichiamo 4 fasi:
@@ -159,7 +159,7 @@ Nella valutazione dell'efficacia inotre definiamo due qualitá :
 - Richness: la qualitá e ricchezza della comunicazione, cioé la frequenza, il dettaglio e la tipologia di dati. es:(frequenza, interattività)
 
 Efficienza: definita come $$\frac{Output Effettivo}{Input}$$
-![Pasted image 20220128214151](images/PartiesObjTimeScopes.png)
+![Pasted image 20220128214151](images/bef0dbd5c0b2406cd7d01c08e178d529.png)
 
 ### Prospettiva organizzativa
 Per modellizzare l'organizzazione si procede per livelli, affinando sempre di piú il dettaglio.
@@ -179,15 +179,15 @@ Al *livello 4* vengono modellizzate le singole componenti interne dell'organizza
 -  Esempio B2B a lv. 4
 
 
-![Pasted image 20220129111217](images/Pasted%20image%2020220129111217.png){width=50%}
+![Pasted image 20220129111217](images/0ee739fc3f70633d64d76528db15952d.png){width=50%}
 
 - Esempio B2C a lv. 4 
 
-![Pasted image 20220129111314](images/Pasted%20image%2020220129111314.png){width=50%}
+![Pasted image 20220129111314](images/37b2989e7a186bc588c77c009310cd17.png){width=50%}
 
 - Esempio B2B a lv. 4 multicanale: 
 
-![Pasted image 20220129111550](images/Pasted%20image%2020220129111550.png){width=50%}
+![Pasted image 20220129111550](images/1d4c9ae868001f0a938c16be98ca5ab8.png){width=50%}
 
 
 ## Prospettiva architetturale
@@ -197,7 +197,7 @@ La prospettiva di architettura ha diversi livelli di aggregazione:
 - **Architettura party-level** descrive la singola organizzazione rappresentando le interfacce verso il mondo esterno, il quale é trasparente in questo livello di astrazione. Si tratta quindi di una visione intra-organizzativa nel quale descriviamo interfacce BE/BE, FE/FE. Specifichiamo anche i vari componenti tra cui i DB con annessi DBMS, e tutti i messaggi scambiati tra i componenti FE e BE (restano ancora visibili quelli scambiati con gli altri partecipanti);
 - architettura system-level non ci interessa.  
 
-![Generic components in A party level](images/Generic%20components%20in%20A%20party%20level.png)
+![Generic components in A party level](images/4a51d4ea3811fde01587e84137af2319.png)
 
 ## Prospettiva tecnologica
 Dividiamo la parte tecnologica del livello tecnologico del Boat in:
@@ -212,32 +212,32 @@ Dividiamo la parte tecnologica del livello tecnologico del Boat in:
 Un processo di business è un insieme di attività eseguite secondo un ordine specifico per ottenere un certo obiettivo di business. Utilizziamo per modellare processi BPMN.  Business Process Modeling Notation (BPMN). 
 Nella notazione BPMN gli eventi sono modellati con un cerchio al cui interno è disegnato un simbolo che ne definisce la tipologia.
 
-![events bpmn](images/events%20bpmn.png)
+![events bpmn](images/7fb475cce6e11c00f76fbe6894e23c42.png)
 
 Tipi di attività:
 
-![task](images/task.png)
+![task](images/3098f1e58891c2144d2743f03e94c447.png)
 
 Tipi di Gateway:
 
 - Gateway XOR
 
-	![xorbpmn](images/xorbpmn.jpg)
+	![xorbpmn](images/3fb1e93b5b01cb3ebd0ec04ca27bf7d9.jpg)
 - Gateway OR
 
-![orbpmn](images/orbpmn.jpg)
+![orbpmn](images/78dfd2da11533c8f7dfc9e61a6a24f33.jpg)
 - Gateway AND
 
-![andbpmn](images/andbpmn.jpg)
+![andbpmn](images/b3233d37358128fbbee20dc273969602.jpg)
 - Gateway EVENT BASED 
 
- ![event based gateway](images/event%20based%20gateway.png)
+ ![event based gateway](images/46d03eb317d105eda0f52fefcdf1fad8.png)
  
 Esempi di BPMN collaborativo, cioè con più pools e più lanes.
 
-![bpmn collaborativo, pool](images/bpmn%20collaborativo,%20pool.png)
+![bpmn collaborativo, pool](images/2b19301ace53b9f66e190bf4739800ac.png)
 
-![Pasted image 20220125101247](images/bpmnex.png)
+![Pasted image 20220125101247](images/248a6508cd5e6613ebf1176f7f3a877b.png)
 
 
 
@@ -376,7 +376,7 @@ Machine Learning, puó essere:
 
 ### Approccio Make or Buy 
 L’analisi Make-or-Buy prende in considerazione il fatto che sul mercato per alcuni interventi esistono dei prodotti software già pronti: i cosiddetti COTS (Commercial Off-The-Shelf o Commercially available Off-The-Shelf). L’adozione di questi software (alternativa Buy) si pone in alternativa alla possibilità di progettare e realizzare un prodotto su misura (alternativa Make).
-![make or buy](images/make%20or%20buy.png)
+![make or buy](images/dec3f4817672d977614a3b4247917613.png)
 
 
 ## Livello di piattaforma 
@@ -429,7 +429,7 @@ Con il cloud computing abbiamo quindi un servizio on demand che ci permette di a
 - **Platform as a Service** = controllo delle proprie applicazioni
 - **Software as a Service** = solo applicazione, posso quindi configurare solo i parametri di tale applicazione. (ese: i vari cloud storage Dropbox, Onedrive, GDrive ecc. ecc.).
 
-![SAS](images/SAS.png)
+![SAS](images/5a7168ebe2b3fda55f7c97f31ef5531d.png)
 
 Il cloud potrà quindi essere:
 
@@ -445,7 +445,7 @@ Ogni azienda/attività potrà scegliere se gestire l'architettura fisica del SI 
 Si può anche possedere direttamente i server fisici o appoggiarsi a enti esterni (outsourcing) sempre facendo riferimento ai tipi di cloud e servizi possibili. 
 Possiamo distinguere 6 livelli, dall'insourcing al outsourcing completo.
 
-![](images/insourcing%20e%20outsourcing.jpg)
+![](images/2d9e51b7fc09fc84bfd9d406b9a623c1.jpg)
 
 > Ricordati che l'insourcing/outsourcing è diverso da make/buy 
 
@@ -488,7 +488,7 @@ La sicurezza ha 4 proprietá fondamentali:
 La firma digitale é utilizzata per verificare l'integralitá e consiste in una funzione di hash. 
 > La firma digitale é la cifratura da parte del mittente (con la sua chiave privata) del digest del messaggio. 
 
-![Pasted image 20220128103750](images/Pasted%20image%2020220128103750.png)
+![Pasted image 20220128103750](images/ae316e6ae30faab2ee223e874d2908a1.png)
 
 La firma digitale la verifico con la chiave pubblica. Il senso è che una volta verificato il messaggio con la chiave pubblica, solo l'ente che possiede la chiave privata può aver scritto quel messaggio (l'hash del messaggio è unico).
 
@@ -561,49 +561,49 @@ sensori che continuano a monitorare attraverso log. E ulteriori analisi sui vari
 Tutti gli IDS fanno funzione di **allerting and response** ma si distinguono se hanno una risposta attiva o semplicemente avvisano e basta.
 
 ## Archimate
-![Pasted image 20220127160925](images/Pasted%20image%2020220127160925.png)
+![Pasted image 20220127160925](images/fb6ac73ebc135410900f28c5255bf2dd.png)
 
-![archimateRelazioni](images/archimateRelazioni.jpg)
+![archimateRelazioni](images/b0bf20e051e8d7347524302344a766b7.jpg)
 
 Punto di contatto tra Archimate e BOAT: 
 
-![Pasted image 20220127162001](images/Pasted%20image%2020220127162001.png)
+![Pasted image 20220127162001](images/d82850e41670fe9d21c8a2850ac36cc7.png)
 
 Il device è **fisico** . 
 
-![Pasted image 20220127162106](images/Pasted%20image%2020220127162106.png)
+![Pasted image 20220127162106](images/4095caa08c1a1638a09af5c6e37e66e5.png)
 
 
 
-![Pasted image 20220127162049](images/Pasted%20image%2020220127162049.png)
+![Pasted image 20220127162049](images/1824349eecc3acb4a15fe4dc0f16b324.png)
 
 
-![Pasted image 20220127162216](images/Pasted%20image%2020220127162216.png)
+![Pasted image 20220127162216](images/c512883c2fe86e62d7d7160e8aa5e324.png)
 
 Attenzione i collegamenti (path) non sono linee! Stiamo ragionando a livello fisico .. la fibra è diversa dal ethernet o dallo spago! 
 
 Esempio di DW scritto in Archimate:
 
-![Pasted image 20220127162456](images/Pasted%20image%2020220127162456.png) 
+![Pasted image 20220127162456](images/6b69e50c147ae103fdb0269791d1b665.png) 
 
 (normalmente all'esame specifichiamo bene la struttura interna del nodo server).
 Tipi di Double-Tiered:
 
 
-![Pasted image 20220127163224](images/Pasted%20image%2020220127163224.png)
+![Pasted image 20220127163224](images/0464d23bbfbbaf77d3e8c21bda0ed785.png)
 
-![Pasted image 20220127163047](images/Pasted%20image%2020220127163047.png)
+![Pasted image 20220127163047](images/0f2ddf704c0af26f01de128e37cc3163.png)
 
 Tipi di virtualizzazione:
 
-![Pasted image 20220127163639](images/Pasted%20image%2020220127163639.png)
+![Pasted image 20220127163639](images/588900b85695d7301301b6f600551832.png)
 
 Classico server virtuale: 
 
-![Pasted image 20220127163808](images/Pasted%20image%2020220127163808.png)
+![Pasted image 20220127163808](images/db3fb553e1b61fb86587b6e5948a5c5a.png)
 
 Struttura standard per punto di contatto internet/rete aziendale
 
-![Pasted image 20220128123842](images/Pasted%20image%2020220128123842.png)
+![Pasted image 20220128123842](images/9e679e9519079a0bd9e15b3378f2933e.png)
 
 

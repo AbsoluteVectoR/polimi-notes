@@ -21,7 +21,7 @@ In case MC algorithm is for a decision problem we can it in two classes:
 A **minimum cut** of a graph is a partition of the vertices of a graph into two disjoint subsets with the minimal amount of deleted edges. Karger's algorithm is an algorithm to find a min-cut on a multi-graph using a randomized approach. Multigraphs are undirected graphs that do not allow for self-loops but allow for multiple edges between the same node pairs.
 
 Contracting an edge means to collapse a vertex into another neighbor vertex (removing self loops):
-![](images/Pasted%20image%2020221101115305.png)
+![](images/c0892efd0ab30537c18e80377885140a.png)
 
 
 The Karger's algorithm consists in contracting edges uniformly at random until only two vertices remain. These two vertices correspond to a partition of the original graph and the edges remaining in the two vertex graph correspond to a cut in the original input graph.
@@ -32,7 +32,7 @@ The key idea of the algorithm is that it is far more likely for non min-cut edge
 Karger’s algorithm is a Monte Carlo algorithm and cut produced by it may not be minimum. For example, the following diagram shows that a different order of picking random edges produces a min-cut of size 3.
 The probability can be increased by repeated runs of basic algorithm and return minimum of all cuts found.
 
-![](images/Pasted%20image%2020221105164124.png)
+![](images/5e5cd01be75da238f6c5c66c4a1e5d1f.png)
 
 
 Each run of the algorithm is $O(n^2)$ and since the possibility of pick one of the edges of the min-cut during an iteration is $\binom{n}{2}$ we have to minimize $l \binom{n}{2}$, keeping in mind that we would like to have minimize probability of error $\frac{1}{\text{poly}(n)}$ increasing the number of runs. The best optimization is with $l =\log (n)$ . So the final complexity is $O(n^4 \log (n))$.

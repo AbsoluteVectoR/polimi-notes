@@ -43,12 +43,7 @@ L'obiettivo principale dell'azienda é generare valore per la shareholder
 $$Utile = Ricavi \space Totali - Costi \space Totali$$
 
 Ovviamente l'impresa deve massimizzare l'utile anche pensando alle normative e all'ambiente, cioé con una **certa etica**. 
-
-![Etica Volkswagen](src/images/Etica%20Volkswagen.png)
-
-### Rischio
-
-Non esiste impresa senza rischio. 
+![](images/d722a0983e72314b60afd8839fcf269d.png)o. 
 Rischio: impossibilitá di prevedere con certezza gli esiti futuri delle decisioni. Indipendentemente dallo sforzo che un imprenditore ci mette, l'impresa potrebbe essere sfortunata. 
 
 > Gli imprevisti capitano  
@@ -59,7 +54,7 @@ Fattori di rischio:
 - rigidezza dell'azienda 
 - contesto dinamico e mutevole 
 
-![Pasted image 20220221230937](src/images/cellulari.png)
+![](images/7a49d9cd2328aa88870db43a262be53a.png)
 
 
 Il rischio colpisce tutti. Il contesto dinamico e mutevole ha cancellato Nokia, leader del settore. 
@@ -78,7 +73,7 @@ Per partire si costruisce il cosiddetto business plan: documento che espone le p
 
 Come muore? Ormai l'impresa é dissociata con la vita dell'imprenditore, ma puó rischiare di morire in assenza di profitto. In Italia le imprese vivono in media 12 anni. 
 
-![Pasted image 20220221232114](src/images/Pasted%20image%2020220221232114.png)
+![](images/f5ab1749bd118d096b50a6e66ab5eaa9.png)
 
 Può morire per:
 
@@ -112,7 +107,7 @@ E può essere classificata per:
 
 *L'[Italia](Italia.md) é fatta di Piccole-Medie imprese. Si parla di una dimensione media di 4 addetti!*
 
-![Pasted image 20220228121940](src/images/Pasted%20image%2020220228121940.png)
+![](images/83051b3a3cb7a9ed4497a99bab38612e.png)
 (*Fonti Istat 2019*)
 
 
@@ -136,7 +131,7 @@ Le grandi aziende internazionali devono fare per redigere il bilancio per ogni p
 
 ### Tipi di forme giuridiche: 
 
-![Pasted image 20220228121026](src/images/Pasted%20image%2020220228121026.png)
+![](images/6a0e24d7f2e7003d9d4e2caa17a6313d.png)
 ### Impresa individuale 
 Caratterizzate da una responsabilitá illimitata. 
 (ingegnere, architetto ecc. ecc.): chiaramente di semplice gestione, (tassazione IRPEF, la quale va a privilegiare i redditi bassi) . 
@@ -178,13 +173,14 @@ Assunzioni banali ma fondamentali per caratterizzare la funzione di utilità:
 - Utilità monotona e crescente: aumenta la qualità e aumenta l' utilità del consumatore. 
 - Utilità marginale decrescente: l'utilità addizionale (marginale) di ogni successiva consumazione a via via decresce. Cioè la derivata prima della funzione di utilità (crescente) è decrescente. 
 
-![Pasted image 20220301122308](src/images/Pasted%20image%2020220301122308.png)
+![](images/88c8cc02fc27e904935cb6569a717c56.png)
 
 
 ### Prezzo di riserva
 Il PR é l'upper bound del prezzo che il consumatore è disposto a pagare per l'acquisto del bene. 
 Conoscere il prezzo di riserva dei consumatori permette di definire la curva di domanda individuale di un bene.
-![Pasted image 20220301122632](src/images/Pasted%20image%2020220301122632.png)
+
+![](images/457ba44152ccc6ba392a7d322e59430b.png)
 
 Il surplus è un benessere aggiuntivo del consumatore, cioè differenza tra il PR e il prezzo di mercato del bene. 
 Il surplus è un parametro utilizzato per valutare 'il profitto dei consumatori' o meglio, la soddisfazione dei clienti. 
@@ -208,7 +204,8 @@ In caso dei beni inferiori sostanzialmente si effettua una sostituzione dei prod
 Somma, per tutti gli N consumatori, delle quantità domandate individuali. 
 $$Q(p)=\sum^n_{i=1}q_i(p)$$
 *Sostanzialmente non ci importa del singolo consumatore ma della domanda totale, costruita dalla sommatoria delle domande individuali.*
-![Pasted image 20220301125413](src/images/Pasted%20image%2020220301125413.png)
+
+![](images/5b483570b04ef6f909832b9fb3bf42be.png)
 Aggregazione della domanda. 
 Una considerazione: può avere forme diverse ma la logica di fondo è che la curva sarà quasi sempre decrescente. 
 
@@ -229,7 +226,7 @@ L'elasticità é in genere negativa e la si considera in valore assoluto.
 Quando bisogna calcolare l'elasticità della **domanda** al prezzo, ovviamente devi fare il conticino sulla funzione della curva di domanda.
 Nel caso di domanda elastica rispetto al prezzo, il risultato è superiore a 1, mentre è inferiore a 1 nel caso di domanda anelastica; se il valore coincide con 1, invece, la domanda e il prezzo sono direttamente proporzionali. Questo di fatto è estremamente improbabile potendo essere al limite il risultato di un’osservazione dell’elasticità della domanda per un breve periodo. Anche il risultato 0 si verifica solo in pochi casi eccezionali in cui le variazioni dei prezzi non hanno alcun impatto sulla domanda. Un esempio tipico di questa **domanda completamente anelastica** rispetto al prezzo è l’aumento dei prezzi di farmaci salvavita come l’insulina per i diabetici.
 
-![Pasted image 20220301130629](src/images/Pasted%20image%2020220301130629.png)
+![](images/007181f7ee3b19464c801204fc54c1a6.png)
 > Un'azienda che opera in un mercato con un prodotto caratterizzato da una curva di domanda elastica dovrà quindi stare attenta a modificare il prezzo del prodotto.
 
 > Sostanzialmente in mercati caratterizzati da domanda elastica la competizione è maggiore.
@@ -390,16 +387,17 @@ Solo per gli italiani altri documenti che costituiscono il bilancio sono:
 
 In particolare lo stato patrimoniale: 
 
-![](src/images/Stato%20Patrimoniale.jpg)
+![](images/8f62e92eede72489a6e2c8c1b2dfa65e.jpg)
 
 ## Identità fondamentale
 
-![](src/images/Pasted%20image%2020220323165507.png)
+![](images/5f99cd54fc97ddbeea465d74a9e994b3.png)
 
 
 ## Stato Patrimoniale 
 - Attività: Risorse controllate dall’impresa, risultato di operazioni svolte in passato, dalla quale ci si attende un afflusso di benefici economici futuri.
-![](src/images/classificazione%20attivit.jpg)
+
+![](images/7d6a45436cc218b0f6e40351c6318d45.jpg)
 - Passività: Obbligazioni effettivamente assunte dall’impresa in relazione ad operazioni e altri fatti verificatisi in passato, ossia impegni irrevocabili a tenere un certo comportamento per effetto di disposizioni contrattuali, di leggi o di prassi consolidate 
 - Patrimonio netto: Valore residuo delle attività dell’impresa dopo aver dedotto tutte le passività. 
 
@@ -409,7 +407,8 @@ In particolare lo stato patrimoniale:
 L'utile d'esercizio è la differenza tra ricavi e costi di competenza di un esercizio contabile. Necessario per capire la performance economica e reddituale dell'impresa. 
 
 Tabella importantissima: 
-![](src/images/contoEconomicoNatura.jpg)
+
+![](images/0ebc2efeb20b2208498f3066a026f2be.jpg)
 
 
 ## Operazioni di bilancio e mastrini
@@ -427,22 +426,22 @@ Ogni operazione sarà contabilizzata in modo tale che la somma della colonna 'DA
 
 - Operazione 1
 
-![](src/images/ammortamento%20materiali%20per%20compensare%20la%20diminuzione%20di%20attivitá%20materiali.jpg)
+![](images/30e06662fed9598c46f4e8feefc0192e.jpg)
 
 - Operazione 2
 
-![](src/images/operazioneconUtileNettoAnnoPrecUtiliPortatiANuovo.jpg)
+![](images/609cbd016801be0e1a6feedb31290838.jpg)
 
 Distribuzione dividendi significa che tolgo dagli utili dell'anno precedente (Utile Netto).
 Quello che rimane lo porto a Utili Portati a Nuovo e la differenza (i dividendi) vanno fuori dalla cassa.
 
 - Operazione 3
 
-![](src/images/mutuoEsempio.jpg)
+![](images/7958c0e1a4d53937a9baa3692f63597f.jpg)
 
 - Sintetico formulario su dove sono alcune voci
 
-![](src/images/in%20che%20cazzo%20di%20voci%20metto%20ste%20robe.jpg)
+![](images/76863195cb852b142148cb3436eb64de.jpg)
 
 
 - Generica operazione acquisto MP
@@ -503,11 +502,11 @@ Diversi modi per calcolare il cashflow operativo:
 
 - metodo diretto: il metodo  più immediato e si basa sulle principali categorie di incassi e pagamenti lordi 
 
-![](src/images/Pasted%20image%2020220328162412.png)
+![](images/8647457925b24e3b89b65d1d7a431b98.png)
 
 - metodo indiretto: si basa sulla **rettificazione** dei costi netti dovuto agli effetti delle operazioni non-cash e della variazione di capitale circolante netto. 
 
-![](src/images/Pasted%20image%2020220328162621.png)
+![](images/abf8b2807d44795090fc4e97119eb0ec.png)
 
 
 Il CF operativo (o flusso di cassa netto) sarà particolarmente importante per gli esercizi riguardo la valutazione degli investimenti e in genere utilizzerai sempre il metodo indiretto (cioè in parole povere non lo calcolerai direttamente, ma partirai con il calcolo dall'utile netto del esercizio). 
@@ -516,12 +515,12 @@ Il CF operativo (o flusso di cassa netto) sarà particolarmente importante per g
 
 Strettamente legato alla variazione di attività non correnti in SP.
 
-![](src/images/CashFlow%20per%20attività%20di%20investimento.jpg)
+![](images/4f869f2e179784c84697691a682abda1.jpg)
 
 ### CashFlow per attività di finanziamento 
 Strettamente legato alla variazione di Passività finanziare e patrimonio netto in SP.
 
-![](src/images/cashflow%20per%20attività%20di%20finanziamento.jpg)
+![](images/168282757396df193b3473380ce615dc.jpg)
 
 
 ## Indici di bilancio 
@@ -641,7 +640,7 @@ Possiamo classificare diversi tipi di costi:
 - evitabili/inevitabili
 - inventariabili/non inventariabili 
 
-![](src/images/Pasted%20image%2020220710191849.png)
+![](images/efa7846ceb41f2110faffc02b30aaaa6.png)
 
 *immagine più importante di questo capitolo, importantissimo sapere la tassonomia dei costi* . 
 
@@ -680,13 +679,13 @@ mentre i costi di prod. sono i costi direttamente attribuibili in modo oggettivo
 lo stesso vale per i costi indiretti/fissi .
 
 
-![](src/images/grado%20evitabilitá%20.jpg)
+![](images/3df8e42e43b624e326f6b06ea8be40f0.jpg)
 
 Il concetto principale è che i costi diretti e il lavoro diretto sono facili da determinare per ciascun prodotto. La complessità principale è determinare come i costi **indiretti** vengono spartiti tra i prodotti.  
 
 ## Diversi modi per la rilevazione dei costi
 
-![](src/images/Pasted%20image%2020220420103232.png)
+![](images/8f8fcc97fc20c8af88ce890ecef92a33.png)
 
 In questo corso guarderemo principalmente i seguenti modi per calcolare i costi: 
 
@@ -732,7 +731,7 @@ Per il PC introduciamo ulteriori 2 concetti:
 
 Grafico che mostra che 50k unità sono 'partite' da un WIP al 40% per poi diventare prodotti finiti. Nel frattempo 80k unità sono state prodotte e 40k sono 'uscite' al 60% della lavorazione. Il grafico mostra inoltre di come i materiali diretti siano inseriti all'inizio della produzione. 
 
-![](src/images/Pasted%20image%2020220417114150.png)
+![](images/0bb5150f92b2faf2875dffc7ca5a917f.png)
 
 ### Passi del PC
 
@@ -870,7 +869,7 @@ Nella formula di NPV il NCF lo si ottiene con la rettificazione del utile netto 
 
 ## Da utile a NCF
 
-![](src/images/Pasted%20image%2020220513113845.png)
+![](images/4bf7af044c9457a8e644df5e828f7e95.png)
 
 
 Si passa da logica economica a logica finanziaria. 
@@ -888,7 +887,7 @@ $\Delta CCN = \Delta  Crediti \space commerciali \space + \Delta  \space rimanen
 
 Negli esercizi, spesso quando ci sono in ballo crediti/debiti e stiamo valutando l'investimento su un periodo di $x$ anni, quasi sicuramente ci toccherà riportare anche una colonna $(x+1)$esima proprio per il fatto che dobbiamo tener conto della variazione del CCN. 
 
-![](src/images/rettificcazione%20NPV.png)
+![](images/31470c1d4129cf1352ceff08df8189d1.png)
 
 *Nota che la somma degli $NCF$ attualizzati e cumulati è proprio $NPV$ .
 
@@ -902,7 +901,7 @@ Si tratta quindi di valutare un investimento in base al corrente e ai futuri sta
 
 Si fa budgeting per capire se rispettiamo gli obiettivi aziendali. 
 
-![](src/images/Pasted%20image%2020220611094102.png)
+![](images/84994d54bf4f0e30bc5ed8d410f0c8d8.png)
 
 ## Master Budget
 
@@ -918,7 +917,7 @@ Il master budget é composto dai tre tipi di budget:
 - **budget degli investimenti** 
 - **budget finanziari** 
 
-![](src/images/Pasted%20image%2020220711191014.png)
+![](images/3873eaa5807c3ddb760c10025c3bf814.png)
 
 In pratica nei nostri esercizi valuteremo soltanto i budget operativi e non considereremo budget degli investimenti e finanziari. 
 
@@ -1049,7 +1048,7 @@ I costi di assorbimento e costi della risorsa sono ovviamente per ciascuna risor
 Con specializzazione orizzontale si intende la varietà di mansioni svolte dal lavoratorie. Se il lavoratore è molto specializzato orizzontalmente significa che fa una sola/poche mansione/i.
 Con specializzazione verticale si intende la distanza o profondità logica che c'è tra il lavoratore e lo svolgimento delle proprie decisioni. Ad esempio un manager ha basso livello di specializzazione poichè prende decisioni per altri e non svolge alcuno dei compiti/mansioni derivate dalle sue decisioni. In genere chi è poco specializzato verticalmente ha anche un'elevata autonomia decisionale. 
 
-![](src/images/Pasted%20image%2020220525110922.png)
+![](images/0a1636d2b7d0278a02bf9a2f000491b3.png)
 
 
 La specializzazione può però inevitabilmente portare alla ripetizione dei compiti e in generale alla alienazione. 
@@ -1077,7 +1076,7 @@ Ulteriore modi:
 	- motivazione intrinseca : puro piacere nel fare il compito
 	- motivazione estrinseca : che dipende dalla propria remunerazione e/o per trovare un lavoro migliore
 
-![](src/images/Pasted%20image%2020220525103929.png)
+![](images/4e5b60e352069f9f4a7350c7d646d064.png)
 
 
 ## Macrostruttura 

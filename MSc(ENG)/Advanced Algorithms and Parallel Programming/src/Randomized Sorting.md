@@ -3,7 +3,7 @@
 All the sorting algorithms we have seen so far are comparison sorts : they use comparisons to determine the relative order of elements.
 We can prove using a decision-tree view of the problem that the  the tree represents the sorting algorithm and it splits whenever it compares two elements.
 
-![](images/Pasted%20image%2020221031124020.png)
+![](images/3d4ee25a2221f08b0b4a7dee1035b164.png)
 
 Some properties about this kind of tree: 
 
@@ -36,7 +36,7 @@ In statistics, the $k_{th}$ **order statistic** of a statistical sample is
 Quickselect is the best-known selection algorithm and it's basically Quicksort. 
 We don't do recursive calls to both the partitions of quick-sort but just to the one where we will know there is the $i-th$ element. How do we know where there is the $i-th$ element? Simply remember that in quicksort the position of the pivot after the iteration is the final one, even if the algorithm has not finished! 
 
-![](images/Pasted%20image%2020221012161039.png)
+![](images/890c6fa2aa45e89825ab985981d6f731.png)
 
 So we can proceed searching the $i-th$ element recursively without ordering all the array.     
 Average case: $\Theta(n)$ but worst case is $\Theta (n^2)$ that is worst than sorting! 
@@ -49,7 +49,7 @@ Unlucky case: $$T(n)=T ( n -1) + \Theta (n) = \Theta (n^2)$$
 ## Deterministic version
  
 A possible way to guaranteed that the smallest partition is not empty we could group all the elements in groups of 5 each and find the median of each group. Then select as pivot the median of the median group. 
-![](images/Pasted%20image%2020221012171346.png)
+![](images/b83b5758326dbf857474ef911ba97678.png)
 
 Developing the recurrence :
 

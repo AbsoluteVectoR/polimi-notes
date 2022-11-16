@@ -93,7 +93,7 @@ CANCELLA-MAX(A){
 Degli alberi di ricerca sono alberi binari in cui sussiste una certa relazione tra i padri e i figli. Questa relazione, se sensata, ci permette di navigare e quindi cercare meglio nell'albero. Gli alberi possono essere binari o non binari a seconda del numero della prole di ciascun nodo. In questo corso ci concentreremo principalemente su quelli binari.
 Un albero binario di ricerca è un albero binario nel quale: la key di ogni nodo $X$, se $Y$ è un nodo del sottoalbero sinistro di $X$, vale che $X.key$ $\ge$ $Y.key$ . Mentre se $Z$ è un nodo del suo sottoalbero destro vale $Z.key \ge  X.key$ .
 
-![Albero-di-ricerca-binario](images/Albero-di-ricerca-binario.png)
+![Albero di ricerca binario](images/1fb1700426d4d15ed9647e44b327156c.png) 
 
 I BST sono la concretizzazione in struttura della ricerca binaria. Molto efficienti, ma devono essere correttamente bilanciati! Se ad esempio un nodo finisce per diventare una lista (caso pessimo) non abbiamo alcun tipo di vantaggio!
 Ricordati che c'è differenza tra BT e BST ! 
@@ -213,16 +213,16 @@ Quando cancelliamo un oggetto $z$ da un albero, abbiamo 3 possibili casi. Il nod
 
 - non ha sottoalberi 
 
-	![](images/eliminazione%20leaf.png)
+	![](images/1484ecd6d9ccdafb66df7b87dfc5bd18.png)
 - ha 1 sottoalbero:
 	ysy, si sposta l'intero sotto albero
 	
-	![](images/eliminazione%20non%20leaf.png)
+	![](images/baf9704ca1f51a85f127fa2c6074576c.png)
 
 - ha 2 sottoalberi:
 	sbattella, dobbiamo trovare il successore del nodo da cancellare $z$. Copiare la chiave del successore in $z$ e quindi cancellare il successore. Cancellare il successore potrebbe richiedere di spostare in sù il sottoalbero destro ma ysy. (notare che il successore è il minimo del sottoalbero, quindi al più avrà un sottoalbero destro).
 	
-	![](images/operazione%20su%20albero.png)
+	![](images/c709c42fcd97147ca0ee22fa40a14ea5.png)
 
 ````C
 TREE-DELETE(T, z)
@@ -253,7 +253,7 @@ TREE-DELETE(T, z)
 
 Un albero generale può essere rappresentato con una struttura a puntatori in cui ogni nodo $x$ ha 4 attributi: $x.key$ è la chiave, $x.p$ è il puntatore al padre, $x.fst$ è il puntatore al figlio più a sinistra, e $x.sibling$ è il puntatore al fratello a destra.
 
-![](images/esempio%20tree.png)
+![](images/6726635bce41f6fa2096f2e086437852.png)
 
 ### Fusione di due alberi binari di ricerca in uno bilanciato
 
@@ -289,7 +289,7 @@ All’inserimento ogni nodo è rosso. Quindi, se anche il padre del nodo appena 
 
 Rotazioni: 
 
-![rotations bitches](images/left%20and%20right%20rotate.png)
+![rotations bitches](images/f38932dfd9720d5b20551e946366cb3e.png)
 
 ````C
 LEFT-ROTATE(T,x)
@@ -308,7 +308,7 @@ LEFT-ROTATE(T,x)
 ````
 
 
-![](images/left%20rotation.png)
+![](images/b75121b27e368d746719d0ea66aaeeee.png)
 
 #### Inserimento 
 
@@ -462,7 +462,7 @@ Complessità: $O(|V|+|E|)$
 
 I nodi da visitare sono in una coda (inizialmente solo s) e ad ogni iterazione, cancello dalla coda un elemento u e ne visito i nodi adiacenti che sono ancora bianchi (la cui distanza da s sarà u.dist+1).
 
-![](images/bfs.png)
+![](images/b526bd40f22ef198d2e8eb8aaab415a6.png)
 
 L'algoritmo per poter essere eseguito necessita di array/liste di appoggio:
 
@@ -540,11 +540,11 @@ DFS-VISIT(u)
 
 #### Ordinamento Topologico 
 
-![](images/grafo%20activities.png)
+![](images/1abb5f92012b67584374e5188302f249.png)
 
 Dato in input un DAG (directed acyclic graph) un ordinamento topologico è una lista che rappresenta l'ordine delle connessioni. In particolare, l'ordinamento lineare dei nodi del grafo è tale che se nel DAG c’è un arco $(u, v)$, allora il nodo $u$ precede $v$ nell’ordinamento. L’ordinamento ottenuto rispetta la precedenza tra nodi. C'è stato un tema d'esame un anno nel quale si richiedeva l'ordinamento topologico di un grafo che rappresentava dipendenze di programmi tra loro: un programma C poteva essere eseguito solo dopo la fine del programma C ... e così via. 
 
-![](images/ordinamento%20topologico.png)
+![](images/cc3edc92274e117ead3434aeba59c707.png)
 
 L'idea per l'algoritmo si basa su DFS:
 1) Visito il DAG con un algoritmo DFS

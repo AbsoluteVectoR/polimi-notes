@@ -66,7 +66,7 @@ Continuo riaggiustamento .. si continua a buttare via un sacco di codice .. ''no
 > Non fossilizzarti a prendere la decisione perfetta. 
 
 
-![scrum](scrum.jpg){width=50%}
+![scrum](images/a18f8ced3cb2b7ef5d5a84e3f1fc786d.jpg){width=50%}
 
 ### DevsOps
 
@@ -74,11 +74,12 @@ Le aziende che tipicamente potrebbero avere maggiori benefici da un orientamento
 I teams che adottano la cultura, le procedure e gli strumenti DevOps ottengono prestazioni elevate e creano più rapidamente prodotti, incrementando la soddisfazione dei clienti.
 
 
-![AgilevsWaterfallReleases](AgilevsWaterfallReleases.png)
+![AgilevsWaterfallReleases](images/f078f0d57f7f47a721a851c142753b43.png)
 
 
 ## Riassunto modelli di sviluppo
-![models](models.jpg)
+
+![models](images/3964fd28cd2b30f8a346266a48024aad.jpg)
 
 # Object Oriented Programming 
 
@@ -157,9 +158,9 @@ Le interfacce sono utilizzate come un ulteriore livello di information hiding, m
 
 ### Collezioni e mappe varie in Java
 
-![](collections%20in%20java.png)
+![](images/f9eae9a7d24b7a755c3c9a18c84a1330.png)
 
-![](map%20java.png)
+![](images/1360ec953f88c91a6e4edaac1c89d97f.png)
 
 
 ### Iterators
@@ -242,21 +243,21 @@ I principali concetti da portarci a casa sono quindi:
 - incapsulamento: non posso accedere alle informazioni se non attraverso i metodi.
 
 # UML 
-![umlex](umlex.png)
+![umlex](images/eb8abe174e235bf4b4148d2e3c3ed537.png)
 
 ### Struttura base classe:
-![Pasted image 20220311105626](uml.png)
+![Pasted image 20220311105626](images/b2a0a5876f78fb9457f576a3b1f03217.png)
 
-![Pasted image 20220311104919](uml%20guide.png)
+![Pasted image 20220311104919](images/227d1679fa9e1823f0113dde6ed0a64c.png)
 
 ### Tipi di relazione:
-![Pasted image 20220311105700](uml%20relazioni.png){width=50%}
+![Pasted image 20220311105700](images/a14aae869fd7f4affeee2ef51e93a7ec.png){width=50%}
 
 - associazione: i due componenti sono semplicemente associati. In genere hanno un nome (verbo) e una molteplicitá 
 - aggregazione: un componente logicamente viene aggregato dal componente superiore
 - composizione: é una aggregazione forte... se il contenitore viene eliminato, anche i contenuti vengono eliminati. Tipico esempio:  mazzo e carte 
 
-	![](Pasted%20image%2020221101180147.png)
+	![](images/1d7c262a447e3a528a72e5a1801a5acf.png)
 - ereditarietá: esprime l'ereditarietá 
 - dipendenza: 'relazione di utilizzo'
 - implementazione: usato per indicare l'implementazione delle interfacce 
@@ -271,7 +272,7 @@ Dall'alto verso il basso si puó leggere la sequenza di una operazione tra piú 
 - Frecce tratteggiate se il messaggio é una risposta
 
 
-![](server%20client.png){width=20%}
+![](images/318cc4b5f82d1f38bb291e48e3273e9d.png){width=20%}
 
 
 # Java e Pattern Designs 
@@ -288,7 +289,7 @@ Classificazione patterns:
 
 Lo stesso (abstract/concrete) per i prodotti. 
 
-![](creator%20pattern.png)
+![](images/aab0ad5b4559fc21fb0f6b2a6ac9f4d2.png)
 
 - Singleton:  una classe la cui istanza é sempre singola. 
 
@@ -296,12 +297,12 @@ Lo stesso (abstract/concrete) per i prodotti.
 
 - Adapter: per matchare interfacce diverse 
 
-![adapter pattern](adapter%20pattern.png)
+![adapter pattern](images/600317ac5f8e6982544a06458f2636f1.png)
 
 - Bridge: per separare l'interfaccia di un oggetto dalla sua implementazione
 - Decorator: per aggiungere responsabilitá/funzionalitá ad oggetti esistenti dinamicamente 
 
-![](decorator%20pattern.png){width=50%}
+![](images/4e680976401fcdb6beddf61e0ca14c17.png){width=50%}
 
 - Facade: una classe che rappresenta un insieme di altre classi e maschera la complessitá. 
 
@@ -310,8 +311,8 @@ Lo stesso (abstract/concrete) per i prodotti.
 - Flyweight: un'istanza 'leggera' usata per condividere risorse
 - Proxy: Un oggetto che rappresenta un altro oggetto, in genere usato per evitare di istanziare oggetti pesante se non veramente necessari.
 
-![](proxy%20pattern.png){width=50%}
-![](proxy%20pattern2.png){width=50%}
+![](images/fc5d49e203cbe2e1458522aa6abdb794.png){width=50%}
+![](images/7b2c30989300f431f55230e65a581cef.png){width=50%}
 
 ### Behavioral Patterns 
 
@@ -322,11 +323,11 @@ Lo stesso (abstract/concrete) per i prodotti.
 - Memento: per 'snapshottare' lo stato di una classe
 - Observer: un modo per notificare agli oggetti 'Listeners' o 'Observers' un cambiamento sul oggetto osservato. 
 
-![](observer%20pattern.png)
+![](images/e4545b61e6282aafc830bd4bddeb8c67.png)
 
 - State: un oggetto la cui configurazione cambia a seconda dello stato (che varia a runtime).
 
-![](pattern.png)
+![](images/cf25a0bcd2e46d85a8a77089bef8c78f.png)
 
 - Strategy: incapsula gli algoritmi all'interno di una classe: utili per quei casi in cui é necessario cambiare/scegliere un algoritmo dinamicamente. 
 
@@ -405,7 +406,7 @@ L’accesso ai campi static é controllato da un lock speciale, diverso da quell
 ````static synchronized```` é una cosa piú generale: a livello di classe e non di oggetto singolo. Ad esempio per un attributo static (quindi un attributo che é sopra la singola istanza, ma é a livello di classe) puoi fare uno synchronized static che "estende la sincronizzazione anche a livello di classe" .
 
 
-![](threads%20e%20oggetti.png){width=25%}
+![](images/c115417f8abf3ec83e37060f6c57b38c.png){width=25%}
 
 In caso di sincronizzazione statica su un attributo della classe dei due oggetti, si sincronizzeranno anche i threads di colore diverso. Senza static, i threads si sincronizzeranno solo con quelli dello stesso colore/operanti sullo stesso oggetto. 
 
@@ -581,7 +582,7 @@ Se si può rendere il codice abbastanza chiaro da poterlo considerare autocommen
 
 # Programmazione Funzionale 
 
-![](function.png){width=50%}
+![](images/7d96aa31de653b35cda991ef8752f19c.png){width=50%}
 
 Erlang, Lisp e Haskell sono linguaggi puramente funzionali. 
 
@@ -792,7 +793,7 @@ La RI è una funzione caratteristica per gli stati validi: restituisce true ogni
 
 La Funzione di astrazione è una funzione non iniettiva che associa a ogni stato concreto al più uno stato astratto: molti stati concreti possono essere associati allo stesso stato astratto (es. [1,2,5] e [2,1,5] corrispondono allo stesso stato astratto {1,2,5} nel caso del ADT dell'insieme di interi).
 
-![](stati%20astratti%20e%20concreti.png)
+![](images/88bd132b42d304a4c8fd8486b2234017.png)
 
 
 Se con il RI specifichiamo 'quali stati sono legali'; con l'AF associamo gli **stati astratti** con gli stati concreti che rispettano le proprietà del RI:

@@ -77,7 +77,7 @@ per una $n$ abbastanza grande e una qualsiasi $c$ (non importa quanto piccola) s
 L’albero di ricorsione fornisce un aiuto per avere una congettura da verificare con il metodo di sostituzione. E' una rappresentazione delle chiamate ricorsive, indicando per ognuna la complessità. Ogni chiamata costituisce un nodo in un albero, i chiamati appaiono come figli del chiamante.
 $T(n) =T(\frac{n}{3}) +T(\frac{2n}{3}) +n$
 
-![Pasted image 20210610170457](images/Albero%20binario.png)
+![Pasted image 20210610170457](images/ce5ea9e2b983f146d753e8a87449d8a7.png)
 
 
 ## Teoremi di accelerazione lineare per MT

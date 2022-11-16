@@ -15,8 +15,6 @@ Ranking data? Look how Google solved that problem finding a very efficient way t
 
 # Transactions
 
-![](Pasted%20image%2020220914113036.png)
-
 Banking and Booking apps are the killer apps. 
 
 Transaction 
@@ -47,9 +45,6 @@ The execution of a transaction must be independent of
 the concurrent execution of other transactions
 
 durability Recovery management
-
-
-![](Pasted%20image%2020220914114851.png)
 
 
 
@@ -90,7 +85,7 @@ Two schedules are conflict-equivalent (Si »C Sj ) if : • Si and Sj contain th
 
 Is done with a conflict graph that has: • One node for each transaction Ti • One arc from Ti to Tj if there exists at least one conflict between an operation oi of Ti and an operation oj of Tj such that oi precedes oj • Theorem: • A schedule is in CSR if and only if its conflict graph is acyclic
 
-![](images/Pasted%20image%2020221024153406.png)
+![](images/d4689f4432c86086af9f5dd5171a564d.png)
 
 
 # 26 09 
@@ -343,7 +338,7 @@ ManyToMany annotation must come with the mappedBy element.
 
 Map example
 
-![](images/Pasted%20image%2020221030115257.png)
+![](images/bdcabc300e2f04d22f42820390bc3837.png)
 
 We can't have a traditional join table with 2 columns because we have 3 attributes: so we use a map ```Map<Product, Integer>``` . 
 

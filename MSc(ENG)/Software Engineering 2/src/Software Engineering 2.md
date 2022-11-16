@@ -9,7 +9,7 @@ Why software engineering is important? Software is everywhere and our society is
 
 Waterfall lifecycle: As a reaction to the many problems: traditional “waterfall” model identify phases and activities force linear progression from a phase to the next. No returns (they are harmful), better planning and control, standardize outputs (artifacts) from each phase. Software like manufacturing. 
 
-![](images/Pasted%20image%2020220916122239.png)
+![](images/8272b5865e427d2bb09ac1f33fb8d2d3.png)
 Feasibility study & project estimation
 Cost/benefits analysis
 Determines whether the project should be started (e.g., buy vs
@@ -85,7 +85,7 @@ based on incremental releases
 
 22/9/2022
 
-![](images/Pasted%20image%2020220929190226.png)
+![](images/7c0217f50e455cdd0b176c4ecc4cb7e5.png)
 
 Some definitions:
 
@@ -134,7 +134,7 @@ Some notes:
 
 associations are rapresented by lines. You can have association between actors and use cases. 
 
-![](images/Pasted%20image%2020220930133221.png)
+![](images/5bfe46f9d7c3c3505fea247137fc4bfb.png)
 
 
 # 12 10 22 
@@ -233,25 +233,25 @@ Architecture is a transferable abstraction of a system.  The architecture manife
 
 ## Layered style
 
-![](images/Pasted%20image%2020221030185136.png)
+![](images/48d7d6ff6297508149cef6322b5d3704.png)
 
 Layers archtecture enable separation of concerns, claryfying the main focuses of each layer. Each layer can be considered 'independent' from the others. Layered style can be used when it is possible to identify a specific (bounded) concern for each layer and clearly communication protocol between layers.
 
-![](images/Pasted%20image%2020221030185228.png)
+![](images/55a68953529fd27b7c28c006d2d0fe6d.png)
 
 ## Client/Server
 
-![](images/Pasted%20image%2020221030185632.png)
+![](images/4d827fc73360a16e7e6e4d3959042b29.png)
 
 A client-server architecture is a kind of layered architecture with two layers (also called tiers).
 
-![](images/Pasted%20image%2020221030185723.png)
+![](images/663e7b6d5518489d0f06d2958786b96c.png)
 
 
 ### Three-tier architecture
 
 
-![](../../Databases%202/src/images/Pasted%20image%2020221102165853.png)
+![](../../Databases%202/src/images/8a8aa806fc6734d7b864a87fa0864371.png)
 
 Note how the middle tier plays 2 roles (server and client). 
 
@@ -259,7 +259,7 @@ Note how the middle tier plays 2 roles (server and client).
 
 This kind of style is popular in distributed systems (systems heavily distributed and decentralized). 
 
-![](images/Pasted%20image%2020221102170135.png)
+![](images/1ea7126c94b4f01a1aff0696bf0fd2f3.png)
 
 There are producers of events and consumers of evens and everything is coordinated by an event dispatcher:
 
@@ -270,7 +270,7 @@ Since publishers/subscribers are decoupled, addition/deletion of components is e
 
 ## Service-oriented architecture (SOA)
 
-![](images/Pasted%20image%2020221102170557.png)
+![](images/adb8c00dbf94a576c014632442014891.png)
 
 Services offered through a API. 
 
@@ -278,7 +278,7 @@ Services offered through a API.
 
 Each service uses its own technology stack and it's isolated. 
 
-![](images/Pasted%20image%2020221102170646.png)
+![](images/3094155438237d129e989f4285aa59c6.png)
 
 Microservices architecture is very resilience and scalable. Each service has its own software repository and there is no cross-dependencies between codebases. 
 While monolithic systems are often big and complex and their replacement is risky and costly; replacing a microservice implementation is much easier. 
@@ -292,7 +292,7 @@ A couple of parameters:
 - Mean Time Between Failures ($MTBF$): Mean time between the occurrences of two consecutive incidents
 
 
-![](images/Pasted%20image%2020221102172739.png)
+![](images/235f1627b058ea2dfd2a003976d60f09.png)
 
 The we can define availability:
 
@@ -324,7 +324,7 @@ Then the example of parallelize the weakest component of the chain to increase t
 # UML models
 
 
-![](images/Pasted%20image%2020221112190820.png)
+![](images/858f15c235cc4b58f21ee44de1e7a797.png)
 
 
 Objects diagrams is the Class diagram with only distances. It is used to show links between instances. 
@@ -335,7 +335,7 @@ Component Diagram used to show interfaces between components.
 
 Deployment Diagram captures topology of a system: hardware, software and communications protocol between them. It is used to specify the distribution of components and identify performance bottlenecks. 
 
-![](images/Pasted%20image%2020221112192234.png)
+![](images/eb29c998a8cc5110e24e57a626e616af.png)
 
 Sequence Diagram used to describe behavior time-oriented. Focused on internal message exchange among components. It is used to show the control flow and illustrate typical scenarios. 
 
@@ -375,7 +375,7 @@ Tier = logical group of components that are served for a specific purpose.
 
 Component = self-contained software units deployed onto the tiers of a EA. 
 
-![](images/Pasted%20image%2020221116175558.png)
+![](images/eb5acc4a07332025fdeba1fefc5b4403.png)
 
 
 

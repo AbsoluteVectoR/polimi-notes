@@ -14,8 +14,6 @@ A possible example could be to broadcast a network packet to all the nodes in a 
 
 # Optimal cost spanning trees 
 
-![](Pasted%20image%2020220930154837.png)
-
 
 A complete graph wqith n nodes ($n \ge 1$) has $n^{n-2}$ spanning trees.
 
@@ -76,8 +74,6 @@ To use the algorithm you use a matrix. If on the diagonal there is a negative co
 A DAG can be always ordered topologically.  
 At each step we delete the node (or one of the nodes if there are more than one node) that has not any edge arriving in it. 
 
-![](Pasted%20image%2020221003164721.png)
-
 
 If it's DAG, it's guaranteed to find always at least one node that hasn't any edge arriving in it. So if it's DAG there is always a topological order. 
 
@@ -91,7 +87,6 @@ The constraint of this algorithm so it's to not have any cycle.
 The dynamic programming algorithm for finding shortest/longest paths in DAGs is optimal and exact. 
 
 Any optimal solution is composed by optimal subsolutions. 
-![](Pasted%20image%2020221003165823.png) 
 Each best path can be divided into two smaller paths: 
 
 - the optimal path from $1$ to $i$  (optimal subsolution)

@@ -88,7 +88,7 @@ Operatori:
 - $\bowtie$ join... è un prodotto cartesiano in cui vengono eliminate le colonne no sense. 
 - $\ltimes$ semijoin. è un join in cui vengono tenute solo le colonne della tabella sinistra (o dx a seconda dove disegni la stanghetta aperta del simbolo). In pratica te lo puoi ricordare come il join nel quale usi le righe di una tabella per 'selezionare' le stesse righe in un'altra. 
 - operatore di divisione. Complicato da capire, sostituibile con le altre operazioni. 
-![esempio divisione query](images/esempio%20divisione%20query.png)
+![esempio divisione query](images/11adcb200504b86e7a971fc40d27ff6d.png)
 
 
 Algebra relazionale è un linguaggio procedurale, cioè l'ordine delle operazioni è molto importante. Or dunque usi le parentesi. 
@@ -115,7 +115,7 @@ $$\{ x | p(x) \}$$ dove $p(x)$ è una formula costruita tramite atomi. Un atomo 
 
 # Datalog
 Datalog è un linguaggio di programmazione logica basato su formule che prendono il nome di **regole** . è un linguaggio dichiarativo senza alcuna introduzione procedurale come ad esempio SQL. Sintatticamente derivato dal Prolog. 
-![Datalog Esempio](images/Datalog%20Esempio.png)
+![Datalog Esempio](images/85ad4c6b1006adc399ddb2435c02130a.png)
 
 Ogni regola ha una **testa** e un **corpo** . 
 
@@ -167,7 +167,7 @@ In SQL te ne sbatti dell'interrogazione, vari modi ma alla fine SQL è ottimizza
 Da un punto di vista logico vediamo solo tabelle, ma come sono organizzati i dati fisicamente? 
 L'approccio più comune è tenere le tuple distribuite in modo sequenziale in memoria. In genere le tuple sono in ordine cronologico d'inserimento. Sopra questo blocco di memoria vengono poi costruiti degli indici. Questi indici sono nella maggior parte dei casi implementati con hash e albero B+ .
 
-![albero B+](images/albero%20B+.jpg)
+![albero B+](images/d172f2d7b7aaad3001195795a659d14e.jpg)
 
 Simile a un BST ma con più chiavi, infatti ogni nodo può avere n puntatori. 
 Inoltre un albero B+ è costruito in modo tale che si possono attraversare le foglie in modo sequenziale. 
@@ -198,7 +198,7 @@ $${\{}ID,ESAME{}\} \rightarrow VOTO$$
 Una dipendenza funzionale è banale $X \implies Y$ quando in X compaiono attributi di Y. 
 
 
-![dipendenza funzionale non banale e banale](images/dipendenza%20funzionale%20non%20banale%20e%20banale.png)
+![dipendenza funzionale non banale e banale](images/a4118fd11548a69be2eab79fe60dbad3.png)
 
 ### Rindondanze
 Possono capitare rindondanze nei DBs. Le rindondanze sono dovute ad anomalie di inserimento, aggiornamento o cancellazione. Cioè quando c'è una cancellazione/inserimento/modifica si creano conflitti con alcune key. Ad esempio dopo una cancellazione ci potrebbe essere una key ad essere null. 
@@ -213,7 +213,7 @@ Forme normali (dalla più debole alla più forte):
 - **Seconda Forma Normale**: Deve essere 1FN e tutti gli attributi non chiave devono dipendere dall'intera chiave primaria, non da un sottoinsieme di essa (dipendenza completa). 
 - **Terza Forma Normale**: Deve essere 2FN e non devono esserci dipendenze transitive. Cioè ogni attributo _non-chiave_ deve dipendere **direttamente** dalla chiave. Cioè gli attributi non si determinano a vicenda, ma hanno una **dipendenza funzionale** $X \implies Y$ solo con la chiave $X$ OPPURE (ed è questo che la rende diversa dalla FN di BC) gli attributi hanno una dipendenza del tipo $X \implies Y$, dove Y **fa parte della chiave**. Più debole di Boyce Codd proprio per la seconda condizione. Quindi non garantisce la scomparsa di tutte le anomalie. (Sempre ottenibile, così come le precedenti).
 
-![Non 3NF](images/Non%203NF.png)
+![Non 3NF](images/e3624e51afa2dd8bf31952c6a151ea66.png)
 Il ModelloAuto dipende funzionalmente dalla TargaAuto, duqnue ci sono attributi  che si determinano a vicenda. 
 
 - **Forma di Boyce Codd**: non sempre raggiungibile. Ogni attributo deve dipendere **solo** dalla chiave. Cioè in " $X \implies Y$ " X deve essere sempre chiave. 
@@ -222,17 +222,17 @@ Il ModelloAuto dipende funzionalmente dalla TargaAuto, duqnue ci sono attributi 
 All'esame, ogni tabella che facciamo, deve soddisfare almeno la terza forma normale. Normalmente quando faccio un progetto basato sul modello ER riusciremo a soddisfare tranqui Terza Forma Normale. 
 
 # Progetto concettuale e logico 
-![database conceptual](images/database%20conceptual.png)
+![database conceptual](images/2d99168b70e72cd2dfa30adc09d0d893.png)
 
 IL **modello entità-relazione** (**modello ER**) è un modello teorico per la rappresentazione concettuale e grafica dei dati, formalizzato da Peter Chen nel 1976
 Il modello entità-relazione viene spesso utilizzato nella prima fase della progettazione di una base di dati, nella quale è necessario tradurre le informazioni analizzate in uno schema concettuale, detto **diagramma entità-relazione** (o **diagramma ER**).
 Si tratta di una fase con una astrazione molto elevata. Seguito dal progetto logico. 
 
-![progetto concettuale esempio tde](images/progetto%20concettuale%20esempio%20tde.png)
+![progetto concettuale esempio tde](images/be3d1aa61ff6ed1b9a58fa15cedda630.png)
 
 Particolare attenzione quando ci si sposta dal progetto concettuale a quello logico. L'idea è che in ogni tupla ci deve essere il riferimento a 0 o al massimo 1 tupla esterna. Quindi le relazioni 0:1 e 1:1 sono le più semplici. I riferimenti tra A e B 1:n non posso stare in A, bisogna fare il riferimento nell'altra tabella solo se B e A ha 0:1 o 1:1. Se l'altra tabella B ha anch'essa 1:n allora serve una tabella ponte AB. 
 
-![trasformazioniConcettualeLogico](images/trasformazioniConcettualeLogico.jpg)
+![trasformazioniConcettualeLogico](images/c0becc975675bb889ebc68d4c81c4c58.jpg)
 
 ### Errori gravissimi in uno schema concettuale:
 

@@ -35,20 +35,20 @@ Any problem that can be solved by a $p$-processors PRAM in time $T_p$ can be sol
 
 Parallelization of a sum of vector elements with the naïve algorithm can be performed with $T*(n)=\Theta (n)$ while with a popular parallel pattern can be performed with $T_p=2+\log(n)$ . 
 
-![](images/sum%20vector%20parallel.png)
+![](images/d3c23b64af7f99cb09f955e6ebb1f086.png)
 
 ## Matrix-vector multiplication 
 
 Embarrassingly parallel because there isn't cross-dependence (just the concurrent read over the vector $x$).  
 
-![](images/Pasted%20image%2020221031114536.png)
+![](images/5a9ce6ac80ec5d7d083d26419aa37003.png)
 
 The matrix $A$ can be subdivided in submatrices of size $\frac{n}{p}n$ .
 This is so easy that from $T_1(n)=\Theta (n^2)$ we obtain $T_p(n)=\Theta (\frac{n^2}{p})$ (the ideal case is $p=n \rightarrow \Theta (n)$) so we have linear speedup and perfect efficiency $E_p=\frac{T_1}{pT_p}=1$ . 
 
 ## Matrix-matrix multiplications
 
-![](images/Pasted%20image%2020221104220334.png)
+![](images/4c2a2fd2572f4995db7554be2375dcc5.png)
 
 This algorithm is characterized by concurrent read but only exclusive write so runs on CREW PRAM. Let $p=n^3$ processors we can compute the multiplication in $\log (n)$ assigning to each processor a row and a column and the corresponding cell in the result matrix. Note that $\log (n)$ is because you have to perform the sum of all elements of the vector (the vector obtained multiplying the row with the column). 
 
@@ -57,7 +57,7 @@ This algorithm is characterized by concurrent read but only exclusive write so r
 The previous PRAM algorithms make the same amount of work of the work done by a single processor, simply faster using parallelization. 
 The prefix sum problem is basically the same of a sum of the vector elements but exploiting idle processors. 
 
-![](images/Pasted%20image%2020220930112448.png)
+![](images/f9d826fd633d2bfb58323c83ca090d56.png)
 
 The idea is to make more work in same time taking advantage of idle processors in sum. Basically we used all the processors all the time. Efficiency is $1$ and the complexity is still $log(n)$. The goal of this algorithm (and the difference of a normal sum vector elements) is that we not only obtain the final sum but also the sum of all the prefixes.
 For example from $a,b,c,d,e$ we obtain $a$ , $a+b$ , $a+b+c$ , $a + b + c + d$ and $a+b+c+d+e$ . 
@@ -76,14 +76,14 @@ Gene Amdahl objected to parallelism saying that computation consists of interlea
 - a serial segments that cannot be parallelized 
 - parallelizable segments 
 
-![](images/Pasted%20image%2020220930114834.png)
+![](images/ab8bff309d3370d39f7673ca42289edb.png)
 
 The law is 'pessimist' since if the parallelized part is a fixed fraction $f$ of the total computation, this will mean that given a problem with inherent $f=0.9$, there will not sense to use more than 10 processors... showing the limits of parallelization.
 
 $$SU_p=\frac{T_1}{T_p}=\frac{T_1}{T_1(1-f) +\frac{f}{p}}=\lim_{p \rightarrow \infty} = \frac{1}{1-f}$$
 
 
-![](images/Pasted%20image%2020221031115816.png)
+![](images/e3a137e4cb46711781c4a833f008d9d9.png)
 
 ## Gustafson's law
 
@@ -92,7 +92,7 @@ $$SU_p=\frac{T_1}{T_p}=\frac{T_1}{T_1(1-f) +\frac{f}{p}}=\lim_{p \rightarrow \in
 The key points of Gustafson are that portion $f$ is not fixed and only absolute serial time is fixed. The end result of Gustafson's law is that we could always increase up the parallelized part of the computation **redoing** the sequential work more than one time. 
 So basically we map the work to more processors and then we **repeat the initialization/sequential part** more than one time to permits an infinite theoretical speedup. 
 
-![](images/Pasted%20image%2020220930114916.png)
+![](images/106aa35adbc24b7c1140e27ebcd44eb4.png)
 
 ## ISPC for implementing PRAM algorithms. 
 

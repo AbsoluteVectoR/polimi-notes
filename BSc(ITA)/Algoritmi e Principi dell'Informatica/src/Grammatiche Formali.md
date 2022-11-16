@@ -21,7 +21,7 @@ Regole delle **Grammatiche Regolari**:
 - b $\in V_t . V_n \cup V_t$  *(nota che $.$ intende la concatenzazione di stringhe)*
 - b = $\epsilon$ sono nel caso in cui la stringa vuota è presente nel linguaggio
 
-![grammatiche](images/grammatiche.png)
+![grammatiche](images/26396012fc57438123aa39321df813ff.png)
 
 Le grammatiche sono modelli generativi di linguaggi, possiamo associare ciascuna grammatica al rispettivo automa riconoscitore del linguaggio generato:
 

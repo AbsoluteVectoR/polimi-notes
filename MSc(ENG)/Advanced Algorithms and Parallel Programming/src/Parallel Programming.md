@@ -113,7 +113,7 @@ $$\begin{array}{|l|l|l|l|}
 \hline
 \end{array}$$
 
-![](images/Pasted%20image%2020221028164604.png)
+![](images/30d410d194144696bf68ad11182337d2.png)
 
 
 # Parallel programming pt 2

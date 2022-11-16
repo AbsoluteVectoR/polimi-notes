@@ -64,7 +64,7 @@ dove $$K_p = \frac{1}{2} \mu _oC'_{ox}\frac{W}{L}$$
 
 Per essere acceso il transistor dovrà avere una $V_{gs}>V_t$ e per essere in zona satura $V_{ds}>V_{gs}-V_t$ . 
 
-![](images/curva%20transistor.png)
+![](images/cb9de415782b652fd9310f33c5ca7752.png)
 
 ## Pmos 
 Duale con l'Nmos. Ma con alcune differenze. 
@@ -151,7 +151,7 @@ Memoria più veloci che abbiamo:
 
 Semplice bistabile: 
 
-![bistabile](images/bistabile.png)
+![bistabile](images/57a16c11c5fdd902c4091c16b8c1689c.png)
 
 Due e solo due stati, quando non applico nessun segnale $Q_n$ si 'ricorderà' $Q_{n-1}$ . 
 
@@ -163,7 +163,7 @@ Non riusciamo a unificare la memoria in un'unica grande memoria cache. Riduciamo
 - sram = celle composte da un bistabile e 2 mos selettori con un dimensionamento adeguato per leggere/scrivere in modo corretto.
 - dram = pass transistor! Composta da 1 condensatore e un mos di selezione (circuito semplice). Perchè **dynamic** RAM? Poichè ci sono parassitismi. Ci serve dunque un refresh nel'ordine dei ms (per quanto riguarda tecnologie implementative con precisione 22-40 nm).
 - 
-![DRAM](images/DRAM.png)
+![DRAM](images/58ec4929141a203ab5e2aaa37b1579a8.png)
 La semplice struttura si paga con una complessa gestione (gestione del refresh). Lettura distruttiva: la Big Line infatti si attacca quando deve leggere. Inoltre nel circuito ci sono anche parassitismi capacitativi che quindi introducono fenome di Charge Sharing tra i condensatori. 
 
 ### Esempi di porte logiche semplici semplici
@@ -173,7 +173,7 @@ Da notare bene la PDN (Pull Down Network) composta dagli nmos e la PUN (Pull Up 
 #### Inverter
 
 
-![Inverter](images/Inverter.png){width=50%}
+![Inverter](images/a739937cf11d8f82dff84a28f7906dd4.png){width=50%}
 
 
 #### Inverter Tristate
@@ -184,17 +184,17 @@ Logica TriState é qualsiasi logica con signal di Enable e Enable negato. Ció m
 - off 
 - HZ (High Impedance) .
 
-![Inverter TriState](images/Inverter%20TriState.png){width=50%}
+![Inverter TriState](images/37dc541c40870d5bfec4dbf54dc94a8e.png){width=50%}
 
 #### NOR
 
 
-![Nor](images/Nor.png){width=50%}
+![Nor](images/5212f6a3e97fcb106e6eac2015d69f52.png){width=50%}
 
 #### NAND
 
 
-![Nand](images/Nand.png){width=50%}
+![Nand](images/7aebdb822e2ed2210f9044ab2c5ac89d.png){width=50%}
 
 
 # Alimentatori 
@@ -217,14 +217,14 @@ $$V_m=V_{max}-V_{min}$$
 La bontà del alimentatore si valuterà infatti con il parametro del Ripple Factor. 
 $$RF=\frac{\Delta V _{ripple}}{V_m}$$
 
-![vripple](images/vripple.png)
+![vripple](images/28c556f2babe9feb1c546c5ce0092c91.png)
 
 # Amplificatore Operazionale
 L'amplificatore è un circuito in cui un segnale applicato attraverso una porta d'ingresso viene amplificato e fornito all'esterno attraverso una porta d'uscita. 
 
 Caratteristica fondamentale di un amplificatore è il suo guadagno. Il guadagno può essere identificato in diversi modi, a seconda della grandezza fisica d'interesse. Guadagno di corrente/tensione/transconduttanza(tensione in ingresso e corrente in uscita)/tranresistenza(corrente in ingresso e tensione di uscita). 
 
-![](images/amplificatori.png)
+![](images/02f989c31db8f7d1a984c5e03c837d51.png)
 
 ## Risposta in frequenza 
 Se l'amplificatore è lineare (cioè l'uscita varia linearmente rispetto al segnale d'ingresso) gode di una importante proprietà:
@@ -242,9 +242,9 @@ $$Z_L={sL}$$
 $$Z_r = R$$
 L'amplificatore operazionale viene controllato tramite una differenza di tensioni, per minimizzare i disturbi esterni: viene amplificato il segnale **differenziale**. Se una scoreggia perturba i segnali che scorrono nei fili, essendo i fili molto vicini tra loro, verranno perturbati da un segnale uguale e dunque la differenza tra i due sarà nulla. 
 
-![opamp](images/opamp.png)
+![opamp](images/d56d56dfc46130397782dd7cc7161cf4.png)
 
-![buffer opamp](images/buffer%20opamp.png)
+![buffer opamp](images/9abc3b81da6b312d16b9370f657cc10a.png)
 
 ## Non idealità 
 Abbiamo classificato le varie non idealità del amplificatore operazionale:
@@ -270,7 +270,7 @@ $$CMRR=\frac{A_D}{A_{CM}}=20log_{10}(\frac{A_D}{A_{CM}})$$
 - **Tensione di offset**: ponendo gli ingressi a massa ci si aspetterebbe una tensione di uscita nulla, ma ciò non accade. Inseriamo dunque un gen. di tensione su uno dei due morsetti. La tensione di offset è definita quindi come la tensione differenziale che deve essere applicata per portare la tensione di uscita dal valore di $V_{offset}$ a 0. A livello pratica, per essere calcolata, si applica un gen. di tensione per convenzione al morsetto +. Con il segno 'concorde' al morsetto, cioè ponendo il + del generatore verso il morsetto +. 
 - **Slew Rate**: $V_{out}=G*V_{in}$ non è immediato. La derivata di $V_{out}$, cioè la sua massima pendenza, satura allo Slew Rate. 
 
-![Slew Rate](images/Slew%20Rate.png)
+![Slew Rate](images/8f509b7a6000399c2b3a224b49c4f67b.png)
 
 # Retroazione 
 $$G_R(s)=G_{ID}(s)\frac{1}{1-\frac{1}{G_{loop}(s)}}$$
@@ -280,7 +280,7 @@ altrimenti posso o calcolare $G_{reale}$ o approssimare $G_{reale}\simeq -G_{loo
 
 In genere il nostro approccio sará quello di calcolare $G_{id}$, cioé considerando l'opamp ideale e poi calcolare il $G_{loop}$ con un metodo meccanico, cioé 'aprendo' il circuito subito dopo l'opamp e osservando l'impedenza che un ipotetico generatore di test vede. Poi in base alle esigenze scegliere come approssimare $G_{reale}$.
 
-![Pasted image 20220116183056](images/Pasted%20image%2020220116183056.png)
+![](images/0a7c1fa5c75d79c95e60abf5815bd9d8.png)
 
 
 ## Prodotto guadagno banda
@@ -299,7 +299,7 @@ Se $|G_{loop}|$ taglia asse a 0db:
 	- con 40 db/dec -> potrebbe essere instabile 
 	- con 60 db/dec -> sicuramente instabile 
 
-![opamp retroazione](images/opamp%20retroazione.png)
+![](images/59dce2aaf4b9ef6cdb07dc15deaf504a.png)
 
 # Acquisizione digitale
 Sappiamo che i circuiti digitali hanno performance e costi migliori dei circuiti analogici. Dunque nel mondo moderno utilizziamo convertitori analogici-digitali per portare fenomeni fisici nel mondo elettronico e digitali-analogici per fare il contrario.
@@ -307,7 +307,7 @@ Sappiamo che i circuiti digitali hanno performance e costi migliori dei circuiti
 ## DAC
 Digital-Amplitude converter. 
 
-![DACsemplice](images/DACsemplice.jpg)
+![](images/8643e8226d2661d9cff2b86093356d62.jpg)
 
 FSR = Full Scale Range e ci dice il range di tensione che abbiamo a disposizione per esprimere i nostri bit. 
 $$FSR=V_{dd} - V_{ss}$$
@@ -336,7 +336,7 @@ Non idealitá del DAC:
 
 - **DAC flash**
 
-![dac flash](images/dac%20flash.jpg)
+![](images/77fec7947c7d2855b6f738cc4f245edf.jpg)
 - **A resistenze pesate** : non é scalabile perché mi serve un'alta sensibilitá sulla costruzione delle resistenze. 
 - **Maglia a R-2R pesate**: bisogna costruire solo 2 tipi di resistenze!
 
@@ -387,20 +387,22 @@ Principali indici per caratterizzare gli ADC.
 - **FLASH: $T_{conv}=T_{CLK}$**
 
 
-![Tempi di conversione ADC](images/Tempi%20di%20conversione%20ADC.png)
+![](images/c41ee8a4001b393a7f9e0ead8c346cfc.png)
 
 ## Sample and Hold
 
-![Pasted image 20220120182941](images/Pasted%20image%2020220120182941.png)
+![](images/7d25127fff08f13a9a96b2bbc8664190.png)
 
 Gli Switch sono dei transfer-logic, con tutte le problematiche viste in digitale.  In questo caso devono portare in segnale analogico dall’ingresso alla capacità di hold. 
 
 ### Fase Sample
-![sample and hold reale](images/sample%20and%20hold%20reale.jpg)
+
+![sample and hold reale](images/ef17bf3898caa0636df70ee43e3f22e4.jpg)
 
 
 ### Fase Hold
-![sample and hold reale HOLD](images/sample%20and%20hold%20reale%20HOLD.jpg)
+
+![sample and hold reale HOLD](images/e98cb7cb8ab785cf87d90d558705ef32.jpg)
 
 All'esame saltano fuori un sacco di quesiti riguardo il giusto dimensionamento dei parametri del condensatore o dei tempi di hold/sample. 
 In genere i tempi di hold sono dipendenti dai tempi di conversione dell'adc e dalla capacità del condensatore. 
