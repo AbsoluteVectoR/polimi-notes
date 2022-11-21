@@ -47,7 +47,7 @@ while head is car
 
 bot is 'never ending computation' and all errors have value bot
 
-bisogna integrare con [impara haskell e mettilo da parte](impara%20haskell%20e%20mettilo%20da%20parte.md) 
+bisogna integrare con [impara haskell e mettilo da parte](../../../../../kb/impara%20haskell%20e%20mettilo%20da%20parte.md) 
 
 
 

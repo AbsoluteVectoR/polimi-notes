@@ -1,3 +1,5 @@
+[Sorting](../../../BSc(ITA)/Algoritmi%20e%20Principi%20dell'Informatica/src/Sorting.md)
+
 # Sorting 
 
 All the sorting algorithms we have seen so far are comparison sorts : they use comparisons to determine the relative order of elements.
@@ -16,11 +18,11 @@ So Heapsort and merge sort are asymptotically optimal comparison sorting algorit
 Since Counting Sort is not based on comparison, it can perform better results than others sorting algorithms. It is also stable: it preserves the input order. 
 
 
-# Quicksort randomized
+## Quicksort randomized
 
 The worst case occurs every time the 2 partition are not balanced. For example if the input is already sorted or reverse sorted, using the Lomuto's partition, the pivot will always on min or max element.  Because of this one of the two partition will be empty. In case of this unlucky event repeated all the times, we have $O(n^2)$ . We can 'keep away' this unlucky case randomizing the original vector or partition around a random pivot. 
 
-# Radix Sort
+## Radix Sort
 
 Radix sort is fast for large inputs but quicksort is still a viable option due to its locality that allows to better exploit the steep cache hierarchies of modern processors and result in better overall performances for most uses.
 
@@ -30,7 +32,7 @@ Correctness of Radix Sort proved by induction on digit position.
 Also we can split each word of $b$ in group of digits, so that we can divide a word in $r$ groups. The best way to divide each word is in $r=\log n$ where $n$ is the number of words. In this way, the total complexity is $T(n)=\Theta(dn)$ where $n$ is the number of words and $d$ the length of each word. 
 In practice, radix sort is fast for **large inputs**, as well as simple to code.  
 
-# Randomized selection algorithm
+## Randomized selection algorithm
 
 In statistics, the $k_{th}$ **order statistic** of a statistical sample is equal to its $k_{th}$-smallest value. 
 Quickselect is the best-known selection algorithm and it's basically Quicksort. 
@@ -46,7 +48,7 @@ Not so lucky case: $$T(n)=T \left ( \frac{9}{10}n \right) + \Theta (n) = \left\{
 Unlucky case: $$T(n)=T ( n -1) + \Theta (n) = \Theta (n^2)$$
 
 
-## Deterministic version
+### Deterministic version
  
 A possible way to guaranteed that the smallest partition is not empty we could group all the elements in groups of 5 each and find the median of each group. Then select as pivot the median of the median group. 
 ![](images/b83b5758326dbf857474ef911ba97678.png)

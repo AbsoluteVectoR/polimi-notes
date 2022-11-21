@@ -1,21 +1,3 @@
----
-title: "sdas"
-author: "Martino Piaggi"
-description: "prova per vedere come viene la descrizione. github.com/martinopiaggi/polimi-notes telegram: @martino_piaggi "
-date: "2021-2022"
-numbersections: true
-geometry: 
-- top=30mm
-- left=23mm
-- right=23mm
-- bottom=30mm
----
-
-\maketitle
-\newpage
-\tableofcontents
-\newpage
-
 # Introduction
 
 An algorithm is any well defined computational procedure that takes some value, or a set of values, as input and produces some value, or set of values, as output.
@@ -32,12 +14,15 @@ An algorithm is any well defined computational procedure that takes some value, 
 
 [Randomized data structures](Randomized%20data%20structures.md) 
 
-[[Dynamic programming]] 
+[Dynamic programming](Dynamic%20programming.md) 
 
 [Amortized Analysis](Amortized%20Analysis.md) 
 
-[Competitive analysis](Competitive%20analysis.md) 
+[Competitive analysis](Competitive%20analysis.md)  
 
 ---
 
 [Parallel Programming](Parallel%20Programming.md) 
+
+[Posix Thread](Posix%20Thread.md) 
+

@@ -1,4 +1,3 @@
-
 # RSA algorithm
 
 Possible application of the [Primality Test](Primality%20Test.md) this shit is public-key cryptosystems with public/secret keys cryptography. Basic description of public-key cryptosystems, fundamental for generating digital signatures:  

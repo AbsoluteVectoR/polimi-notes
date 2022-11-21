@@ -347,8 +347,6 @@ In real life generally is used a trade-off between the two approaches.
 
 # JEE
 
-## 10 11 22 
-
 JEE is a software framework. 
 A software framework facilitates and speeds the software development up through pre-built blocks. The framework itself forces some architectural styles, design patterns and design principles. Any library is also a software framework.
 An integrated collection of components, set of specifications, conventions and principles. Frameworks follow the open-closed design principle. 
@@ -361,7 +359,7 @@ JEE:
 
 - Enterprise JavaBean (EJB): server-side components that implement the main business logic of the application 
 - Java Persistence API (JPA): manages data base connectivity, relational data management, execution of queries. 
-- Java Message Service (JMS) common interface for message protocols to implement communication among distributed systems
+- Java Messaging Service (JMS) common interface for message protocols to implement communication among distributed systems
 - Java Transaction API (JTA): specifies standard interfaces between a transaction manager and the parties involved in a distributed transaction system
 
 JEE follows a multi-tier architecture:
@@ -378,6 +376,85 @@ Component = self-contained software units deployed onto the tiers of a EA.
 ![](images/eb5acc4a07332025fdeba1fefc5b4403.png)
 
 
+### Client tier
+
+Java applets are dead because security concerns (client tier). 
+
+When the UI is complex it's possible to build a client machine. 
+
+Application clients container 
 
 
+### Web tier 
 
+Servlets a small server-side Java application. HttpServlet acts as a middleware between request coming from a http client 
+
+Java Server Pages JSP are a ''going to death'' technology but still are not deprecated. 
+
+
+Modern web applications use oftenly this stack: 
+
+![](a710c4fc31121e95040b15f19231055c.png)
+
+The business and web tier expose APIs to interact with business functions Communication uses the HTTP protocol The web clients use the APIs (e.g., HTML/JavaScript frontend, using frameworks such as AngularJS, Backbone.js, React). 
+
+### Business tier 
+
+$$\begin{array}{|l|l|}
+\hline \text { Enterprise Bean Type } & \text { Purpose } \\
+\hline \text { Session } & \begin{array}{l}
+\text { Performs a task upon client requests; tasks } \\
+\text { typically invoked by the servlets }
+\end{array} \\
+\hline \text { Message-driven } & \begin{array}{l}
+\text { Acts as a listener for a particular messages, } \\
+\text { such as the Java Message Service API }
+\end{array} \\
+\hline
+\end{array}$$ 
+The session Bean is more used and it encapsulates the business logic that can be invoked programmatically by a client. Session beans are of three types: 
+
+- Stateful Session Beans: each stateful bean has only one client and there is a ''conversational state''. When the session bean terminates, it is no longer associated with that client. Example when you are buying a ticket. 
+- Stateless Session Beans: there is no maintain any kind of ''conversational state'' , there is just a reply to a a request. 
+- Singleton Session Beans: unique bean, generally used to keep system level configurations. 
+
+
+## Platform Mechanisms
+
+Injection mechanism simplify the code and decouples the creation/usage of existing components. 
+Two types:
+
+- Resource Injection: in a distributed environments it is used to access objects physically maintain by others machines/servers. There is a JNDI (Java Naming and Directory Interface) that provides mapping from an unique name to an instance. 
+- Dependency Injection: since we typically have object creation tightly coupled with their usage (the classical object creation in Java).  
+
+$$\begin{array}{|l|c|c|}
+\hline \space & \text { Resource Injection} & \text { Dependency Injection } \\
+\hline \text { Can Inject JNDI Resources Directly } & \text { Yes } & \text { No } \\
+\hline \text { Can Inject Regular Classes Directly } & \text { No } & \text { Yes } \\
+\hline \text { Resolves By } & \text { Resource Name } & \text { Type } \\
+\hline \text { Type safe } & \text { No } & \text { Yes } \\
+\hline
+\end{array}$$
+
+
+### JEE Resource Management 
+
+JEE servers achieve heavy workloads with good performance using two commons distributed systems: 
+
+- instance pooling: it consists in avoiding continue creation/deletion of objects using a ''pool'' . Mainly used for stateless and message-driven beans.
+- activation/passivation: the EJB container "passivates" a stateful bean when it is in "idle" state and "activates" (recover) it whenever it is needed. Mainly used for stateful beans and it's convenient since the time between two requests by the client is usually bigger than the service time. 
+
+## JWW APIs 
+
+Java Messaging Service (JMS) is composed by: 
+
+- JMS provider: exchanger 
+- JMS client: source and target components 
+- Messages: objects exchanged between components. 
+
+Messages: 
+
+- P2P (point-to-point): queues, senders and receivers. Senders put each message into a specific queue, receivers pull messages from the queue. Each message has at most one consumer. It's an asynchronous communication: senders are not forced to wait for answers. 
+- Publish/subscribe: components topics which groups messages, publishers and subscribers. Topics do not keep the messages, they only broadcast them to subscribers (so subscribers can only access the messages generated after their subscription). Each message can have multiple consumers. 
+
+ 

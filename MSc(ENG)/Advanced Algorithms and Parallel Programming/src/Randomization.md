@@ -1,3 +1,5 @@
+# Randomization 
+
 ## Las Vegas vs Montecarlo algorithms. 
 
 An algorithm is randomized if it is in some way based on some random variable. There are mainly 2 different types of randomized algorithms:
