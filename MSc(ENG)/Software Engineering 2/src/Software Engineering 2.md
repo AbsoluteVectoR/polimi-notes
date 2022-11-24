@@ -457,4 +457,61 @@ Messages:
 - P2P (point-to-point): queues, senders and receivers. Senders put each message into a specific queue, receivers pull messages from the queue. Each message has at most one consumer. It's an asynchronous communication: senders are not forced to wait for answers. 
 - Publish/subscribe: components topics which groups messages, publishers and subscribers. Topics do not keep the messages, they only broadcast them to subscribers (so subscribers can only access the messages generated after their subscription). Each message can have multiple consumers. 
 
- 
+# JPA
+
+JEE specification and API that simplifies the interaction with back-end databases providing support for relational/SQL/NoSQL databases. 
+JPA provides an object-oriented view of the DB tables (entities in the ER model): 
+
+- A table in the DB is represented by a class 
+- Table rows are instances of this class Columns map to fields (attributes) 
+- Relations between two tables are defined by properties that are common in the two classes 
+- Multiplicity of a relation is declared using annotations
+
+@Entity annotation is mandatory, @Id indicates the primary key 
+
+```Java
+@OneToOne   
+@JoinColumn ( name  = "mailID") 
+private MainlingAddress address;
+
+//in MainlingAddress there the attributed annotated as ''@Id" is called "mailID"
+````
+
+
+Entities are managed by EntityManager declared in this way: 
+````Java
+@PersistenceContext   
+private EntityManager em;  
+````
+and it can be used to make queries like for example this selection: 
+````Java
+public Product findProduct(int productid) {   
+	return em.find(Product.class, productid); 
+	}
+````
+
+Mainly there are two EM patterns: 
+
+- direct access
+- DAO (Data Access Object): better separation and better design for change. It works like an interface so that you can have for example multiple database backends that are encapsulated by the DAO. 
+
+## DD document 
+
+1) Introduction   
+	- Scope: reviews the domain and product, summary of main architectural choices
+	- Definitions, acronyms, abbreviations   
+	- Reference documents   
+	- Overview   
+2) Architectural Design   
+	- Overview: high-level components and interactions   
+	- Component view: components and interfaces description
+	- Deployment view: infrastructure description  
+	- Component interfaces: more detailed description of each interface
+	- Runtime view: dynamics of interactions  
+	- Selected architectural styles and patterns   
+	- Other design decisions
+3) User Interface Design: overview of UIs  
+4) Requirements traceability   
+5) Implementation, Integration and test Plan: order in which you plan to implement all the stuff   
+6) Effort Spent   
+7) References
