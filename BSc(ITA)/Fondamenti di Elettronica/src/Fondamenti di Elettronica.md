@@ -1,21 +1,4 @@
----
-title: Fondamenti di Elettronica
-author: "telegram/github/twitter: @martinopiaggi"
-date: "2021-2022"
-numbersections: true
-geometry: 
-- top=30mm
-- left=23mm
-- right=23mm
-- bottom=30mm
----
-
-\maketitle
-\newpage
-\tableofcontents
-\newpage
-
-# Ripasso elettrotecnica
+# Ripasso di Elettrotecnica
 
 Introduzione risoluzione di circuiti con condensatori e generatori di corrente/tensione con segnali a gradino. 
 Osservazione e studio della fase di regime ed iniziale, con conseguente transizione in cui si manifestano i fenomeni transitori. 
