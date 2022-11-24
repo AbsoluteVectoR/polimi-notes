@@ -3,3 +3,4 @@
 [03. Linear Programming](src/03.%20Linear%20Programming.md) 
 [04. Integer Linear Programming](src/04.%20Integer%20Linear%20Programming.md) 
 [05. Python Labs](src/05.%20Python%20Labs.md) 
+[06. List of all analyzed LP problems](src/06.%20List%20of%20all%20analyzed%20LP%20problems.md) 
