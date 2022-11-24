@@ -1,0 +1,82 @@
+OpenMP (Open Multi-Processing) is an API for multi-platform shared memory multiprocessing programming. 
+OpenMP multithreading is based on the fork-join paradigm where a master thread "forks" a specified number of slave threads. The programmers can themself define a schedule policy of the tasks. 
+Directives let the user spawn threads, assign tasks to them and manage synchronization. 
+Variables defined outside the parallel region are visible to all threads in the team while the variables defined inside are private to each thread unless otherwise specified.
+
+The main thread spawns a team of slave threads and becomes the master. Each thread runs a copy of the code in the block and all threads are joined by means of an implied barrier at the end of the block, only the master continues its execution beyond the parallel section. 
+It's also possible to implement nested parallelism. 
+
+
+Under the hood, your compiler might replace the diretive with another programming model, like for example Pthreads:
+````Cpp
+#pragma omp parallel num_threads(8) {...}
+
+\\ it might become: 
+for(i=0;i<8;i++){
+	pthread_create (...);
+}   
+for(i=0;i<8;i++){
+	pthread_join (...);
+}  
+````
+
+
+The number of threads in a parallel region is determined evaluating the following factors, in order of precedence: - 
+- Evaluation of the ```if``` clause: obviously if it's false, no threads will be instanced 
+- Value of the ```num_threads``` clause 
+- Use of the ```omp_set_num_threads()``` library function 
+- Setting of the ```OMP_NUM_THREADS``` environment variable
+- Implementation default, example the number of CPUs on a node.
+
+Basic parallel directives: 
+
+### DO/for loop 
+````C++
+#pragma omp for [clauses...]  
+<for loop>
+```` 
+
+Parallelize execution of iterations of the cycle with the assumption that iterations number are static (they are not modified during runtime) and there are no data dependencies in the loop. Most important clauses: ```schedule (type [ , chunk])``` describes how iterations of the loop are divided among the threads in the team:
+````Cpp
+#pragma omp for schedule (<policy>,[chunk]) [clauses...] 
+< for loop>   
+````
+
+### sections
+
+MIMD parallelism of the application. Closed sections of code that are divided among the threads and executed concurrently. 
+
+````CPP
+#pragma omp sections [clause...]   
+	#pragma omp section   
+		{ / * code section 1 * / }   
+	#pragma omp section   
+		{ / * code section 2 * / }
+````
+
+
+### single 
+
+````CPP
+#pragma omp single [clauses...]
+{ / * code section   * / } 
+
+#pragma omp master   
+{ / * code section   * / } 
+````
+
+```single``` specifies that a section of a code is executed only by a single thread; the choice on the thread is implementation dependent. 
+```master``` specifies that a section of a code is executed only by the master thread, no implied barrier at the end. 
+
+````cpp
+#pragma omp critical [(name)]   
+{ / * critical code section * / }
+````
+
+The critical directive specifies a region of code that must be executed by only one thread at time. The name is used as as global identifier. Different critical sections with the same name are considered as the same region. It's a concept very similar to the mutex stuff.
+
+````cpp
+#pragma omp barrier
+````
+
+It's a directive used to synchronized all threads. All threads will wait the others before proceed over the barrier. 

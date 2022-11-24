@@ -26,3 +26,6 @@ An algorithm is any well defined computational procedure that takes some value, 
 
 [Posix Thread](Posix%20Thread.md) 
 
+[OpenMP](OpenMP.md) 
+
+
