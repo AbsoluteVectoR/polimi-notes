@@ -1,23 +1,3 @@
----
-title: Economia e Organizzazione Aziendale
-author: 
-- "github.com/martinopiaggi/polimi-notes"
-- "telegram: @martino_piaggi"
-date: "2021-2022"
-numbersections: true
-geometry: 
-- top=30mm
-- left=23mm
-- right=23mm
-- bottom=30mm
----
-
-\maketitle
-\newpage
-\tableofcontents
-\newpage
-
-
 
 # L'impresa: obiettivi, tipologie e forme giuridiche 
 
