@@ -498,3 +498,12 @@ ghci> show [1,13..100]
 [1,13,25,37,49,61,73,85,97]
 -- [x,k..u] is a a list with upper bound "u" and a step of "x-k"  
 ````
+
+[Haskell/Indentation - Wikibooks, open books for an open world](https://en.wikibooks.org/wiki/Haskell/Indentation)
+
+[haskell - What are the benefits of currying? - Stack Overflow](https://stackoverflow.com/questions/12413495/what-are-the-benefits-of-currying)
+
+
+[Currying - HaskellWiki](https://wiki.haskell.org/Currying)
+
+[Haskell (linguaggio) - Wikipedia](https://it.wikipedia.org/wiki/Haskell_(linguaggio)#Algoritmo_di_ordinamento_generico_quicksort)

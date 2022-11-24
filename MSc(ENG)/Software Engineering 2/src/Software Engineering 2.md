@@ -2,7 +2,7 @@ https://docs.google.com/spreadsheets/u/1/d/e/2PACX-1vRbfc9IS3b-qYzE-EJUxXl0nKOWE
 
 # Introduction to software engineering
 
-Why software engineering is important? Software is everywhere and our society is now totally dependent on software-intensive systems.Society could not function without software.
+Why software engineering is important? Software is everywhere and our society is now totally dependent on software-intensive systems. Society could not function without software.
 
 
 ## Software lifecycles 
