@@ -4,7 +4,6 @@ https://docs.google.com/spreadsheets/u/1/d/e/2PACX-1vRbfc9IS3b-qYzE-EJUxXl0nKOWE
 
 Why software engineering is important? Software is everywhere and our society is now totally dependent on software-intensive systems. Society could not function without software.
 
-
 ## Software lifecycles 
 
 Waterfall lifecycle: As a reaction to the many problems: traditional “waterfall” model identify phases and activities force linear progression from a phase to the next. No returns (they are harmful), better planning and control, standardize outputs (artifacts) from each phase. Software like manufacturing. 
@@ -195,31 +194,6 @@ Tutte le volte che voglio indicare la cardinalitá uso ```#nome_variabile``` .
 
 
 let wants the ```=``` while the declarations want 
-
-# RASD 
-
-**Describe at most three between strengths and weaknesses you see in Sections 1 and 2. Be concise and clear. **
-
-(-) Since in the assignment is explicitly wrote that DREAMS will support three actors, I would have considered also the agronomists. This affect also the other sections, for example in the UML there is written under the diagram that Product-suggest is managed by agronomist, but this leads to incoherence since there is no agronomist considered in the rest of the document.
-
-(-) I would have considered a generic 'user unregistered' and not only 'unregistered farmer'. It isn't a wrong assumption itself (the Policy Makers could be already registered by the government) but if this is the motivation of the absence of 'user unregistered’, it must be written in the Domain Assumptions (it's not).
-
-(-) In the domain assumptions D7 and D9 are redundant.
-
-(-) In the Class UML diagram seems forced the use of 'composition relation' between User, Forum Thread and Help Request. I would have used an 'aggregation' relationship.
-
-**Describe at most three between strengths and weaknesses you see you see in Section 3. Be concise and clear. **
-
-(-) In ' 3.2.1 Mapping on goals section ' I would have inserted in the same page a recall of the goals and domain assumptions to increase the readability of the document. I don't think the requirements are a problem since they are in the previous page while the goals and the domain assumptions are in different pages and 'go back and forth between pages' makes a little bit difficult understanding the mapping.
-
-(+) The use cases are well described and very clear.
-
-(-) Since it's a RASD in 3.3 they should not write about different technological details such as CSS and JavaScript.
-
-**Describe at most three between strengths and weaknesses you see in Section 4. Be concise and clear. **
-
-(+) The Alloy part is very clear and well documented and surely the consideration of the dynamic model helps.
-
 
 # Software Design
 
@@ -515,3 +489,68 @@ Mainly there are two EM patterns:
 5) Implementation, Integration and test Plan: order in which you plan to implement all the stuff   
 6) Effort Spent   
 7) References
+
+
+
+# Verification and Validation 
+
+
+Verification along the entire development process, not just at the end. 
+Programs do not display a “continuous” behavior and verifying the function in one point does not tell us anything about other points. 
+
+- Human error: human action that results in software containing a defect or fault 
+- System error: bug, there is a difference between observed output and the theoretically value 
+- System Failure: Inability of a system or component to perform a required functionality 
+
+Two main approaches: 
+
+- ANALYSIS (usually, static technique) analytic study of properties 
+- TESTING (dynamic technique) experimenting with behavior of the products sampling behaviors find “counterexamples”
+
+TESTING
+
+- Randomly: random testing It is "blind", it does not "look for bugs” But it can be effective as it allows testers to generate and execute hundreds of thousand of test cases Using statistics it can be a powerful tool 
+- Systematically: systematic testing Use characteristics/structure of the software artifacts (e.g., code) – white-box testing Use information on the behavior of the system (e.g., specifications) – black-box testing
+
+
+
+The only good aspect of the random approach is that you can systematically generate a lot of cases, but this is not very effective without some good criterion. 
+The "reasoned approach" follow the same practices studied in [Software Engineering 1 course](../../../BSc(ITA)/Ingegneria%20del%20Software/Ingegneria%20del%20Software.md) in the bachelor, in the [testing](../../../BSc(ITA)/Ingegneria%20del%20Software/src/10.Testing.md) chapter: 
+- edge coverage criterion 
+- condition coverage criterion 
+- path coverage
+
+
+
+
+
+
+
+
+testing activities: 
+
+- Unit Testing Conducted by the developers themselves Aimed at testing sections of code
+- Integration Testing Aimed at exercising interfaces modules’ interactions. Possible integration testing could be: 
+	- Inconsistent interpretation of parameters or values 
+	- Violations of value domains, capacity, or size limits 
+	- Side effects on parameters or resources 
+	- Omitted or misunderstood functionality 
+	- Nonfunctional properties Example
+	- Dynamic mismatches
+
+How to achieve integration & testing Big bang (better to avoid it) Incrementally (facilitates bug tracking)
+
+An extreme and desperate approach: Test only after integrating all modules Does not require stubs/drivers/oracles The only excuse, and a bad one Minimum observability, diagnosability, efficacy, feedback High cost of repair
+
+Incrementally: it occurs while components are released. Applicable in different ways: 
+	- Top-down/Bottom-up
+	- Threads: A “thread” is a portion of several modules that together provide a uservisible program feature
+	- Critical modules: prioritize riskiest modules, identified by a risk assessment 
+
+
+Structural strategies (bottom up and top down) are  But thread and critical modules testing provide better process visibility, especially in complex systems.
+
+System testing is a complete test over the final system. It's a complex phase where you have to "simulate" the environment to make a correct "black-box" testing. The purpose is to identify bottlenecks and benchmarking with load testing. 
+
+
+scaffolging?

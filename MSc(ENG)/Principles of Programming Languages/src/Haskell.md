@@ -1,10 +1,29 @@
+In [computer science](https://en.wikipedia.org/wiki/Computer_science "Computer science"), a [programming language](https://en.wikipedia.org/wiki/Programming_language "Programming language") is said to have **first-class functions** if it treats [functions](https://en.wikipedia.org/wiki/Function_(programming) "Function (programming)") as [first-class citizens](https://en.wikipedia.org/wiki/First-class_citizen "First-class citizen"). This means the language supports passing functions as arguments to other functions, returning them as the values from other functions, and assigning them to variables or storing them in data structures.
+
+First-class functions are a necessity for the [functional programming](https://en.wikipedia.org/wiki/Functional_programming "Functional programming") style, in which the use of [higher-order functions](https://en.wikipedia.org/wiki/Higher-order_function "Higher-order function") is a standard practice. A simple example of a higher-ordered function is the _[map](https://en.wikipedia.org/wiki/Map_(higher-order_function) "Map (higher-order function)")_ function, which takes, as its arguments, a function and a list, and returns the list formed by applying the function to each member of the list. For a language to support _map_, it must support passing a function as an argument.
+
+ first-class functions ([Haskell](https://en.wikipedia.org/wiki/Haskell_(programming_language) "Haskell (programming language)")) compared to an imperative language where functions are second-class citizens ([C](https://en.wikipedia.org/wiki/C_(programming_language) "C (programming language)")) 
+
+In [programming language design](https://en.wikipedia.org/wiki/Programming_language#Design_and_implementation "Programming language"), a **first-class citizen** (also **type**, **object**, **entity**, or **value**) in a given [programming language](https://en.wikipedia.org/wiki/Programming_language "Programming language") is an entity which supports all the operations generally available to other entities. These operations typically include being passed as an argument, returned from a function, and assigned to a variable.
+
+
+We see `reverse` takes one argument, a list. It then outputs a list of the same type. It’s a **pure function**, so it cannot change the input list! Instead, it constructs a **completely new list** with the same elements as the input, only in reverse order. This may seem strange, but it has huge implications on our ability to reason about code.
+
+Each function might mutate the input list, so we don’t know what value is passed to the second and third functions. However, in Haskell, we know we will pass the **exact same list** as a parameter to each of these functions! This simple principle makes it **extremely easy to refactor** Haskell code.
+
+
+1.  Expressions in Haskell are immutable. They cannot change after they are evaluated.
+2.  Immutability makes refactoring super easy and code much easier to reason about.
+3.  To “change” an object, most data structures provide methods taking the old object and creating a new copy.
+
+
 [Starting Out - Learn You a Haskell for Great Good!](http://learnyouahaskell.com/starting-out#babys-first-functions) <- bel sito 
 [Haskell Online Compiler & Interpreter - Replit](https://replit.com/languages/haskell) 
 
 # Haskell 
 
 
-
+**
 Riguardare la parte in cui parla di dynamic typed languages based on hashtables . <- also python organizes stuff using hashtables
 
 
@@ -483,7 +502,6 @@ We couldn't have achieved this by just using Maybe as an applicative. If you t
 
 [A Fistful of Monads - Learn You a Haskell for Great Good!](http://learnyouahaskell.com/a-fistful-of-monads#getting-our-feet-wet-with-maybe)
 
-
 A value of type Maybe a represents a value of type a with the context of possible failure attached. A value of Just "dharma" means that the string "dharma" is there whereas a value of Nothing represents its absence, or if you look at the string as the result of a computation, it means that the computation has failed.
 
 allows us to feed a monadic value to a function that takes a normal one.
@@ -499,11 +517,88 @@ ghci> show [1,13..100]
 -- [x,k..u] is a a list with upper bound "u" and a step of "x-k"  
 ````
 
+
 [Haskell/Indentation - Wikibooks, open books for an open world](https://en.wikibooks.org/wiki/Haskell/Indentation)
 
 [haskell - What are the benefits of currying? - Stack Overflow](https://stackoverflow.com/questions/12413495/what-are-the-benefits-of-currying)
 
-
 [Currying - HaskellWiki](https://wiki.haskell.org/Currying)
 
 [Haskell (linguaggio) - Wikipedia](https://it.wikipedia.org/wiki/Haskell_(linguaggio)#Algoritmo_di_ordinamento_generico_quicksort)
+
+
+# Monad recap and lesson of 19/11 
+
+```(>>=)```  sequentially compose two actions, discarding any value produced by the first, like sequencing operators in imperative languages. 
+
+The do syntax is used to avoid the explicit use of ```(>>=)```  , this is like the begin structure in [Scheme](Scheme.md) . 
+
+````Haskell
+instance Monad  Maybe where: 
+(Just x) >>= k            -- k x  
+Nothing  >>= _           --Nothing 
+fail _                           --Nothing   
+````
+
+
+The list Monad is the foundation of list comprehension. 
+A monad is just an operation which gives the possibility of compose monadic actions one after the other. What is a monadic action? That actually depends on how you define your monad. 
+
+[(7) Learn Haskell for Plutus (Cardano ADA Contracts) Day 1 - YouTube](https://www.youtube.com/watch?v=5b-YG558ft8) watching this I realized that a variable is just a function with no parameters that return a fixed value. (in Haskell) 
+
+# The state monad
+
+We can do IO with it. We now define a general monad to do it: btw it is already available in the libraries ```Control.Monad.State```. 
+First of all, we define a type to represent our state:
+The idea is having a type that represent a computation with a state.  
+
+[algorithm - What is tail call optimization? - Stack Overflow](https://stackoverflow.com/questions/310974/what-is-tail-call-optimization) 
+
+
+## Why tail calls matter
+
+Recursive tail calls can be replaced by jumps. This is called "tail call elimination" and is a transformation that can help limit the maximum stack depth used by a recursive function, with the benefit of reducing memory traffic by not having to allocate stack frames. Sometimes, recursive function which wouldn’t ordinarily be able to run due to stack overflow are transformed into function which can.
+
+**Introducing Tail Call Elimination**
+
+The whole idea behind _Tail Call Elimination_ is avoiding function calls and stack frames as much as possible, since they take time and are the key difference between recursive and iterative programs. You read that right: Functional Languages are awesome, partly, because they found a way to call less functions.
+
+In order to understand the next part, it’s important to go back a step and understand what exactly is going on every time we do a function call.
+
+Because of the benefits, some compilers (like gcc) perform tail call elimination, replacing recursive tail calls with jumps (and, depending on the language and circumstances, tail calls to other functions can sometimes be replaced with stack massaging and a jump). In the following example, we will eliminate the tail calls in a piece of code which does a binary search. It has two recursive tail calls.
+
+dollar sign: https://www.youtube.com/watch?v=XZPgZE3LcNI 
+
+
+
+In Haskell, a monad is a way to structure computations. It is a way to define a sequence of steps that can be combined and reused. Monads are used to abstract away common patterns in code, making it easier to write and understand complex programs. A monad is a type of abstract data type that has a specific set of operations defined for it, such as bind and return. These operations allow you to combine monads and create new ones, making it easier to write programs in a functional style.
+
+
+In Haskell, you can make an instance of Applicative for a certain data type by defining how the Applicative's `pure` and `<*>` functions should behave for that type. Here is an example of how you might make an instance of Applicative for the `Maybe` data type:
+
+````Haskell
+instance Applicative Maybe where
+  pure = Just
+  Nothing <*> _ = Nothing
+  _ <*> Nothing = Nothing
+  Just f <*> Just x = Just (f x)
+  ````
+
+In this instance, the `pure` function simply wraps a value in a `Just` constructor, while the `<*>` function handles the different possible combinations of `Just` and `Nothing` values. This allows you to use Applicative methods, such as `<$>` and `<*>`, with `Maybe` values.
+
+Overall, making an instance of Applicative for a certain data type in Haskell involves defining the behavior of the `pure` and `<*>` functions for that type. This allows you to use Applicative methods with values of that type.
+
+
+
+
+# The State Monad
+
+
+
+https://wiki.haskell.org/All_About_Monads#Why_should_I_make_the_effort_to_understand_monads.3F
+
+
+
+
+check 
+https://www.youtube.com/watch?v=C2w45qRc3aU

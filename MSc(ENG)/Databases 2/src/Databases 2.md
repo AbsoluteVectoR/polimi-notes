@@ -569,3 +569,57 @@ But less efficient that hash structures for point queries. BUT: adding indexes t
 
 # B + 
 
+
+
+
+
+--- 
+
+# Ranking 
+
+
+This chapter is a first panorama view about a very important and popular topic in AI, ML and search engines. 
+
+
+Ranking is about an approximate query . It's an huge topic, this chapter is just the tip of the iceberg. 
+
+"quality" may be expressed with a variable degree of objectivity: it can be determined by a deterministic function or by a parametric function of some object attribute values weighted by parameters totally subjective or even unknown. 
+
+Because of this ranking is not sorting!! 
+
+The boundary is not absolute but sorting is something deterministic and not "opinionable", while ranking is based on preferences. 
+
+- rank aggregation: combination of multiple ranked list 
+- ranking according to a given quality
+- skyline: extract the subset of objects that are not dominated  by other one under multiple quality criteria
+
+Recommender System is a little bit different topic, because they use the propagation of preferences of user or multiple other users.
+
+https://en.wikipedia.org/wiki/Condorcet_method
+
+
+
+approaches to rank aggregation: distance between rankings. Matric approaches: kendall tau . Spearman's footrule
+
+
+Medrank algorithm which provides an approximation of the Footrule-optimal aggregation
+
+Medrank is not optimal but it's instance-optimal. 
+
+The actual subject of the exame are: 
+
+- top-k queries
+- skyline 
+
+top-k queries assuming a scoring function S which assigns to each tuple a numerical score. The naive approach is expensive since you have to sort a large amount of data.
+
+Simplest case of a top-k query is when there is only 1 relation. 
+
+top-k tuples = k-nearest neighbors 
+
+It is useful to consider distances rather than goodness scores since most approaches are 'distance-based'. 
+
+In classical ML most of the time you are searching the closest point to a given target point in metric space. 
+
+We in this chapter only deterministic algorithms and not statistical stuff. 
+
