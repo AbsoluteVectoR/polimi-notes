@@ -24,7 +24,7 @@ An algorithm is any well defined computational procedure that takes some value, 
 
 [09.Parallel Programming](src/09.Parallel%20Programming.md) 
 
-[11.Posix Thread](src/11.Posix%20Thread.md) 
+[11.PThread](src/11.PThread.md) 
 
 [12.OpenMP](src/12.OpenMP.md) 
 
