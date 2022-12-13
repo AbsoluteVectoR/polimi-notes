@@ -24,8 +24,12 @@ An algorithm is any well defined computational procedure that takes some value, 
 
 [09.Parallel Programming](src/09.Parallel%20Programming.md) 
 
+[10.Parallel Patterns](src/10.Parallel%20Patterns.md) 
+
 [11.PThread](src/11.PThread.md) 
 
 [12.OpenMP](src/12.OpenMP.md) 
+
+[13.MPI](src/13.MPI.md) 
 
 
