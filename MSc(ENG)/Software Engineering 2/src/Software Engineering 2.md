@@ -505,25 +505,30 @@ Programs do not display a “continuous” behavior and verifying the function i
 Two main approaches: 
 
 - ANALYSIS (usually, static technique) analytic study of properties 
+Based on identification of pairs of variables definitions and use. Typically used by compilers to check for possible errors and to make optimizations. Pessimistic approach, some problems may actually be false positives. 1. Derive control flow graph 2. Derive def and use sets for every node 3. Identify pairs of def-use Can be used to check if variable is guaranteed to be initialized or if variable is never used. Symbolic execution Values are expressed over symbols, executing statements computes new expressions. In case of branches, execution is performed only for a specified path.
+
+
+
 - TESTING (dynamic technique) experimenting with behavior of the products sampling behaviors find “counterexamples”
+
+Test case is a set of inputs of the system, along with the expected outcome (given hypothesis on state of the system). Test set is a set of test cases. Test cases can be generate randomly or systematically
 
 TESTING
 
 - Randomly: random testing It is "blind", it does not "look for bugs” But it can be effective as it allows testers to generate and execute hundreds of thousand of test cases Using statistics it can be a powerful tool 
 - Systematically: systematic testing Use characteristics/structure of the software artifacts (e.g., code) – white-box testing Use information on the behavior of the system (e.g., specifications) – black-box testing
 
+Unit testing 
+Conducted directly by the developers on single units of code. Component may not work in isolation, so drivers and stubs are needed (this is called scaffolding). Unit testing should be done as soon as possible. 
 
+Integration testing 
+Aimed to test interfaces and modules interactions. Example of integration faults are: • Inconsistent interpretation of parameters • Violations of capacity or size limits • Side effects on resources • Omitted or misunderstood functionality • Nonfunctional properties (e.g. performance issues) • Dynamic mismatches Integration plan is an important part of the test plan, which is part of the project plan. Big Bang testing All integration testing done at the end, no scaffolding required. Very bad, it has an high cost of repair (bugs found early cost less to be fixed). Incremental testing Integration testing is done while component are released, even at early stages.
 
 The only good aspect of the random approach is that you can systematically generate a lot of cases, but this is not very effective without some good criterion. 
 The "reasoned approach" follow the same practices studied in [Software Engineering 1 course](../../../BSc(ITA)/Ingegneria%20del%20Software/Ingegneria%20del%20Software.md) in the bachelor, in the [testing](../../../BSc(ITA)/Ingegneria%20del%20Software/src/10.Testing.md) chapter: 
 - edge coverage criterion 
 - condition coverage criterion 
 - path coverage
-
-
-
-
-
 
 
 
@@ -553,4 +558,162 @@ Structural strategies (bottom up and top down) are  But thread and critical modu
 System testing is a complete test over the final system. It's a complex phase where you have to "simulate" the environment to make a correct "black-box" testing. The purpose is to identify bottlenecks and benchmarking with load testing. 
 
 
-scaffolging?
+scaffolding?
+
+
+
+Black box testing a state machine 
+
+If the system acts like a state machine (there are states and transactions between them) there are 2 criterion of coverage: 
+
+- Coverage of States: the test cases must collectively reach all the states
+- Coverage of Transactions: the test cases must collectively reach all the transactions
+
+
+![](26533954f83a6e414abfa3bc10354f21.png)
+
+ANALYSIS 
+
+A family of techniques which don't involve the actual execution of software. Two main approaches:
+
+- Manual review: (informal) Review is an in-depth examination of some work product by one or more reviewers. Product is anything produced for the lifecycle, i.e., requirements, plans, design, code, test cases, documentation, manuals, everything! two types:
+	- Reviews between peers 
+	- Inspections: ?? 
+- Automated static analysis: a formal evaluation technique (systematic) in which software requirements, design, or code are examined in detail by a person or group other than the author to detect faults, violations of development standards, and other problems. Different types: 
+	- data flow analysis: focused on usage of variables and possible errors related to them. Typically used by compilers and note that in general not errors, but symptoms of possible errors: 
+	 - a variable is initialized when used
+	 - a variable assigned and then never used
+	 - a variable always get a new value before being used
+
+	to automate these checks? Derive the control flow diagram Identify points where variables are defined and used. Identify def-use pairs and analyse the pairs to answer to questions Using basically algorithms that explore the graph and check the variables. 
+	![](2ca70e3e95d57794ae58447bfba8c06b.png)
+
+
+
+# Project Management
+
+1. Initiating 
+2. Planning 
+3. Executing 
+4. Monitoring and controlling
+5. Closing 
+
+
+## Initiating 
+
+- Define the project
+- Define initial scope
+- Estimate cost and resources
+- Define the stakeholders
+
+
+## Planning
+
+- Scope management plan: defining, validating and controlling scope
+- **Schedule planning**: how schedule is developed, managed, executed and controlled 
+- **Cost and Effort estimation** 
+- Quality management plan: quality standards, quality assurance and control 
+- Change management plan 
+- Communication management plan 
+- **Risk management plan**: identify risks and plan responses
+
+### Schedule planning 
+
+Tasks are activities which must be completed to achive the project goal. Milestones are points in the schedule where progress can be assessed. Deliverables are work products delivered to the customer (e.g documents).
+
+Break down project in tasks 2. Define dependencies between tasks 3. Define lag time between dependencies (even negative). 
+
+Different dependencies: 
+
+![](9b00a51fec9751a7d36cc906707554b5.png) 
+
+The critical path is a sequence of tasks that runs from the start to the end of the project. Changes to task on the critical path changes the project finish date. A task is critical if it cannot float earlier or later.
+
+The dependencies can be: 
+
+- mandatory 
+- discretionary 
+- external: outside project's team control (ex: waiting 3rd party component completion before integration)
+- internal
+
+and also: 
+
+- Flexible: dynamic deadline (as soon as possible .. )
+- Partial flexible: bounded deadline (start no earlier than / finish no later than) 
+- Inflexible: (must occur on specific time interval)
+
+![](79db862e08aaf795460b4e33ef24cfaa.png) 
+
+GANTT chart
+
+It can be detailed and automatically generated: 
+
+![](ac7f7d2730e6879b8da3d7cf3e84a0b4.png)
+
+![](fc5bcfcc0a77808e08e77b4503e03649.png) 
+
+### Cost and Effort estimation
+
+Two types of techniques:
+
+- experience-based techniques: based on past projects
+- algorithmic cost modelling: estimation using mathematical function. 
+
+![](8072af089848d705f8eb18f0f7a6d49f.png) 
+
+There are specific techniques that can be used for product model and process model (mathematical description of the process): 
+
+- Function Points: based on a combination of program characteristics 
+- COCOMO II : another software cost estimation model widely used. It is based on a set of algorithms that use factors such as the size of the project and the level of reuse of existing software to estimate the cost and effort required to develop a new software. 
+
+### Risk Management 
+
+Risk is an uncertain event that if occurs can impact the achievement of objectives. 
+
+- Risk cause is the source of the risk:
+	![](0fc0d1544c1144eba25ac4eebaf2654e.png) 
+- Risk event: uncertain event that might follow the cause
+- Risk effect: how the objectives might be affected by the risk event 
+
+Steps for risk management: 
+
+1. Define roles and responsibilities 
+2. Identify possible risks with template: 
+	if ?situation? then ?consequence? for ?stakeholders? 
+3. Give probability (high, low, medium) to each risk 
+4. Develop a risk response plan 
+5. Define a budget for unknown risks 
+
+## Executing 
+
+The main steps of launching a project:
+
+- holding a kick-off meeting
+- acquiring and managing the project team and resources
+- acquiring equipment and materials
+- executing the plans
+- performing the work according to the Work Breakdown Structure (WBS)
+- controlling and monitoring the progress of the project.
+
+## Monitoring and controlling
+
+Monitoring involves collecting data on the current status of a project to identify any deviations from the initial plan. Controlling involves implementing corrective actions to get the project back on track. 
+Controlling can increase risks, but there are techniques:
+
+- fast-tracking: push tasks to occur faster than they would, no cost increase but higher risk)
+- crashing: shorten the tasks on the critical path by adding new resources (increasing costs) 
+
+If neither the schedule, budget, nor resources are negotiable, the scope of the project may need to be reduced by eliminating certain tasks.
+
+### Earned Value Analysis (EVA) monitoring methodology 
+
+Very simple and stupid methodology.
+
+
+# Closing
+
+- Ensure project acceptance 
+- Track project performance
+- Lessons learned
+- Close contracts
+- Release resources
