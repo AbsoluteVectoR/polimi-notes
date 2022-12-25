@@ -32,4 +32,6 @@ An algorithm is any well defined computational procedure that takes some value, 
 
 [13.MPI](src/13.MPI.md) 
 
+[14.Halide](src/14.Halide.md) 
+
 
