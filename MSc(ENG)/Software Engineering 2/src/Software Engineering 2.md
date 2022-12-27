@@ -135,65 +135,7 @@ associations are rapresented by lines. You can have association between actors a
 
 ![](images/5bfe46f9d7c3c3505fea247137fc4bfb.png)
 
-
-# 12 10 22 
-
-# Introduction to Alloy 
-
-Alloy is a formal notation for specifying models of systems and software.
-Alloy looks like a **declarative** OO language but also has a strong mathematical foundation.
-
-> everything is a relation here. 
-
-keywords: 
-
-logic quantifiers
-- lone : is a relation that says "at most one" . Example: 
-	wife: lone Woman
-set any number
-all 
-some at least one
-no 
-lone F holds for at most one x
-one
-
-- all
-- iff 
-	fact { all m: Man, w: Woman | m.wife = w iff w.husband = m }
-
-
-
-- sig : Signatures: define types and relationships. 
-sig Book {addr: Name -> lone Addr}
-
-- show() built in Alloy Analyzer to show us a visual rapresentation 
-- fun /functions reusable expressions
-- pred Predicates reusable expressions. True o False. Each line is in conjuction with the others.
-- assert Assertions: properties we want to check.
-- fact :  Facts: properties of models (constraints!) 
-- run PRED for #ENTITIES but exactly #PARTICULAR EXCEPTIONS
-
-operations: 
-
-- join construct: entity.(entity.attribute)
-- ^ transitive closure on binary relations 
-- * reflexive transitive closure on binary relations
-- tilde transpose operator always on binary relations
-
-### Esercizi per cazzi miei 
-
-Tutte le variabili si indicano 
-
-nome: cardinality type 
-
-nelle funzioni e predicati si dichiarano con [ nome: tipo ]
-
-You must remember that when you join, the result of the join is 'the header'
-
-Tutte le volte che voglio indicare la cardinalitá uso ```#nome_variabile``` . 
-
-
-let wants the ```=``` while the declarations want 
+[Alloy](Alloy.md) 
 
 # Software Design
 
