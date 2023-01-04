@@ -1,10 +1,15 @@
+[0.Impresa](src/0.Impresa.md) 
 
-[L'impresa obiettivi, tipologie e forme giuridiche](projects/polimi-notes/BSc(ITA)/Economia%20e%20Organizzazione%20Aziendale/src/L'impresa%20obiettivi,%20tipologie%20e%20forme%20giuridiche.md) 
+[1.Mercato](src/1.Mercato.md) 
 
-[Il mercato](projects/polimi-notes/BSc(ITA)/Economia%20e%20Organizzazione%20Aziendale/src/Il%20mercato.md) 
+[2.Contabilitá esterna bilancio](src/2.Contabilitá%20esterna%20bilancio.md) 
 
-[Valutazione investimenti](projects/polimi-notes/BSc(ITA)/Economia%20e%20Organizzazione%20Aziendale/src/Valutazione%20investimenti.md) 
+[3.Contabilitá interna](src/3.Contabilitá%20interna.md) 
 
-[Controllo di gestione](projects/polimi-notes/BSc(ITA)/Economia%20e%20Organizzazione%20Aziendale/src/Controllo%20di%20gestione.md) 
+[4.Decisioni di breve termine](src/4.Decisioni%20di%20breve%20termine.md) 
 
-[Organizzazione](projects/polimi-notes/BSc(ITA)/Economia%20e%20Organizzazione%20Aziendale/src/Organizzazione.md)
+[5.Valutazione investimenti](src/5.Valutazione%20investimenti.md) 
+
+[6.Controllo di gestione](src/6.Controllo%20di%20gestione.md) 
+
+[7.Organizzazione](src/7.Organizzazione.md)
