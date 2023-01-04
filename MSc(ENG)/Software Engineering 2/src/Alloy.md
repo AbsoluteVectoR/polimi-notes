@@ -91,15 +91,18 @@ Can be used anywhere a set or set expression is valid.
 
 There are also operators: 
 
-- Unary operators: 
-	- $\sim r$ (transpose/inverse) 
-	- $^{\wedge}r$ (positive transitive closure)
-	- $*r$ (reflexive transitive closure)
+- $\sim r$ (transpose/inverse) 
+````alloy
+assert nonSymmetric{  
+friends != ~ friends}
+````
+- $^{\wedge}r$ (positive transitive closure)
+- $*r$ (reflexive transitive closure)
 - Dot join: $a \cdot b$ combines two or more sets into a single set
 - Box join: ????? 
 - Restriction: $\mathbf{s}<: a$ (domain restriction), $a$ : $>$ s (range restriction) ???? 
 - Arrow product: $\mathrm{a} \rightarrow \mathrm{b}$ (Cartesian product)
-- Intersection: $a$ \& $b$ (intersection*)
+- Intersection: $a$ \& $b$ (intersection*) !!! NON sostituibile con "and"
 - Union, difference: $a+b$ (union* $), a-b($ difference* $)$
 - Expression quantifiers are also used in expressions and not only in relations: 
 	- some var : bounding-expr | expr  
@@ -126,21 +129,6 @@ let x = A + B, y = C + D |
 
 A predicate is like a programming function that returns a boolean. Predicates are mainly use to model constraints since they are reusable expressions.
 
-````alloy
-pred name {
-       constraint
-}
-
-pred foo[arg1: <> , arg2: <> ] {
-  expr
-}
-
-pred deleteBook [b, b': Book, n: Name] {  
-b'.addr = b.addr - n ->Addr  
-}
-
-````
-
 ## Functions 
 
 Alloy functions have the same structure as predicates but also return a value. Unlike functions in programming languages, they are always executed within an execution run, so their results are available in the visualisation and the evaluator even if you haven’t called them directly. This is very useful for some visualisations, although the supporting code can be disorienting when transitioning from “regular” programming languages.
@@ -155,6 +143,12 @@ fun name[a: Set1, b: Set2]: output_type {
 - fun /functions reusable expressions
 - pred Predicates reusable expressions. True o False. Each line is in conjuction with the others.
 - assert Assertions: properties we want to check.
+
+````alloy
+assert NoSelfFather {no m: Man | m = m.father}
+check NoSelfFather
+````
+
 - fact :  Facts: properties of models (constraints!) 
 - run PRED for #ENTITIES but exactly #PARTICULAR EXCEPTIONS
 
@@ -162,6 +156,12 @@ operations:
 
 - join construct: entity.(entity.attribute)
 - ^ transitive closure on binary relations 
+````alloy
+//restutuisci gli ancestori di p  
+fun ancestors [p: Person]: set Person {  
+p.^(mother+father)  
+}
+````
 - * reflexive transitive closure on binary relations
 - tilde transpose operator always on binary relations
 
@@ -192,15 +192,20 @@ A _command_ is what actually runs the analyzer. It can either find models that s
 - run: finds a matching example of the specifications. You will always use with a bound: `run {} for 42 but 4 Bananas, 2 Pears` .
 - run {constraint} : Finds an example satisfying the ad-hoc constraint in the braces.
 - check: **check** tells the Analyzer to find a counterexample to a given constraint. 
-````alloy
-assert no_self_loops {
-    no n: Node | self_loop[n]
-}
-
-check no_self_loops
-````
 
 
 useful links: 
 
 https://alloy.readthedocs.io/en/latest/language/expressions-and-constraints.html#expressions 
+
+https://alloytools.org/tutorials/online/index.html
+
+fact noCommonAncestors{  
+all p1: Man, p2: Woman |  
+p1 -> p2 in wife implies ancestors[p1] & ancestors[p2]=none  
+}  
+// -> vuol dire "cross product" o meglio, join (creo una relazione)  
+// & intersezione  
+//questo codice vuol dire che facendo il join tra tutte  
+//le donne e gli uomini non ci deve essere nessun antenato  
+//che può essere intersecato (ovvero è uguale)

@@ -112,8 +112,14 @@ The purpose of a RE activity is to:
 - to explore alternative ways to satisfy the goals, through alternative pairs (Req, Dom) such that Req and Dom always satisfy G 
 - to evaluate the strengths and risks of each alternative interfaces between the world and the machine
 
+Example G-A-R: 
 
-## Steps to solve first exercise typology 
+- Goal: The spectators want to see who is leading in all parts of the path.  
+- Assumption: The error of devices in measuring the position of athletes is lower than 1 mt.
+- Requirement: The system must display the position of the leading athlete on the map.
+
+
+## Steps to solve first exercise typology <- it's not "the first typology" FIX THIS WITH BETTER TITLE
 
 1) (Trivial) Give a name to the use case: the use case is the flow of events in the system
 2) Find the actors  
