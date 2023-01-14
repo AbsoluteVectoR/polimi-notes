@@ -391,8 +391,8 @@ Matteo
 
 
 
-L’espressione #t definisce vero, mentre #f definisce falso. In aggiunta qualsiasi altra
-cosa diversa #f é considerata vera rispetto alle forme condizionali come if, and, or o
+L’espressione \#t definisce vero, mentre \#f definisce falso. In aggiunta qualsiasi altra
+cosa diversa \#f é considerata vera rispetto alle forme condizionali come if, and, or o
 cond.
 
 
