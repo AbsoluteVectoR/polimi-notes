@@ -50,6 +50,7 @@ durability Recovery management
 
 
 
+
 # Concurrency 
 
 ![](images/d4689f4432c86086af9f5dd5171a564d.png)
@@ -152,9 +153,23 @@ As you know after 3 years of Computer Science when there are locks there are dea
 
 The two main rules to reduce the deadlocks frequency are: 
 
-- use Update Locks ????
+- use Update Locks 
 - use Hierarchical Locks
+
 We we will see a super simple algorithm to detect cycles in wait-for-graph, in particular in a "distributed systems" environment: Obermark's algorithm. 
+
+
+UPDATE LOCKS ADDENDUM 
+
+Clearly deadlocks are possible in the presence of UL. Indeed,
+UL only makes deadlock less likely, by preventing one type of
+(very frequent) deadlock, due to update patterns, when two
+transactions compete for the same resource (e.g., r,(X) 15(X)
+w,(x) w,(x)). If we consider two distinct resources X Y, and
+two transactions that want to access them in this order:
+$$r1(X) \space r2(Y) \space w1(Y) \space w2(X)$$
+It is likely that they end up in deadlock, especially if the system on which they run applies 2PL. UL is totally irrelevant here, because there is no update pattern.
+
 
 ### Obermark's algorithm
 
@@ -164,9 +179,35 @@ The Obermark's algorithm allows for better performance and it's super simple. Th
 > Continue to check the chain of the transaction dependencies and locks??? Until in one of the iteration you find a loop (deadlock). 
 
 
+Schedule is a kind of log while the scheduler is a component that accepts or rejects operations requested by transactions. 
+
+
+CSR implies VSR ! 
 
 
 # Triggers 
+
+Main paradigm: 
+
+````
+EVENT -> CONDITION -> ACTION
+````
+
+where: 
+
+- `EVENT`: 
+
+````sql
+create trigger <trigger_name>
+{before | after}
+{insert | delete | update [of <column>]} on <table>
+[referencing (to put aliases on old, new, etc)]
+[for each {row | statement}]
+[when condition]
+BEGIN
+[my action]
+END
+````
 
 •	Use triggers to guarantee that when a specific operation is performed, related actions are performed
 •	Do not define triggers that duplicate features already built into the DBMS. For example, do not define triggers to reject bad data if you can do the same checking through aeclarative integrity constraints 
@@ -299,6 +340,23 @@ All relationships in JPA are unidirectional, the only way to make bidirectional 
 
 Sometimes @ManyToOne relationship are not necessary and they can be mapped only for consistency. 
 
+
+"Select with possible NULL value and IF condition in a trigger" pattern: 
+
+````sql
+DECLARE X AS INTEGER
+IFNULL(<SELECT_QUERY_HERE>, 0) INTO X
+
+IF (X<>0)
+THEN
+	\\
+ELSE
+	\\
+ENDIF;
+````
+
+
+
 # JPA exercises 
 
 DB del 17/10 praticamente ho guardato 1 quarto della spiegazione ... c'è da leggere i riassunti e sistemare questo. 
@@ -407,6 +465,29 @@ private List<Order> orders; // owner of the relation
 Using this solution you will have (on DB side) a rich table with 3 columns. An alternative solution to this is to make manually a 'bridge entity' . 
 
 You have to use the keyword ```@Embeddable``` (over the class) and a ```@EmbeddedId``` over the primary key of this new bridge entity, which will also contain the ID of the other two entities using ```@MapsId("id1")``` before  ```@JoinColumn(name = "id1")``` and ```@MapsId("id2") ... ``` .  
+
+
+!!!!!
+
+
+@ManyToOne 
+
+On "many side" we use the Foreign Key . 
+On "one side" we use the name of the Java Attribute 
+
+
+Ownership:
+
+- manytomany 
+- onetoone
+
+the owner in these cases is not relevant. 
+
+
+
+
+
+
 
 
 # Physical DB
@@ -637,12 +718,6 @@ Metric Approach:
 
 ## Top-k 
 
-Resume:
-
-1) Max -> b_0 algorithm
-2) No know scoring function -> FA algorithm
-3) Know scoring function -> TA algorithm
-4) no random access -> NRA algorithm
 
 
 ### MedRank 
@@ -675,62 +750,109 @@ A top-k join query is a type of database query that combines rows from two or mo
 This algorithm can be used in various applications such as Information Retrieval, Recommender Systems, and Data Mining.
 
 Input: integer k > 1, ranked lists R1, ..., Rn
-
 Output: the top-k objects according to the MAX scoring function
 
-1.  Make k sorted accesses on each list and store objects and partial scores in a buffer
+1. Make exactly $k$ sorted accesses on each list and store objects and partial scores in a buffer
 2.  For each object in the buffer, compute the MAX of its (available) partial scores
-3.  Return the k objects with the highest scores.
-
-
-General scoring function 
+3.  Return the k objects with the highest scores. 
 
 ### FAGIN's algorithm 
 
-1.  Extract the same number of objects by sorted accesses in each list until there are at least k objects in common
-2.  For each extracted object, compute its overall score by making random accesses wherever needed
-3.  Among these, output the k objects with the best overall score.
+1. Make $k$ sorted accesses in each list until there are at least $k$ objects in common
+2. For each extracted object, compute its overall score by making random accesses wherever needed
+3. Take the $k$ objects with the best overall score from the buffer
 
 ![](426eee0feaa87d17de14a0467a442fc9.png)
-
-It involves extracting a set of candidate objects from each ranked list, combining them into a single candidate set, computing the score for each object using a monotone function, and finally selecting the top-k objects with the highest scores as the final result. It's useful in many applications such as Information Retrieval, Recommender Systems, and Data Mining, but it can be computationally expensive with big data sets.
 
 
 ### Threshold algorithm
 
-1.  Do a sorted access in parallel in each list $R_$1, ..., R_n$
-2.  For each object, do random accesses in the other lists and extract the score $S$
-3.  Compute overall score $S(s1, ..., sn)$. If the value is among the $k$ highest seen so far, remember the object
-4.  Let $s_i$ be the last score seen under sorted access for list $i$
-5.  Define threshold $T=S(s1, ..., sn)$
-6.  If the score of the $k_{th}$ object is worse than $T$, go to step 1
-7.  Return the current top-k objects
+1. Do a sorted access in parallel in each list $R_1$ ... $R_n$
+2. Don´t wait to do random access like FA, but do immediately and extract the score $S$
+3. Define threshold $T=S(s1, ..., sn)$, where $s_i$ is the last value seen under sorted access for list $i$ 
+4. If the score of the $k_{th}$ object is worse than $T$, go to step 1 otherwise return the current top-k objects
 
-It's important to note that this algorithm appears to be a variation of the Threshold Algorithm (TA) which is a variation of Fagin's algorithm. TA is an instance-optimal algorithm among all algorithms that use random and sorted accesses, which means that it is guaranteed to find the best possible results among all algorithms that use the same kind of accesses. However, it's not guaranteed to be optimal among all algorithms in general. The stopping criterion of the algorithm depends on the scoring function used, and the authors of this algorithm received the Gédel prize in 2014 for the design of innovative algorithms.
+TA is an instance-optimal algorithm, which means that it is guaranteed to find the best possible results among all algorithms that use the same kind of accesses, but it's not guaranteed to be optimal among all algorithms in general. The authors of this algorithm received the Gédel prize in 2014 for the design of innovative algorithms.
 
 ![](4258c89ef73aae5c6da7368377efbee1.png)
 
 
-
 ### NRA algorithm 
 
-It refers to a variation of Fagin's algorithm that uses no random access. Instead of using random accesses to extract the score of each object, it uses only sorted accesses over the lists. It's useful when random accesses are not allowed, expensive or not feasible.
-
-
-
-The problem with ranking queries: need to specify scoring function which means to find the "magic" coefficients. 
-
-$S^+(o')$ max value among seen objects
-$S(\tau)$ the score of the threshold point $\tau$  
-
-Input: integer $k \ge 1$, a monotone function $S$ combining ranked lists &,, ..., 8, Output: the top-k objects according to $S$
+NRA uses only sorted accesses over the lists. 
 
 1.  Make a sorted access to each list
 2.  Store in $B$ each retrieved object $o$ and maintain $S(o)$ and $S^*(o)$ and a threshold $r$
 3.  Repeat from step 1 as long as $S^-(B[k]) < \max \{ \max \{ S^+(B[i]), i> k \}, S(\tau) \}$ 
 
+| Algorithm | scoring function | Data access | Notes |
+| :--- | :---: | :---: | :---: |
+| B_(0) | MAX | sorted | instance-optimal |
+| FA | monotone | sorted and random | cost independent of scoring function |
+| TA | monotone | sorted and random | instance-optimal |
+| NRA | monotone | sorted | instance-optimal, no exact scores |
+
 
 ## Skyline 
+![](fed5beae815a79a7bf11963da81d2571.png)
+
+The skyline is the set of all top 1 objects according to some monotone scoring function. 
+
+A point is int n-skyband if it is dominated by less than n tuples. (skyline is 1-skyband since all objectes are not dominated (they are technically dominated by less than 1 object)). 
+
+
+A tuple t is in the skyline iff it is the top-1
+result w.r.t. at least one monotone scoring
+function
+– i.e., the skyline is the set of potentially optimal
+tuples!
+• Skyline ≠ Top-k query
+– there is no scoring function that, on all possible
+instances, yields in the first k positions the skyline
+points
+– based on the notion of dominance
 
 
 
+|  | Ranking queries | Skyline queries |
+| :--- | :---: | :---: |
+| Simplicity | No | Yes |
+| Overall view of interesting results | No | Yes |
+| Control of cardinality | Yes | No |
+| Trade-off among attributes | Yes | No |
+
+Block Nested Loop (BNL)
+
+Input: a dataset D of multi-dimensional points
+Output: the skyline of D
+1. Let Window = empty
+2. for every point p in D
+	1. if p not dominated by any point in theWindow
+		1. remove from the Window the points dominated by p
+		2. add p to W
+3. return W
+
+Computation is O(n2) where n=|D|
+• Very inefficient for large datasets
+
+
+Skylines – Sort-Filter-Skyline (SFS)
+
+Input: a dataset D of multi-dimensional points
+Output: the skyline of D
+1. Let S = D sorted by a monotone function of D’s attributes
+2. Let W = empty
+3. for every point p in S
+	1. if p not dominated by any point in W
+		1. add p to W
+4. return W
+
+
+Pre-sorting pays off for large datasets, thus SFS performs much
+better than BNL
+– If the input is sorted, then a later tuple cannot dominate any previous
+tuple!
+• Will never compare two non-skyline points
+• Can immediately output any points in W as part of the result
+
+But still O(n2)
