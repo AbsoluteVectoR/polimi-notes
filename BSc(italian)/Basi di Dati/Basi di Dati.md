@@ -2,7 +2,7 @@
 [01.Algebra Relazionale](src/01.Algebra%20Relazionale.md)
 [02.Calcolo Relazionale](src/02.Calcolo%20Relazionale.md)
 [03.Datalog](src/03.Datalog.md)
-[04.Structured Query Language](src/04.Structured%20Query%20Language.md)
+[04.SQL](src/04.SQL.md)
 [05.Transazione](src/05.Transazione.md)
 [06.Progettazione](src/06.Progettazione.md)
 [07.Progetto concettuale e logico](src/07.Progetto%20concettuale%20e%20logico.md)
