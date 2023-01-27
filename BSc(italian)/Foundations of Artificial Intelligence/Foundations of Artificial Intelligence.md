@@ -10,6 +10,3 @@
 [04.Constraints Satisfaction Problem (CSP)](src/04.Constraints%20Satisfaction%20Problem%20(CSP).md)
   
 [05.Logic Based AI](src/05.Logic%20Based%20AI.md)
-
-
-
