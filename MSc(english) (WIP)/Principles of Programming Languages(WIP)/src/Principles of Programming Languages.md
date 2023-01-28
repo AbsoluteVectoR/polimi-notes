@@ -136,7 +136,6 @@ In simpler terms, in dynamic scoping, the compiler first searches the current bl
 Let is not assignment, is creating a new variable. 
 Let is used to bind variables.
 
-
 ```` Scheme
 (let ((x 3) 
 	(y 2)) ;It's parallel 
