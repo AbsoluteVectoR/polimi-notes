@@ -37,7 +37,7 @@ Each function might mutate the input list, so we don’t know what value is pass
 Riguardare la parte in cui parla di dynamic typed languages based on hashtables . <- also python organizes stuff using hashtables
 
 
-Call by need ... a optimized version of called by name evaluation . (remember that [Scheme](Scheme.md) is call by value)
+Call by need ... a optimized version of called by name evaluation . (remember that [00.Scheme](00.Scheme.md) is call by value)
 
 
 [Template (C++) - Wikipedia](https://en.wikipedia.org/wiki/Template_(C%2B%2B)) and generics in java ... here in Haskell we have type parameter
@@ -541,7 +541,7 @@ ghci> show [1,13..100]
 
 ```(>>=)```  sequentially compose two actions, discarding any value produced by the first, like sequencing operators in imperative languages. 
 
-The do syntax is used to avoid the explicit use of ```(>>=)```  , this is like the begin structure in [Scheme](Scheme.md) . 
+The do syntax is used to avoid the explicit use of ```(>>=)```  , this is like the begin structure in [00.Scheme](00.Scheme.md) . 
 
 ````Haskell
 instance Monad  Maybe where: 
@@ -612,3 +612,21 @@ https://wiki.haskell.org/All_About_Monads#Why_should_I_make_the_effort_to_unders
 
 check 
 https://www.youtube.com/watch?v=C2w45qRc3aU
+
+
+he “lazy” (call-by-need) rule: Evaluate the argument the first time  
+it’s used. Save answer for subsequent uses.  
+• Asymptotically it’s the best  
+• But behind-the-scenes bookkeeping can be costly  
+• And it’s hard to reason about with effects  
+– Typically used in (sub)languages without side effects – we  
+encountered it in Haskell
+
+Memoization
+
+Streams  
+• A stream is an “infinite” list — you can ask for the rest of it as  
+many times as you like and you’ll never get null.  
+• The universe is finite, so a stream must really be an object that  
+acts like an infinite list.  
+• The idea: use a function to describe what comes next.
