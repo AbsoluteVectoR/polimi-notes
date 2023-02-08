@@ -1,3 +1,11 @@
+-   Erlang
+    
+    -   [Learn you some Erlang](http://learnyousomeerlang.com/content)
+    -   [Main Erlang site, with the standard implementation and documentation](http://www.erlang.org/)
+    -   [Elixir, an Erlang VM-based language](http://elixir-lang.org/)
+    -   [LFE, an Erlang-based Lisp](http://lfe.io/)
+
+
 Pattern matching is more expressive than Haskell. 
 
 Concurrent part is the most important part of the language. 

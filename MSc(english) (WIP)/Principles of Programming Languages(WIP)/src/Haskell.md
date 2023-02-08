@@ -1,3 +1,13 @@
+-   Haskell
+    
+    -   [Learn you a Haskell...](http://learnyouahaskell.com/chapters)
+    -   [Real World Haskell](http://book.realworldhaskell.org/)
+    -   Suggested implementation: [The Glorious Glasgow Haskell Compiler](http://www.haskell.org/ghc/)
+    -   [Standard](http://www.haskell.org/haskellwiki/Language_and_library_specification)
+    -   [A gentle introduction to Haskell](http://www.haskell.org/tutorial/)
+    -   [Haskell Cheatsheet](http://cheatsheet.codeslower.com/)
+    -   [All about monads](http://www.haskell.org/haskellwiki/All_about_monads) (§)
+
 In [computer science](https://en.wikipedia.org/wiki/Computer_science "Computer science"), a [programming language](https://en.wikipedia.org/wiki/Programming_language "Programming language") is said to have **first-class functions** if it treats [functions](https://en.wikipedia.org/wiki/Function_(programming) "Function (programming)") as [first-class citizens](https://en.wikipedia.org/wiki/First-class_citizen "First-class citizen"). This means the language supports passing functions as arguments to other functions, returning them as the values from other functions, and assigning them to variables or storing them in data structures.
 
 First-class functions are a necessity for the [functional programming](https://en.wikipedia.org/wiki/Functional_programming "Functional programming") style, in which the use of [higher-order functions](https://en.wikipedia.org/wiki/Higher-order_function "Higher-order function") is a standard practice. A simple example of a higher-ordered function is the _[map](https://en.wikipedia.org/wiki/Map_(higher-order_function) "Map (higher-order function)")_ function, which takes, as its arguments, a function and a list, and returns the list formed by applying the function to each member of the list. For a language to support _map_, it must support passing a function as an argument.
