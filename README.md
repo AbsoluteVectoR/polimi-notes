@@ -1,3 +1,6 @@
+The author assume no responsibility for the
+correctness of all of the notes. These documents were created in the days of crazy and desperate study and did not aspire to be perfect at all. If you have corrections or additions open an issue or send a pull request.
+
 Should I place all the PDFs in releases?
 
 The content of all the spaces in this collection has been prepared by a student and may contain errors or omissions. It is intended to be used as a supplement to, and not a substitute for, the course material provided by the professors. The author and publisher of these notes makes no warranty of any kind, express or implied, with regard to the accuracy or completeness of these materials.
