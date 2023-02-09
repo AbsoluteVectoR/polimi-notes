@@ -1,5 +1,5 @@
-
+[00.Course Intro](00.Course%20Intro.md) 
 [00.Scheme](00.Scheme.md) 
-[Haskell](Haskell.md) 
-[Erlang](Erlang.md) 
-[Seminar on Rust](Seminar%20on%20Rust.md) 
+[01.Haskell](01.Haskell.md) 
+[02.Erlang](02.Erlang.md) 
+[03.Seminar on Rust](03.Seminar%20on%20Rust.md) 
