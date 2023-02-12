@@ -1,0 +1,299 @@
+
+lun :: [a] -> Integer
+lun [] = 0
+lun (x:xs) = 1 + lun xs
+
+fuck :: Integer -> Integer
+fuck 0 = 1
+fuck n = n*fuck(n-1)
+
+rev :: [a] -> [a]
+rev [] = []
+rev (x:xs) = rev (xs) ++ [x]
+
+data Human = Woman | Man
+
+instance Show Human where 
+    show Woman = "donnaa"
+    show Man = "uomooo"
+
+instance Eq Human where
+    Man == Man = True
+    Woman == Woman = True
+    _ == _ = False
+
+
+data Point = Point Float Float deriving (Show,Eq)
+
+getx (Point a _) = a
+gety (Point _ a) = a
+
+euler :: Point -> Point -> Float
+euler (Point x1 y1) (Point x2 y2) = 
+    let dx = x1 - x2 
+        dy = y1 - y2 
+    in sqrt ( dx*dx + dy*dy )
+
+
+zippa :: [a] -> [b] -> [(a,b)]
+zippa [] _ = []
+zippa _ [] = []
+zippa (x:xs) (y:ys) = (x,y) : zippa (xs) (ys)
+
+isEven :: Integer -> Bool
+isEven x = ((mod x 2) == 0)
+
+filtra :: (a -> Bool) -> [a] -> [a]
+filtra _ [] = []
+filtra x (u:s) 
+    | x u = u : filtra x s
+    | otherwise = filtra x s 
+
+-- foldable stuff
+
+somma xs = foldl (\acc x -> acc + x) 0 xs
+
+isThere y ys = foldl (\acc x -> if x == y then True else acc) False ys
+
+fucktransform xs = [(++"fuck"),(++"test")] <*> xs
+
+foo x = do  
+    let y = x -1
+    show y
+    let x = x + 1 
+    show (x - y)
+
+bmi :: Float -> Float -> String 
+bmi w h 
+    | calc <= 18.5 = "Underweight"
+    | calc <= 25.0 ="Normal"
+    | calc <= 30.0 = "Overweight"
+    | otherwise = "Obese"
+    where calc = w/h^2
+
+--SORTING
+
+find :: Int -> [Int] -> Int 
+find elem array 
+    | head array == elem = 0
+    | otherwise = 1 + (find elem (tail array))
+
+replace :: Int -> Int -> [Int] -> [Int]
+replace elem pos array 
+    | pos == 0 = [elem] ++ (tail array)
+    | otherwise = [head array] ++ (replace elem (pos-1) (tail array)) 
+
+swapByValue :: Int -> Int -> [Int] -> [Int]
+swapByValue x y array = do 
+    let posX = (find x array)
+    let posY = (find y array)
+    replace y posX (replace x posY array) 
+    
+swap :: Int -> Int -> [Int] -> [Int]
+swap posX posY array = do 
+    let x = (array!!posX)
+    let y = (array!!posY)
+    replace y posX (replace x posY array) 
+
+-- remember that head/last turns a single element, not a list of a single element
+
+selectionSort x
+    | length x == 0 = []
+    | otherwise = do 
+        let y = swapByValue (head x) (minimum x) x
+        [head y] ++ (selectionSort (tail y))
+
+-- not in place Quicksort version:
+
+middle array= array!!((length array) `div` 2)
+lower array = filter ( < middle array) array
+greater array = filter ( > middle array) array
+
+fakeQuicksort array 
+    | length array == 0 = []
+    | otherwise = (fakeQuicksort (lower array)) 
+    ++ [middle array]
+    ++ (fakeQuicksort (greater array))
+
+
+-- QUICKSORT IN PLACE, probably not "enough functional"
+
+splitr pos array = 
+    if pos>=0  
+        then splitr (pos-1) (tail array) 
+        else array
+
+splitl pos array = splitlHelper ((length array) -1 -pos) array
+
+splitlHelper pos array = 
+    if pos>=0  
+        then splitlHelper (pos-1) (init array) 
+        else array
+
+pivoting i j (array, pivotPos) 
+    | length array <= 1 = (array, pivotPos)
+    | i>j = ((swap j pivotPos array), j)
+    | x <= pivot  = pivoting (i+1) j (array, pivotPos)
+    | y > pivot = pivoting i (j-1) (array, pivotPos)
+    | pivotPos == i = pivoting (i+1) (j-1) ((swap i j array), j) 
+    | pivotPos == j = pivoting (i+1) (j-1) ((swap i j array), i) 
+    | otherwise = pivoting (i+1) (j-1) ((swap i j array), pivotPos) 
+    where 
+        x = array!!i
+        y = array!!j
+        pivot = array!!pivotPos
+
+quicksort array = do 
+    let (pivoted,pivotPos) = pivoting 0 ((length array)-1) (array,((length array)`div`2))
+    if (length pivoted <= 2) 
+        then pivoted
+        else do 
+            let left = splitl pivotPos pivoted
+            let right = splitr pivotPos pivoted
+            (quicksort left) ++ [pivoted!!pivotPos] ++ (quicksort right)
+            
+--exercises of 18/11 
+
+-- define data Listree
+
+data Listree a = Cons a (Listree a) | Null | Branch (Listree a) (Listree a) deriving (Show,Eq)
+
+instance Functor Listree where 
+    fmap f Null = Null 
+    fmap f (Cons x t) = Cons (f x) (fmap f t)
+    fmap f (Branch t1 t2) = Branch (fmap f t1) (fmap f t2)
+
+instance Foldable Listree where 
+    foldr f z Null = z 
+    foldr f z (Cons x t) = f x (foldr f z t)
+    foldr f z (Branch t1 t2) = foldr f (foldr f z t2) t1 --look very well this
+
+--- STARTING WITH SOME MONADS
+{-
+apply42 f x = 
+    let s = f x
+    in if s > 42 
+        then Just s 
+        else Nothing
+
+sequence42do x = do
+    x1 <- apply42 (+12) x
+    x2 <- apply42 (\x -> x-6) x1
+    x3 <- apply42 (*2) x2
+    return x3
+
+sequence42doDesugared x =
+apply42 (+12) x
+>>= (\x1 -> apply42 (\x -> x-6) x1
+>>= (\x2 -> apply42 (*2) x2
+>>= (\x3 -> return x3)))
+-}
+
+type Log = [String]
+data Logger a = Logger a Log
+
+instance (Eq a) => Eq (Logger a) where
+    (Logger x _) == (Logger y _) = x==y
+
+instance (Show a) => Show (Logger a) where
+    show (Logger a l) = show a ++ "| Log: " ++ show l
+
+instance Functor Logger where 
+    fmap f (Logger x l) = Logger (f x) l
+
+instance Applicative Logger where
+    pure x = Logger x []
+    (Logger f fl) <*> (Logger x xl) = Logger (f x) (fl ++ xl)
+    
+instance Monad Logger where  -- remember that f is a function that 
+    (Logger x l) >>= f =    
+        let Logger x' l' = f x 
+        in Logger x' (l ++ l)
+
+log2 x = Logger x*2 ["Multiplied by 2"]
+
+
+-- STUDING FROM START AGAIN
+
+square :: Integer -> Integer
+square x = x*x
+
+ev :: Integer -> Bool 
+ev x  
+    | x `mod` 2  == 0 = True
+    | otherwise = False
+
+
+fact :: Integer -> Integer  
+fact 0 = 1 
+fact n = n * fact (n-1)
+
+
+lunghezza :: [a] -> Int
+lunghezza [] = 0
+lunghezza x = 1 + lunghezza (tail x)
+
+myReverse :: [a] -> [a]
+myReverse (x : xs) = myReverse xs ++ [x] 
+myReverse [] = [] 
+
+
+mappazza f l
+    | l == [] = []
+    | otherwise = [f (head l)] ++ (mappazza f (tail l))
+
+
+-- binary function 
+-- plus(x,y) {return x + y;}  
+plus :: Num a => a -> a
+plus = (\x->x*x)
+
+showAPiece :: Show a => [a] -> [Char]
+showAPiece [] = ""
+showAPiece (x:xs) = show x ++ "|" ++ show xs 
+
+foldaL :: (t1 -> t2 -> t2) -> t2 -> [t1] -> t2 
+foldaL f acc [] = acc 
+foldaL f acc (x:xs) = foldaL f (f x acc) xs
+
+----
+
+data Tree a = Empty | Leaf a | Node (Tree a) (Tree a)
+
+instance Show x => Show (Tree x) where
+    show Empty = "()"
+    show (Leaf a) = "(" ++ show a ++ ")"
+    show (Node a b) = "[" ++ show a ++ show b ++ "]"
+
+foldT :: (b -> a -> b) -> b -> (Tree a) -> b 
+foldT _ acc Empty = acc 
+foldT f acc (Leaf x) = f acc x
+foldT f acc (Node l r) = (foldT f (foldT f acc l) r)
+
+instance Foldable Tree where
+    foldl = foldT
+
+ftmap :: (a->b) -> (Tree a) -> (Tree b)
+ftmap _ Empty = Empty 
+ftmap f (Leaf x) = (Leaf (f x))
+ftmap f (Node z1 z2) = (Node (ftmap f z1) (ftmap f z2)) 
+
+instance Functor Tree where 
+    fmap = ftmap
+
+instance Applicative Tree where 
+    pure x = (Leaf x)
+    _ <*> Empty = Empty
+    Leaf f1 <*> Leaf x = Leaf (f1 x)
+    Node fl fr <*> Node l r = 
+        Node (Node (fl <*> l) (fl <*> r))
+        (Node (fr <*> l) (fr <*> r))
+
+instance Monad Tree where
+  return = pure
+  Empty >>= f = Empty
+  Leaf x >>= f = f x
+  Node l r >>= f = Node (l >>= f) (r >>= f)
+
+
+
