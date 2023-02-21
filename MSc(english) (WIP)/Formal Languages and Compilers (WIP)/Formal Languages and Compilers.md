@@ -1,5 +1,3 @@
-https://www.dropbox.com/sh/jq1mmyjdk4pzqx5/AABlNlsFdOEJgRbh_ZwR_KgTa?dl=0
-
 [01.Regular Expressions](src/01.Regular%20Expressions.md) 
 [02.Free Grammars](src/02.Free%20Grammars.md) 
 [03.Automatas](src/03.Automatas.md) 
