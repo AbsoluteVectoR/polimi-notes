@@ -1,20 +1,3 @@
----
-title: "Algoritmi e Principi dell'Informatica"
-author: "github/telegram: @martinopiaggi"
-date: "2020-2021"
-numbersections: true
-geometry: 
-- top=30mm
-- left=23mm
-- right=23mm
-- bottom=30mm
----
-
-\maketitle
-\newpage
-\tableofcontents
-\newpage
-
 [01.Linguaggi](src/01.Linguaggi.md)
 
 [02.Automi a stati finiti](src/02.Automi%20a%20stati%20finiti.md)
