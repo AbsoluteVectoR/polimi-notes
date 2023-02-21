@@ -1,4 +1,3 @@
-
 lun :: [a] -> Integer
 lun [] = 0
 lun (x:xs) = 1 + lun xs
@@ -168,50 +167,6 @@ instance Foldable Listree where
     foldr f z (Cons x t) = f x (foldr f z t)
     foldr f z (Branch t1 t2) = foldr f (foldr f z t2) t1 --look very well this
 
---- STARTING WITH SOME MONADS
-{-
-apply42 f x = 
-    let s = f x
-    in if s > 42 
-        then Just s 
-        else Nothing
-
-sequence42do x = do
-    x1 <- apply42 (+12) x
-    x2 <- apply42 (\x -> x-6) x1
-    x3 <- apply42 (*2) x2
-    return x3
-
-sequence42doDesugared x =
-apply42 (+12) x
->>= (\x1 -> apply42 (\x -> x-6) x1
->>= (\x2 -> apply42 (*2) x2
->>= (\x3 -> return x3)))
--}
-
-type Log = [String]
-data Logger a = Logger a Log
-
-instance (Eq a) => Eq (Logger a) where
-    (Logger x _) == (Logger y _) = x==y
-
-instance (Show a) => Show (Logger a) where
-    show (Logger a l) = show a ++ "| Log: " ++ show l
-
-instance Functor Logger where 
-    fmap f (Logger x l) = Logger (f x) l
-
-instance Applicative Logger where
-    pure x = Logger x []
-    (Logger f fl) <*> (Logger x xl) = Logger (f x) (fl ++ xl)
-    
-instance Monad Logger where  -- remember that f is a function that 
-    (Logger x l) >>= f =    
-        let Logger x' l' = f x 
-        in Logger x' (l ++ l)
-
-log2 x = Logger x*2 ["Multiplied by 2"]
-
 
 -- STUDING FROM START AGAIN
 
@@ -296,4 +251,72 @@ instance Monad Tree where
   Node l r >>= f = Node (l >>= f) (r >>= f)
 
 
+--- Stack random --- 
 
+type Stack = [Int]
+
+pop :: Stack -> (Stack, Int)
+pop [] = error "Pop on empty stack"
+pop (x:xs) = (xs,x) 
+
+push :: (Stack, Int) -> Stack 
+push (x,p) = x ++ [p]
+
+--- FUNCTOR APPLICATIVE and MONADS with a logger 
+
+type Log = [String] --remember that is just an alias
+data Logger a = Logger a Log
+
+instance (Eq a) => Eq (Logger a) where
+    (Logger x _) == (Logger y _) = x == y
+
+instance (Show a) => Show (Logger a) where
+   show (Logger x s) = show x ++ "{" ++ show s ++ "}"
+
+instance Functor Logger where 
+    fmap f (Logger x s) = Logger (f x) s 
+
+instance Applicative Logger where
+    pure x = Logger x ["Init"]
+    Logger f f_name <*> (Logger x log) =  (Logger (f x) (log ++ f_name))
+
+instance Monad Logger where 
+    return = pure 
+    (Logger x l) >>= f = 
+        let Logger x' l' = f x
+        in Logger x' (l ++ l') 
+
+plusLog num x = Logger (x+num) [("Added " ++ show num)]
+
+--- 
+
+makeStream :: [l] -> [l]
+makeStream l = l ++ makeStream l
+
+--- 
+
+data Btree a =  Btree (a,Int,Btree a, Btree a) | Nil
+
+instance (Show o) => Show (Btree o) where
+    show Nil = ""
+    show (Btree (a,x,l,r)) = "{"++ show a ++ "(" ++ show x ++ ")" ++ show l ++ show r ++ "}"
+
+addLeft :: Btree a -> Btree a -> Btree a
+addLeft(Btree (a1,num1,Nil, r1)) new@(Btree (a2,num2,l2, r2)) =
+    (Btree (a1,num1+1+num2,new,r1)) 
+addLeft(Btree (a1,num1,Btree (_,oldNum,_,_), r1)) new@(Btree (a2,num2,l2, r2)) =
+    (Btree (a1,num1+1+num2-oldNum,new,r1)) 
+
+instance Functor Btree where
+    fmap f (Btree (a,num,l,r)) = (Btree (f a,num,fmap f l,fmap f r))
+    fmap f Nil = Nil
+
+instance Applicative Btree where
+    pure x = 
+    (Btree (f,numl,fl,fr)) <*> (Btree (a,num1,l,r)) = (Btree (f a,num1,fl <*> l,fr <*> r))
+   
+
+instance Foldable Btree where
+    foldl f acc Nil = acc
+    foldl f acc (Btree (a,num,l,r)) = f (foldl f (foldl f acc l) r) a
+    
