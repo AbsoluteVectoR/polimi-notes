@@ -1,6 +1,6 @@
-[00.Cinematica del punto](src/00.Cinematica%20del%20punto.md)
+[01.Cinematica del punto](src/01.Cinematica%20del%20punto.md)
 
-[01.Cinematica del corpo rigido](src/01.Cinematica%20del%20corpo%20rigido.md)
+[02.Cinematica del corpo rigido](src/02.Cinematica%20del%20corpo%20rigido.md)
 
 [02.Meccanica statica](src/02.Meccanica%20statica.md) 
 
