@@ -1,7 +1,10 @@
 #!/bin/bash
+
 # move into the parent directory
-cd 'MSc(english) (WIP)'
-echo "Building PDF of Master courses"
+cd 'BSc(italian)'
+
+echo "Building PDF of Bachelor courses"
+
 # iterate over each subdirectory
 for directory in */; do
   cd "$directory"
