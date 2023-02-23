@@ -8,7 +8,7 @@ This is a collection of my notes for various Computer Science and Engineering co
 	- All notes are in Italian, except for Foundations of AI
     - Notes are available only for some courses of the study plan
 
-Keep in mind that these notes were created during periods of desperate studying, utilizing both professor-provided materials and resources from fellow students. They are not intended to be perfect and may be inaccurate and incomplete. If you notice any errors or have additions, feel free to open an issue or send a pull request.
+Keep in mind that these notes were created during periods of desperate studying, utilizing both professor-provided materials and resources from fellow students. They are not intended to be perfect and may be inaccurate and incomplete. If you see any error feel free to open an issue or send a pull request.
 
 ## Main features 
 
