@@ -2,7 +2,6 @@
 
 
 
-
 It is the most popular and well established learning paradigm
 
 The goal is to learn a good approximation of an unknown function that maps an input x to an output
