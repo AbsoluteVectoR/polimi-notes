@@ -105,8 +105,6 @@ Some books, libraries or game engine will use matrix-on-the-left or matrix-on-th
 At this moment let's try to imagine how each transformation is represented with a matrix without actually reading the next lines. 
 
 
-Translations use the last column only.
-
 $$
 M=\left|\begin{array}{ccc:c}
 n_{x x} & n_{y x} & n_{z x} & d_x \\
@@ -137,8 +135,7 @@ $$
 Each $j$-th column rapresent the "new direction" of the $j$-th column.  
 
 
-Vector $\vec  d$ represents the position of the origin of the new coordinates system in the old one.
-
+Vector $\vec  d$ represents the position of the origin of the new coordinates system in the old one. Translations use the last column only.
 
 $$
 \vec d=\left|\begin{array}{c}
@@ -147,9 +144,15 @@ d_y \\
 d_z \\
 \end{array}\right|
 $$
+
 ![](f3caaa06db578a232687ddab85df1c67.png)
 
 # Transformations 
+
+Remember that we are using the convention that the matrix is put on the left.
+Remember that the matrices with the on-the-right notation are switched and transposed: 
+
+
 
 ###  Translation
 
@@ -339,3 +342,8 @@ $$
 
 Note that the last row in all the 4x4 transformation matrices is always
 Some engines exploit this to save memory. 
+
+
+Shear bends the axis along which it is performed. For example a shear over $y$ , so $H_y(h_x,h_z)$ is: 
+
+![](ed12136363ac9157518e5a5ca8e10a2e.png)

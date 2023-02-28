@@ -43,26 +43,25 @@ One of the main benefits of using a Makefile is that it can automate the build p
 
 
 ```shell
-DIR=./A00 
-NAME=A00 
+DIR=./A00
+NAME=A00
 
-ifndef DIR 
-$(error DIR is not set) 
-endif  
+ifndef DIR
+$(error DIR is not set)
+endif
 
-ifndef NAME 
-$(error NAME is not set) 
-endif 
+ifndef NAME
+$(error NAME is not set)
+endif
 
-TERMINAL=gnome-terminal 
-FILEPATH=$(DIR)/$(NAME) 
-CFLAGS = -std=c++17 -O3 
-INCLUDE = -I$(DIR)/headers 
-LDFLAGS = -lglfw -lvulkan -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi 
+FILEPATH=$(DIR)/$(NAME)
+CFLAGS = -std=c++17 -O3
+INCLUDE = -I$(DIR)/headers
+LDFLAGS = -lglfw -lvulkan -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
 
-all: clean build test 
+all: clean build test  
 
-build: $(FILEPATH).cpp 
+build: $(FILEPATH).cpp
 	g++ $(CFLAGS) -o $(FILEPATH) $(FILEPATH).cpp $(INCLUDE) $(LDFLAGS)
 
 test: $(FILEPATH)
