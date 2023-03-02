@@ -152,7 +152,7 @@ $$
 Remember that we are using the convention that the matrix is put on the left.
 Remember that the matrices with the on-the-right notation are switched and transposed: 
 
-
+In this course, we will never use the matrix-on-the-right convention.
 
 ###  Translation
 

@@ -19,7 +19,7 @@ Vulkan SDK includes several tools and libraries that you can use to develop Vulk
 -   `SPIRV-Tools`: A set of tools for working with SPIR-V shader modules.
 
 To get started with developing Vulkan applications using VS Code, you can follow these steps:
-
+	
 1.  Install the C/C++ extension for VS Code.
 2.  Create a new C/C++ project and configure it to use the Vulkan SDK.
 3.  Write your Vulkan application code and build it using a build system such as CMake.
