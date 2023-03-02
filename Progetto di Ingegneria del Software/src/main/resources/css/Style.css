@@ -1,0 +1,61 @@
+.error {
+    -fx-border-width: 3;
+    -fx-border-color: red;
+}
+
+.error-message {
+    -fx-background-color: red;
+}
+
+.title {
+    -fx-fill: #ffffff;
+    -fx-font-family: "Rockwell Extra Bold";
+    -fx-font-size: 60;
+    -fx-stroke: #ffffff;
+    -fx-stroke-width: 0;
+}
+
+.button.confirm-button, .button.cancel-button {
+    -fx-pref-height: 50;
+    -fx-pref-width: 200;
+    -fx-border-width: 3;
+    -fx-border-radius: 30;
+    -fx-background-radius: 30;
+}
+
+.confirm-button {
+    -fx-border-color: #2c43ff;
+    -fx-background-color: #848abd;
+}
+
+.confirm-button:hover {
+    -fx-background-color: #b4bee6;
+}
+
+.cancel-button {
+    -fx-border-color: #fdf694;
+    -fx-background-color: #fb581d;
+}
+
+.cancel-button:hover {
+    -fx-background-color: #fe0000;
+}
+
+.background{
+    -fx-background-image: url(../img/custom/background_clouds.png);
+    -fx-background-size: contain;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-size: 100% ;
+}
+
+.WhiteBackground{
+    -fx-border-color: rgba(132, 138, 189, 0);
+    -fx-background-color: rgba(132, 138, 189, 0.5);
+}
+
+
+.BlackBackground{
+    -fx-border-color: rgb(0, 0, 0);
+    -fx-background-color: rgba(132, 138, 189, 0.23);
+}

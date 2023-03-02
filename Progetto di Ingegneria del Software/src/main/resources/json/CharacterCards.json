@@ -1,0 +1,206 @@
+[
+  {
+    "imageName": "1",
+    "price": 1,
+    "type": {
+      "name": "STUDENT",
+      "value": 4
+    },
+    "ability": {
+      "action": "ADD_ISLAND",
+      "value": 1
+    },
+    "requirements": {
+      "resource": "ISLAND",
+      "value": 1
+    },
+    "description": "Move students on the character card to any isle you wish!"
+  },
+  {
+    "imageName": "2",
+    "price": 2,
+    "description": "Snag an opponent's professor if you have the same number of their students!",
+    "type": {
+      "name": "CONTROL",
+      "value": 0
+    },
+    "ability": {
+      "action": "TAKE_PROFESSORS",
+      "value": 0
+    },
+    "requirements": {
+      "resource": "",
+      "value": 0
+    }
+  },
+  {
+    "imageName": "3",
+    "price": 3,
+    "description": "Calculate the influence on any Island and reap the rewards!",
+    "type": {
+      "name": "SELECTOR",
+      "value": 0
+    },
+    "ability": {
+      "action": "CALCULATE_INFLUENCE",
+      "value": 0
+    },
+    "requirements": {
+      "resource": "ISLAND",
+      "value": 1
+    }
+  },
+  {
+    "imageName": "4",
+    "price": 1,
+    "description": "You may move Mother Nature up to 2 additional spaces!",
+    "type": {
+      "name": "CONTROL",
+      "value": 0
+    },
+    "ability": {
+      "action": "MOVE_MOTHER_NATURE",
+      "value": 2
+    },
+    "requirements": {
+      "resource": "",
+      "value": 0
+    }
+  },
+  {
+    "imageName": "5",
+    "price": 2,
+    "description": "Place a No Entry card on an isle and block Mother Nature's power once!",
+    "type": {
+      "name": "SELECTOR",
+      "value": 4
+    },
+    "ability": {
+      "action": "NO_ENTRY_TILE",
+      "value": 1
+    },
+    "requirements": {
+      "resource": "",
+      "value": 0
+    }
+  },
+  {
+    "imageName": "6",
+    "price": 3,
+    "description": "If somebody tries to Conquer an island, ignore the towers for this turn!",
+    "type": {
+      "name": "CONTROL",
+      "value": 1
+    },
+    "ability": {
+      "action": "TOWER_INFLUENCE",
+      "value": 0
+    },
+    "requirements": {
+      "resource": "",
+      "value": 0
+    }
+  },
+  {
+    "imageName": "7",
+    "price": 1,
+    "description": "Swap 3 of the students on this card with 3 from your Entrance!",
+    "type": {
+      "name": "STUDENT",
+      "value": 6
+    },
+    "ability": {
+      "action": "SWAP_ENTRANCE",
+      "value": 3
+    },
+    "requirements": {
+      "resource": "COLORS",
+      "value": 6
+    }
+  },
+  {
+    "imageName": "8",
+    "price": 2,
+    "description": "Add 2 to your Influence this turn!",
+    "type": {
+      "name": "CONTROL",
+      "value": 0
+    },
+    "ability": {
+      "action": "ADD_POINTS",
+      "value": 2
+    },
+    "requirements": {
+      "resource": "",
+      "value": 0
+    }
+  },
+  {
+    "imageName": "9",
+    "price": 3,
+    "description": "Choose a student color to ignore when calculating Influence this turn!",
+    "type": {
+      "name": "SELECTOR",
+      "value": 0
+    },
+    "ability": {
+      "action": "AVOID_COLOR_INFLUENCE",
+      "value": 0
+    },
+    "requirements": {
+      "resource": "COLORS",
+      "value": 1
+    }
+  },
+  {
+    "imageName": "10",
+    "price": 1,
+    "description": "Switch up to two students between your Entrance and your Dining Room!",
+    "type": {
+      "name": "STUDENT",
+      "value": 0
+    },
+    "ability": {
+      "action": "SWAP_ENTRANCE_DINING",
+      "value": 2
+    },
+    "requirements": {
+      "resource": "COLORS",
+      "value": 2
+    }
+  },
+  {
+    "imageName": "11",
+    "price": 2,
+    "description": "Take one student from this card and put them in the dining room, then draw another from the bag and replace them!",
+    "type": {
+      "name": "STUDENT",
+      "value": 4
+    },
+    "ability": {
+      "action": "ADD_DINING",
+      "value": 1
+    },
+    "requirements": {
+      "resource": "COLORS",
+      "value": 1
+    }
+  },
+  {
+    "imageName": "12",
+    "price": 3,
+    "description": "Choose a color: EVERYONE must return 3 students of that color to the bag!",
+    "type": {
+      "name": "SELECTOR",
+      "value": 1
+    },
+    "ability": {
+      "action": "RETURN_STUDENT",
+      "value": 3
+    },
+    "requirements": {
+      "resource": "COLORS",
+      "value": 1
+    }
+  }
+]
