@@ -2,6 +2,12 @@
 
 # Prova Finale di Ingegneria del Software - AA 2021-2022
 
+## Team GC23
+- [__Amrit Singh__](https://github.com/10610426) amrit.singh@mail.polimi.it
+- [__Martino Piaggi__](https://github.com/martinopiaggi) martino.piaggi@mail.polimi.it
+- [__Lorenzo Perini__](https://github.com/Sunriser45) lorenzo1.perini@mail.polimi.it
+
+
 The project's goal is to implement [Eriantys](https://www.craniocreations.it/prodotto/eriantys/) board game. The project covers all rules of the game, including 4 player game and expert mode, and enables to play in two ways: command line interface(CLI) or graphical user interface(GUI).
 
 ### [UML](https://github.com/martinopiaggi/ing-sw-2022-Piaggi-Perini-Singh/tree/master/deliverables/UML)
@@ -66,8 +72,3 @@ The project's jar can be downloaded from here: [eriantys.jar](https://github.com
 | ``java -jar Eriantys.jar -server`` | Server listening on port 23023  |
 | ``java -jar Eriantys.jar -cli ip_adress`` | CLI interface |
 | ``java -jar Eriantys.jar -gui ip_adress`` | GUI interface |
-
-## Team GC23
-- [__Amrit Singh__](https://github.com/10610426) amrit.singh@mail.polimi.it
-- [__Martino Piaggi__](https://github.com/martinopiaggi) martino.piaggi@mail.polimi.it
-- [__Lorenzo Perini__](https://github.com/Sunriser45) lorenzo1.perini@mail.polimi.it
