@@ -1,4 +1,4 @@
-# Shut The Box 
+# Computer Science Project - MCTS
 
 A little game where you play against 1-3 AIplayers. 
 Made in the Unity game engine, the focus of this project is the implementation of a simple board game called 'Shut The Box' and the heuristic search algorithm Monte Carlo Tree Search.
