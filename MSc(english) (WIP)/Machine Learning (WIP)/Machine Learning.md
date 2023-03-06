@@ -1,12 +1,8 @@
-[Supervised](src/Supervised.md)
-
+[00.Supervised](src/00.Supervised.md)
 [Unsupervised](src/Unsupervised.md)
-
 [Reinforcement](src/Reinforcement.md) 
-
-[Linear Regression](src/Linear%20Regression.md)
+[01.Linear Regression](src/01.Linear%20Regression.md)
 [Linear Classification](src/Linear%20Classification.md)
-
 [Bias-Variance](src/Bias-Variance.md)
 [Model Selection](src/Model%20Selection.md)
 [PAC-Learning and VC dimension](src/PAC-Learning%20and%20VC%20dimension.md)
