@@ -2,9 +2,7 @@ https://vulkan.lunarg.com/sdk/home
 
 https://vulkan-tutorial.com/Development_environment
 
-
 https://github.com/glfw/glfw
-
 
 After installing the Vulkan SDK on Linux, you can find the SDK files in the installation directory. The default installation directory is `/usr/share/vulkan`
 
