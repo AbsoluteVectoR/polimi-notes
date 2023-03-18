@@ -103,8 +103,6 @@ Okay? So, right now, let's focus on our single core architecture.
 
 We have to know that we do have superscalar architectures.
 
-
-
 I simplified, of course, everything.
 
 But we will reach a point where this will be clear.
@@ -240,6 +238,135 @@ Because what is happening is that we are trying to create and combine, as we wil
 -   FPGAs are another type of system that integrates different hardware components like logic lookup tables and on-chip memories.
 
 ![](781759d9affeb5d94617bf0b658bcece.png)
+
+
+--- 
+
+
+Instruction Level Parallelism 
+
+Parallelism with simple tecnique. But since it's simple, three hazards: 
+
+- **Structural Hazards**: Attempt to use the same resource from different instructions simultaneously. Example: Single memory for instructions and data  
+- **Data Hazards**: Attempt to use a result before it is ready. Example: Instruction depending on a result of a previous instruction still in the pipeline 
+- **Control Hazards**: Attempt to make a decision on the next instruction to execute before the condition is evaluated Example: Conditional branch execution
+
+
+$$\text{Pipeline Speedup} = \frac{\text{Pipeline Depth}}{\text{1 + Pipe Stall Cycles per Instruction due to Branches}}$$
+
+$$\text{Pipeline Speedup} = \frac{\text{Pipeline Depth}}{\text{1 + Branch Frequency * Branch Penalty}}$$
+
+To feed the pipeline we need to fetch a new instruction at each clock cycle, but the branch decision (to change or not change the PC) is taken during the MEM stage. This delay to determine the correct instruction to fetch is called Control Hazard or Conditional Branch Hazard If a branch changes the PC to its target address, it is a taken branch If a branch falls through, it is not taken or untaken.
+
+- Without forwarding: To stall the pipeline until the branch decision is taken (stalling until resolution) and then fetch the correct instruction flow. 
+
+![](65aabdb2c663857d577615e38d3b33ff.png){width=50%}
+
+With forwarding, to reduce stalling time. 
+
+![](4b078bcea8b91ccf02500541ec99c9de.png){width=50%}
+
+Early Evaluation of the Program Counter PC. Update the PC register  
+as soon as possible in the pipeline  during ID stage. Move a sort of controller of the branch outcome before the execute stage, inside the decode stage. 
+
+With the branch decision made during ID stage, there is a reduction of the cost associated with each branch (branch penalty): We need only one-clock-cycle stall after each branch Or a flush of only one instruction following the branch
+
+One-cycle-delay for every branch still yields a performance loss of 10% to 30% depending on the branch frequency
+
+![](f3ce2f23d45cff41ab065f23a8753818.png){width=50%}
+
+But note that this has an "issue".. anticipating the evaluation of the PC has its 'cons'. 
+![](8dd1cca3a5dbd7c0b23599e2e07f1e01.png){width=50%}
+
+
+## Branch Prediction Techniques 
+
+In every cases, care must be taken not to change the processor state until the branch is definitely known.
+
+### Static Branch Prediction Techniques
+
+The actions for a branch are fixed for each branch during the entire execution. The actions are fixed at compile time. Static Branch Prediction is used in processors where the expectation is that the branch behavior is highly predictable at compile time.
+Static Branch Prediction can also be used to assist dynamic predictors.
+Five static branch prediction techniques: 
+
+- Branch Always Not Taken (**Predicted-Not-Taken**)  
+- Branch Always Taken (**Predicted-Taken**)  
+- Backward Taken Forward Not Taken (**BTFNT**): examples are all the branches at the end of loops, it's assumed the backward-going branches are always taken.
+- **Profile-Driven Prediction**: The branch prediction is based on profiling information collected from earlier runs. The method can use compiler hints.
+- **Delayed Branch**:The compiler statically schedules an independent instruction in the branch delay slot. If we assume a branch delay of one-cycle (as for MIPS), we have one-delay slot. Three different ways:
+	- From before: an instruction is taken (which it's known to not affects the data flow) from before the branch instruction and it's executed not before but after the branch instruction.  
+	- From target: an instruction is taken from the target of the branch. Usually used when the branch is taken with high probability, such as loop branches (backward branches).  
+	- From fall-through:This strategy is preferred when the branch is not taken with high probability, such as forward branches.
+
+In general, the compilers are able to fill about 50% of delayed branch slots with valid and useful instructions, the remaining slots are filled with nops. In deeply pipeline, the delayed branch is longer that one cycle: many slots must be filled for every branch, thus it is more difficult to fill all the slots with useful instructions. The main limitations on delayed branch scheduling arise from: The restrictions on the instructions that can be scheduled in the delay slot. The ability of the compiler to statically predict the outcome of the branch.
+
+
+### Dynamic Branch Prediction Techniques
+
+The decision causing the branch prediction can change during the program execution.
+
+
+The decision causing the branch prediction can change during the program execution.
+
+Basic Idea: To use the past branch behavior to predict the future.
+
+Two important point: 
+
+- Outcome 
+- Target: Branch Target Buffer (Branch Target Predictor) is a cache storing the predicted branch target address for the next instruction after a branch. Nothing more than a lookup table. 
+
+Branch History Table (or Branch Prediction Buffer):
+
+Table containing 1 bit for each entry that says whether the branch was recently taken (1) or not (0). 
+
+A 1-bit saturating counter (essentially a flip-flop "Flip-flop (electronics)")) records the last outcome of the branch. This is the most simple version of dynamic branch predictor possible, although it is not very accurate.
+
+
+A 2-bit saturating counter is a state machine with four states
+
+![](0ec14b6803b76d9f3e68078cf4468f0e.png)
+ 
+
+Correlating Branch Predictors
+
+
+An idea the behavior of recent branches are correlated, that is the recent behavior of other branches rather than just the current branch (we are trying to predict) can influence the prediction of the current branch.
+
+Correlating Branch Predictors • In general (m, n) correlating predictor records last m branches to choose from 2 m BHTs, each of which is a n-bit predictor 
+
+
+![](d02a06e04caf821e7672f9091afa6c17.png)
+
+The first level history is recorded in one (or more) k-bit shift register called Branch History Register (BHR), which records the outcomes of the k most recent branches
+
+The second level history is recorded in one (or more) tables called Pattern History Table (PHT) of two-bit saturating counters
+
+The BHR is used to index the PHT to select which 2-bit counter to use.
+
+
+Each branch history table tracks all the k most recent branches. Using all these tables, it's possible to lookup patterns in the PHT, it's possible to select the BHR with the most similar aspect of the current execution flow (looking the previous branches outcomes) and use the prediction of that BHR. 
+
+
+The solutions to the branch prediction problem are a lot .
+
+
+In theory 2-BHT is always best than 1-BHT but it's not always the case, it depends. 
+
+CHECK BHT EXERCISES !! 
+
+
+---
+
+13-03 exe
+
+
+Recall MIPS with forwarding 
+
+- EX/EX path 
+- MEM/EX path 
+- MEM/MEM path 
+
+In principle EX/ID is not needed since what it's computed in EX is not useful in ID stage. But if there is early branch evaluation it might be useful. 
 
 
 
