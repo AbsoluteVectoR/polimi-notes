@@ -3,7 +3,7 @@
 [Reinforcement](src/Reinforcement.md) 
 [01.Linear Regression](src/01.Linear%20Regression.md)
 [02.Linear Classification](02.Linear%20Classification.md)
-[Bias-Variance](src/Bias-Variance.md)
+[03.Bias-Variance](03.Bias-Variance.md)
 [Model Selection](src/Model%20Selection.md)
 [PAC-Learning and VC dimension](src/PAC-Learning%20and%20VC%20dimension.md)
 [Kernel Methods](src/Kernel%20Methods.md)
