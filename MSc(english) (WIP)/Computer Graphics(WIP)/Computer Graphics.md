@@ -1,7 +1,12 @@
-[Vulkan setup](src/Vulkan%20setup.md) 
+[Vulkan setup and cpp stuff](src/00.Vulkan%20setup%20and%20cpp%20stuff.md) 
 
-[First and second lesson](src/First%20and%20second%20lesson.md) 
+[Foundations of CG](src/01.Foundations%20of%20CG.md) 
 
-[Third lesson](src/Third%20lesson.md)
+[Advanced Transformations](src/03.Advanced%20Transformations.md)
 
-[04.Projections](src/04.Projections.md) 
+[Projections](src/04.Projections.md) 
+
+[Matrix View](src/04.Matrix%20View.md) 
+
+[World Matrix](src/05.World%20Matrix.md)
+
