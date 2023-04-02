@@ -1,0 +1,52 @@
+name: generated PDFs to Releases
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '**.pdf'
+
+jobs:
+  pdf-to-releases:
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: "find env"
+        run: |
+          set | grep GITHUB_ | grep -v GITHUB_TOKEN
+            
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v1.0.${{ github.run_number }}
+          release_name: Release ${{ github.run_number }}
+          body: Latest PDFs release  
+          draft: false
+          prerelease: false
+      - name: Upload pdf files 
+        id: upload_files
+        uses: xresloader/upload-to-github-release@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          file: '**.pdf' 
+          release_id: ${{ steps.create_release.outputs.id }}
+          overwrite: true
+          verbose: true
+      - name: Delete pdf files
+        run: |
+          find -name '*.pdf' -delete
+      - name: Pushing to production branch
+        uses: actions-js/push@master
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
+          message: PDFs deleted
+          author_name: PDFs_Deletion[bot]
+          author_email: 72280379+martinopiaggi@users.noreply.github.com
+          force: true 
