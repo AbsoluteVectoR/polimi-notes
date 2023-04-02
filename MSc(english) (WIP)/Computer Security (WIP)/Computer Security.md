@@ -9,8 +9,8 @@ The attacker always takes the **path with least resistance**.
 Summary
 
 1. [Introduction](01.Security%20Introduction.md)
-2. [Foundations of Cryptography](02.%20Foundations%20of%20Cryptography.md)
-3. Techniques for user authentication
+2. [Foundations of Cryptography](src/02.Foundations%20of%20Cryptography.md)
+3. [Techniques for user authentication](src/03.Techniques%20for%20user%20authentication.md)
 4. Authorization and access control policies
 5. Application and web security
 6. Network security
