@@ -20,6 +20,7 @@ Keep in mind that these notes were created during periods of desperate studying,
 ## Courses index
 
 ````
+.
 ├── BSc(italian)
 │   ├── Algoritmi e Principi dell'Informatica
 │   ├── Analisi 2 (WIP)
@@ -35,23 +36,20 @@ Keep in mind that these notes were created during periods of desperate studying,
 │   ├── Progetto di Ingegneria del Software
 │   ├── Reti Logiche
 │   └── Sistemi Informativi
-├── MSc(english) (WIP)
-│   ├── Advanced Algorithms and Parallel Programming
-│   ├── Advanced Computer Architectures (WIP)
-│   ├── Computer Graphics(WIP)
-│   ├── Computer Security (WIP)
-│   ├── Computing Infrastructures (WIP)
-│   ├── Databases 2
-│   ├── Formal Languages and Compilers (WIP)
-│   ├── Foundations of Operation Research (WIP)
-│   ├── Hypermedia Applications (WIP)
-│   ├── Machine Learning (WIP)
-│   ├── Philosophical Issues of Computer Science (WIP)
-│   ├── Principles of Programming Languages(WIP)
-│   └── Software Engineering 2
-├── README.md
-├── buildEveryPDFInBSc.sh
-└── buildEveryPDFInMSC.sh
+└── MSc(english) (WIP)
+    ├── Advanced Algorithms and Parallel Programming
+    ├── Advanced Computer Architectures (WIP)
+    ├── Computer Graphics(WIP)
+    ├── Computer Security (WIP)
+    ├── Computing Infrastructures (WIP)
+    ├── Databases 2
+    ├── Formal Languages and Compilers (WIP)
+    ├── Foundations of Operation Research (WIP)
+    ├── Hypermedia Applications (WIP)
+    ├── Machine Learning (WIP)
+    ├── Philosophical Issues of Computer Science (WIP)
+    ├── Principles of Programming Languages(WIP)
+    └── Software Engineering 2
 ````
 
 `buildEveryPDFInMSC.sh` and `buildEveryPDFInBSC.sh` generate all the PDF files (using Pandoc) from each course notes of respectively, the Master courses and a Bachelor courses. I already run them and I generate new PDFs periodically after some relevant changes. 
