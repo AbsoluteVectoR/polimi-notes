@@ -89,7 +89,7 @@ Most important:
 - `push` **immediate** (or register): stores the immediate or register value at the top of the stack and obviously decrements the `ESP` of the operand size.
 - `pop` **destination**: loads to the destination a word off the top of the stack and it increases `ESP` of the operand’s size.
 - `call`: push to the stack the address of the next instruction (not the function called) and move the address of **the first instruction of the callee** into `EIP`
-- `ret` : it's the opposite of `call` function ... restores the return address saved by `call` from the top of the stack.
+- `ret` : it's the opposite of `call` function ... restores the return address saved by `call` from the top of the stack. It's equivalent to `pop eip` . 
 - `leave` restores the caller’s base pointer and it's equivalent to say: `mov esp, ebp` and `pop ebp`  ... basically you are "deleting" the func's frame. 
 
 
@@ -158,4 +158,38 @@ Calling conventions
 - Up to two parameters can be passed through two registers (`ECX` and `EDX` ) the others are pushed to the stack. 
 - Return is the register `EAX` 
 
-This conventions are for 
+
+
+---
+
+
+31-03 
+
+
+To debug we use `gdb <name>` . We use `pwndbg` which is a GDB plug-in that makes debugging with GDB suck less, with a focus on features needed by low-level software developers, hardware hackers, reverse-engineers and exploit developers.
+
+[GitHub - pwndbg/pwndbg: Exploit Development and Reverse Engineering with GDB Made Easy](https://github.com/pwndbg/pwndbg)
+
+
+We also see IDA and Ghidra. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
