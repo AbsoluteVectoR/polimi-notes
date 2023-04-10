@@ -13,3 +13,7 @@
 [Meshes](src/06.Meshes.md)
 
 [Rendering](src/07.Rendering.md)
+
+[Rendering Techniques](src/08.Rendering%20Techniques.md)
+
+[GLSL](src/09.GLSL.md)
