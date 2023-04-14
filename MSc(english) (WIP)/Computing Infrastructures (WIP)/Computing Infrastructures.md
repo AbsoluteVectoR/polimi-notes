@@ -6,7 +6,7 @@
 
 [Dependability](src/03.Dependability.md)
 
-[ Data Centers infrastructures](src/04.%20Data%20Centers%20infrastructures.md)
+[Data Centers infrastructures](src/04.%20Data%20Centers%20infrastructures.md)
 
 [Network](src/04.Network.md) 
 
