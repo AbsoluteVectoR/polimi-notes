@@ -9,20 +9,16 @@
 
 ## Thoughts, intelligence and machines
 
--  [Machine and Thought: The Turing Test](src/03.Turing%20Test.md) 
--   The physical system hypothesis
--   Minds and brains: the Chinese room argument
--   The meta problem of consciousness (Giacomo Zanotti)
-
-## Computer and ethics
-
--   Algorithmic fairness: a framework for combining ethics and statistics (Michele Loi)
+- [Machine and Thought: The Turing Test](src/03.Turing%20Test.md) 
+- [The physical system hypothesis](src/04.The%20physical%20system%20hypothesis.md) 
+- [Chinese room argument](src/05.Chinese%20room%20argument.md) 
+- The meta problem of consciousness (Giacomo Zanotti)
 
 ## Final project
 
 - Paper assignment and discussion
--   How to choose a (good) topic and to write a (good) paper
--   Papers’ supervisions
+- How to choose a (good) topic and to write a (good) paper
+- Papers’ supervisions
 
 
 
