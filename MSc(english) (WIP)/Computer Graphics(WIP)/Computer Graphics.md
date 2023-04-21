@@ -17,3 +17,5 @@
 [Rendering Techniques](src/08.Rendering%20Techniques.md)
 
 [GLSL](src/09.GLSL.md)
+
+[10.Lights](src/10.Lights.md) 
