@@ -12,7 +12,7 @@
 - [Machine and Thought: The Turing Test](src/03.Turing%20Test.md) 
 - [The physical system hypothesis](src/04.The%20physical%20system%20hypothesis.md) 
 - [Chinese room argument](src/05.Chinese%20room%20argument.md) 
-- The meta problem of consciousness (Giacomo Zanotti)
+- [The meta problem of consciousness](src/06.The%20meta%20problem%20of%20consciousness.md) 
 
 ## Final project
 
