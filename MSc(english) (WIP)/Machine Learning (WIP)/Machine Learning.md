@@ -1,3 +1,5 @@
+https://www.youtube.com/watch?v=jGwO_UgTS7I&list=PLoROMvodv4rMiGQp3WXShtMGgzqpfVfbU
+
 [Supervised](src/00.Supervised.md)
 [Unsupervised](src/Unsupervised.md)
 [Reinforcement](src/Reinforcement.md) 
