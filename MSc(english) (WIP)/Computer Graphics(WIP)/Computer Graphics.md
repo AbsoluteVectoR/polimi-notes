@@ -1,3 +1,4 @@
+
 [Vulkan setup and cpp stuff](src/00.Vulkan%20setup%20and%20cpp%20stuff.md) 
 
 [Foundations of CG](src/01.Foundations%20of%20CG.md) 
@@ -18,4 +19,7 @@
 
 [GLSL](src/09.GLSL.md)
 
-[10.Lights](src/10.Lights.md) 
+[Lights](src/10.Lights.md) 
+
+[Bidirectional Reflectance Distribution Function - BRDF](src/11.Bidirectional%20Reflectance%20Distribution%20Function%20-%20BRDF.md)
+
