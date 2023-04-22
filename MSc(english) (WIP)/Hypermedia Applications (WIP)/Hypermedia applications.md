@@ -3,7 +3,7 @@
 
 [Visual Design Principles](src/02.Visual%20Design%20Principles.md) 
 
-[ HTML, CSS and JS](03.%20HTML,%20CSS%20and%20JS.md)  
+[ HTML, CSS and JS](src/03.%20HTML%20-%20CSS%20-%20JS.md)  
 
 [Web Server Backend](src/04.Web%20Server%20Backend.md) 
 
