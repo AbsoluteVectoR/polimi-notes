@@ -14,6 +14,8 @@
 - [Chinese room argument](src/05.Chinese%20room%20argument.md) 
 - [The meta problem of consciousness](src/06.The%20meta%20problem%20of%20consciousness.md) 
 
-[07.How to choose a (good) topic and to write a (good) paper](src/07.How%20to%20choose%20a%20(good)%20topic%20and%20to%20write%20a%20(good)%20paper.md) 
+## Final paper 
+
+[How to choose a (good) topic and to write a (good) paper](src/07.How%20to%20choose%20a%20(good)%20topic%20and%20to%20write%20a%20(good)%20paper.md) 
 
 
