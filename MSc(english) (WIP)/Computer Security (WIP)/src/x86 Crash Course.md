@@ -12,11 +12,11 @@ Registers:
 ![](images/4ec6d938e619bc648067905357ea8e23.png)
 
 
-- General-purpose registers: EAX, EBX, ECX, EDX, ESI, EDI, EBP, ESP
-- ESI and EDI used for string operations 
-- EBP used as base pointer 
-- ESP used as stack pointer 
-- EIP 
+- General-purpose registers: `EAX`, `EBX`, ECX, `EDX`, `ESI`, `EDI`, `EBP`, `ESP`
+- `ESI` and `EDI` used for string operations 
+- `EBP` used as base pointer 
+- `ESP` used as the top stack pointer 
+- `EIP` 
 	- Accessed implicitly, not explicitly 
 	- Modified by jmp, call, ret 
 	- Value can be read through the stack (saved IP)
