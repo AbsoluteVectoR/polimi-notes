@@ -8,7 +8,7 @@ https://www.youtube.com/watch?v=jGwO_UgTS7I&list=PLoROMvodv4rMiGQp3WXShtMGgzqpfV
 [Bias-Variance](03.Bias-Variance.md)
 [Model Selection](src/04.Model%20Selection.md)
 [Kernel Methods](src/05.Kernel%20Methods.md)
-[08.Learning Theory](src/08.Learning%20Theory.md) 
+[Learning Theory](src/08.Learning%20Theory.md) 
 [Support Vector Machines](src/Support%20Vector%20Machines.md)
 [Markov Decision Processes](src/Markov%20Decision%20Processes.md)
 [Dynamic Programming](src/Dynamic%20Programming.md)
