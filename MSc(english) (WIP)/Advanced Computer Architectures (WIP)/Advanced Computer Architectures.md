@@ -23,15 +23,10 @@
 
 [Explicit Register Renaming](src/09.Explicit%20Register%20Renaming.md) 
 
-[10.Exceptions Handling](src/10.Exceptions%20Handling.md)
+[Exceptions Handling](src/10.Exceptions%20Handling.md)
 
-[12. Superscalar Architecture](src/12.%20Superscalar%20Architecture.md) 
+[Parallel Architectures](src/12.Parallel%20Architectures.md) 
 
-
-Memory Hierarchy: Basic and Advanced Concepts; Virtual Memory Architectures;  
-
-• Multiprocessors Architectures; Manycores;  
-• Cache Coherency Protocols in Multiprocessors;  
-• SIMD, Vector Processors; Intro to GP-GPUs; Intro to Tensor Cores;
+[Memory Hierarchy](src/13.Memory%20Hierarchy.md) 
 
 
