@@ -4,4 +4,3 @@
 [Erlang](02.Erlang.md) 
 [Seminar on Rust](03.Seminar%20on%20Rust.md) 
 
-
