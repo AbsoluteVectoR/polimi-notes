@@ -21,7 +21,7 @@
 
 [Scoreboard](src/07.Scoreboard.md) 
 
-[Tomasulo](src/07.Tomasulo%201.md) 
+[Tomasulo](src/07.Tomasulo.md) 
 
 [Multithreading Architectures](src/11.Multithreading%20Architectures.md)
 
