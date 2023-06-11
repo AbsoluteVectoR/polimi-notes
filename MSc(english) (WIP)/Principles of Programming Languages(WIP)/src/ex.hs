@@ -1,3 +1,6 @@
+import Control.Monad.State.Lazy
+import Data.List (isInfixOf)
+
 lun :: [a] -> Integer
 lun [] = 0
 lun (x:xs) = 1 + lun xs
@@ -155,17 +158,18 @@ quicksort array = do
 
 -- define data Listree
 
-data Listree a = Cons a (Listree a) | Null | Branch (Listree a) (Listree a) deriving (Show,Eq)
 
-instance Functor Listree where 
-    fmap f Null = Null 
-    fmap f (Cons x t) = Cons (f x) (fmap f t)
-    fmap f (Branch t1 t2) = Branch (fmap f t1) (fmap f t2)
+-- data Listree a = Cons a (Listree a) | Null | Branch (Listree a) (Listree a) deriving (Show,Eq)
 
-instance Foldable Listree where 
-    foldr f z Null = z 
-    foldr f z (Cons x t) = f x (foldr f z t)
-    foldr f z (Branch t1 t2) = foldr f (foldr f z t2) t1 --look very well this
+--instance Functor Listree where 
+--    fmap f Null = Null 
+--    fmap f (Cons x t) = Cons (f x) (fmap f t)
+--    fmap f (Branch t1 t2) = Branch (fmap f t1) (fmap f t2)
+
+--instance Foldable Listree where 
+--    foldr f z Null = z 
+--    foldr f z (Cons x t) = f x (foldr f z t)
+--    foldr f z (Branch t1 t2) = foldr f (foldr f z t2) t1 --look very well this
 
 
 -- STUDING FROM START AGAIN
@@ -251,17 +255,6 @@ instance Monad Tree where
   Node l r >>= f = Node (l >>= f) (r >>= f)
 
 
---- Stack random --- 
-
-type Stack = [Int]
-
-pop :: Stack -> (Stack, Int)
-pop [] = error "Pop on empty stack"
-pop (x:xs) = (xs,x) 
-
-push :: (Stack, Int) -> Stack 
-push (x,p) = x ++ [p]
-
 --- FUNCTOR APPLICATIVE and MONADS with a logger 
 
 type Log = [String] --remember that is just an alias
@@ -311,12 +304,97 @@ instance Functor Btree where
     fmap f (Btree (a,num,l,r)) = (Btree (f a,num,fmap f l,fmap f r))
     fmap f Nil = Nil
 
-instance Applicative Btree where
-    pure x = 
-    (Btree (f,numl,fl,fr)) <*> (Btree (a,num1,l,r)) = (Btree (f a,num1,fl <*> l,fr <*> r))
-   
-
 instance Foldable Btree where
     foldl f acc Nil = acc
     foldl f acc (Btree (a,num,l,r)) = f (foldl f (foldl f acc l) r) a
     
+
+--- Stack random --- 
+
+--- Immutable stack --- 
+
+type Stack = [Int]
+
+pop :: Stack -> (Stack, Int)
+pop [] = error "Pop on empty stack"
+pop (x:xs) = (xs,x) 
+
+push :: Stack -> Int -> Stack 
+push x p = x ++ [p]
+
+-- Mutable stack  
+
+-- data State st a = State (st -> (st,a))
+-- there is always an implicit and an explicit part of the monad 
+-- monadic code use do notation, so it's ysy 
+
+-- monadic action
+
+popM :: State Stack Int 
+popM = do 
+    stack <- get  -- get is used to " get the state"
+    case stack of 
+        (x:xs) -> put xs >> return x
+        [] -> error "Pop on empty stack"
+
+pushM :: Int -> State Stack () 
+pushM x = do 
+    stack <- get  -- get is used to " get the state"
+    put (x:stack) -- put is used to " set the state"
+
+-- in monadic action everything is like imperative code
+-- then you have to use "RunState"
+
+monadicActionOnStack = do 
+    pushM 2
+    pushM 1
+    popM
+    pushM 4
+
+
+
+-- Exam 2020/01/15
+
+-- make it an instance of functor,applicative and monad 
+
+
+data CashReg a = CashReg { getReceipt :: (a,Float) } deriving (Show, Eq)
+
+getCurrentItem = fst . getReceipt 
+getPrice = snd . getReceipt
+
+instance Functor CashReg where 
+    fmap f cr = CashReg (f $ getCurrentItem cr, getPrice cr)
+
+instance Applicative CashReg where 
+    pure a = CashReg (a,0.0)
+    fcr <*> cr = CashReg (getCurrentItem fcr $ getCurrentItem cr, getPrice fcr + getPrice cr) 
+
+instance Monad CashReg where 
+    return = pure 
+    cr >>= f = 
+        let newCr = f $ getCurrentItem cr 
+        in CashReg (getCurrentItem newCr, getPrice cr + getPrice newCr)
+
+
+addItem :: String -> Float -> CashReg String 
+addItem item price = CashReg (item,price)
+
+
+checkBag :: String -> CashReg String 
+checkBag item = if isInfixOf "veg" item
+                    then CashReg ("bag", 0.01)
+                    else CashReg ("",0.0)
+
+buyStuff = do 
+    i1 <- addItem "veg pro" 10.0 -- When you use `<-`, it unwraps the value from its monadic context
+    checkBag i1
+    i2 <- addItem "milk" 1.0
+    checkBag i2
+
+
+data Queue a = End | Cons a (Queue a)
+
+instance Show q => Show (Queue q) where
+    show End = ""
+    show (Cons x y) = (show y) ++ " " ++ (show x)

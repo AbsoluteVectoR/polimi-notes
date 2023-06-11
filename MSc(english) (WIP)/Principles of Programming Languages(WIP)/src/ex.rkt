@@ -1,13 +1,11 @@
-#lang racket
+
 
 ; esempio interessante
 
 (define (minimum L) 
-
 (let ((prev (car L))
-(nex (cdr L)) )
-
-(if (null? nex)
+  (nex (cdr L)) )
+  (if (null? nex)
 
 prev
 
@@ -79,10 +77,6 @@ prev
 
 ; reverse list
 
-(define (revers L)
-  (if (null? L)
-      '()
-      (append (revers (cdr L)) (list (car L)) )))
 
 ;(display (revers  '(1 2 3 4 9)))
                                     
@@ -212,9 +206,15 @@ prev
                 
 ;(continue-negative '(40 41 42 -43 44))
 
-
+;2021 01 20
           
+(define (mlv l)
+  (if (list? l)
+  (apply vector (map mlv l))
+  l
+  ))
 
+; 2020 07 17 
 
 
 
