@@ -398,3 +398,8 @@ data Queue a = End | Cons a (Queue a)
 instance Show q => Show (Queue q) where
     show End = ""
     show (Cons x y) = (show y) ++ " " ++ (show x)
+
+
+gzip xs = if null (filter null xs) 
+          then (map head xs) : gzip (map tail xs) 
+          else []

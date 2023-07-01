@@ -218,21 +218,45 @@ prev
 
 
 
+; closures as classes
+
+(define (make-person name age)
+  (define (get-name) name)
+  (define (get-age) age)
+
+  (lambda (message . args)
+    (case message 
+      ((get-name) get-name)
+      ((get-age) get-age)
+    )))
+
+
+(define (f . L) 
+
+(foldl (lambda (y1 y2) (cons (list y1) y2)) (foldl cons '() L) L)
+
+)
+
+(define (mix f . rest )
+  (foldr (lambda (x acc) (list x acc x)) 
+  (map f rest)
+  rest
+  ))
 
 
 
+(define (test-closures)
+  (define (greet)
+    (display "Hello"))
+  
+  (define (farewell)
+    (display "Goodbye"))
 
-
-
-
-
-
-
-
-
-
-
-
+  (lambda (message)
+    ((case message
+       ((greet) greet)
+       ((farewell) farewell)
+      ))))
 
 
 

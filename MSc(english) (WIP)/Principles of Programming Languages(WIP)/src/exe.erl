@@ -34,7 +34,6 @@ execute(F, X, Pid) ->
 
 
 %same as pmap but we have to discard
-
 pfilter(F, L) ->
     Ps = [ spawn(?MODULE, execute2, [F, X, self()]) || X <- L],
     lists:foldl(fun (P,Vo) ->
