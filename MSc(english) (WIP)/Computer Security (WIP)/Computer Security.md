@@ -15,7 +15,7 @@ Summary
 5. [Software Security](src/05.Software%20Security.md)  
 6. [Web Security](src/06.%20Web%20Security.md) 
 7. [Network Security](src/07.Network%20Security.md) 
-8. Malware
+8. [Malware](src/08.Malware.md) 
 9. [x86 Crash Course](src/x86%20Crash%20Course.md)
  
 
